@@ -1,11 +1,11 @@
 [
   {
     "id": "11",
-    "element_id": "1",
+    "entity_id": "1",
     "operation_type": "insert",
-    "data_modified_time": "2024-01-01T12:00:00.000+00:00",
-    "data_modified_comment": null,
-    "data_modified_by": "User A",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": null,
+    "entity_modified_by": "User A",
     "updated_fields": {
       "name": "Manufacturer A",
       "code": "manufacturer-a",
@@ -23,11 +23,11 @@
   },
   {
     "id": "12",
-    "element_id": "2",
+    "entity_id": "2",
     "operation_type": "insert",
-    "data_modified_time": "2024-01-01T13:00:00.000+00:00",
-    "data_modified_comment": null,
-    "data_modified_by": "User A",
+    "entity_modified_time": "2024-01-01T13:00:00.000+00:00",
+    "entity_modified_comment": null,
+    "entity_modified_by": "User A",
     "updated_fields": {
       "name": "Manufacturer B",
       "code": "manufacturer-b",
@@ -45,11 +45,11 @@
   },
   {
     "id": "13",
-    "element_id": "3",
+    "entity_id": "3",
     "operation_type": "insert",
-    "data_modified_time": "2024-01-01T14:00:00.000+00:00",
-    "data_modified_comment": null,
-    "data_modified_by": "User B",
+    "entity_modified_time": "2024-01-01T14:00:00.000+00:00",
+    "entity_modified_comment": null,
+    "entity_modified_by": "User B",
     "updated_fields": {
       "name": "Manufacturer C",
       "code": "manufacturer-c",
@@ -67,11 +67,11 @@
   },
   {
     "id": "14",
-    "element_id": "1",
+    "entity_id": "1",
     "operation_type": "update",
-    "data_modified_time": "2024-01-02T12:00:00.000+00:00",
-    "data_modified_comment": "Address has changed",
-    "data_modified_by": "User B",
+    "entity_modified_time": "2024-01-02T12:00:00.000+00:00",
+    "entity_modified_comment": "Address has changed",
+    "entity_modified_by": "User B",
     "updated_fields": {
       "address": {
         "address_line": "5 Example Street"
@@ -80,22 +80,22 @@
   },
   {
     "id": "15",
-    "element_id": "1",
+    "entity_id": "1",
     "operation_type": "update",
-    "data_modified_time": "2024-01-03T12:00:00.000+00:00",
-    "data_modified_comment": "Telephone number has changed",
-    "data_modified_by": "User A",
+    "entity_modified_time": "2024-01-03T12:00:00.000+00:00",
+    "entity_modified_comment": "Telephone number has changed",
+    "entity_modified_by": "User A",
     "updated_fields": {
       "telephone": "07565848959"
     }
   },
   {
     "id": "16",
-    "element_id": "2",
+    "entity_id": "2",
     "operation_type": "update",
-    "data_modified_time": "2024-01-02T12:30:00.000+00:00",
-    "data_modified_comment": "Website URL changed",
-    "data_modified_by": "User C",
+    "entity_modified_time": "2024-01-02T12:30:00.000+00:00",
+    "entity_modified_comment": "Website URL changed",
+    "entity_modified_by": "User C",
     "updated_fields": {
       "url": "http://test.com"
     }

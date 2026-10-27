@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   capitalize,
+  Link,
   TableCellBaseProps,
   TableRow,
 } from '@mui/material';
@@ -13,6 +14,11 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import {
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
+} from '../common/consts.tsx';
 import { usePreservedTableState } from '../common/preservedTableState.component.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -26,12 +32,11 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../utils.tsx';
 import { useGetHistoryEntries } from '../api/history.tsx';
 import { HistoryEntry } from '../api/api.types.tsx';
-import { useLocation, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 
 const getOperationTypeName = (operation: string) => {
   switch (operation) {
@@ -49,69 +54,94 @@ type HistoryFieldRow = HistoryEntry & {
   updated_value: unknown;
 };
 
-const transformUpdatedFieldValue = (value: unknown) => {
+const transformUpdatedFieldValue = (value: unknown): string => {
   if (value === null || value === undefined) {
-    return 'N/A';
+    return '';
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => transformUpdatedFieldValue(item)).join(', ');
   }
   if (typeof value === 'object') {
+    // Nested objects are flattened into separate rows, but fall back to
+    // key: value pairs in case an unexpected shape slips through.
     return Object.entries(value)
-      .map((key, val) => `${key}: ${val}`)
-      .join('\n');
+      .map(([key, val]) => `${key}: ${transformUpdatedFieldValue(val)}`)
+      .join(', ');
+  }
+  if (typeof value === 'string' && !isNaN(Date.parse(value))) {
+    return formatDateTimeStrings(value, true);
   }
   return String(value);
 };
 
-function HistoryEntries() {
-  const { element_id } = useParams();
+// Recursively unravel nested fields into one leaf per changed value,
+// modifies nested field name to `field.nested` (e.g. `address.address_line`)
+const flattenUpdatedField = (
+  field: string,
+  value: unknown
+): { updated_field: string; updated_value: unknown }[] => {
+  if (
+    field.includes('_id') ||
+    field == 'modified_time' ||
+    field === 'created_time' ||
+    field === 'code'
+  ) {
+    return [];
+  }
+  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+    return Object.entries(value).flatMap(([childField, childValue]) =>
+      flattenUpdatedField(`${field}.${childField}`, childValue)
+    );
+  }
+  return [{ updated_field: field, updated_value: value }];
+};
+
+function HistoryTable() {
   const location = useLocation();
   const historyPath = location.pathname.split('/');
   const collection = historyPath[historyPath.length - 3];
+  const entity_id = historyPath[historyPath.length - 2];
 
   const { data: historyData, isLoading: historyDataLoading } =
-    useGetHistoryEntries(collection!, element_id ?? null);
+    useGetHistoryEntries(collection, entity_id);
 
   const flattenedHistoryData = React.useMemo<HistoryFieldRow[]>(() => {
     if (!historyData) {
       return [];
     }
     return historyData.flatMap((entry) =>
-      Object.entries(entry.updated_fields ?? {}).map(([field, value]) => {
-        // skip ObjectIds here, and parse values as well
-        return {
+      Object.entries(entry.updated_fields ?? {}).flatMap(([field, value]) =>
+        flattenUpdatedField(field, value).map((leaf) => ({
           ...entry,
-          updated_field: field,
-          updated_value: value,
-        };
-      })
+          ...leaf,
+        }))
+      )
     );
   }, [historyData]);
-
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const columns = React.useMemo<MRT_ColumnDef<HistoryFieldRow>[]>(() => {
     return [
       {
         header: 'Comment',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.data_modified_comment,
-        // Group by ID here so it is per history entry, but shows the user it is by comment,
-        // so 2 changes with the same comment are grouped separately
+        accessorFn: (row) => row.entity_modified_comment,
+        // Group by ID so 2 changes with the same comment are grouped separately
         getGroupingValue: (row) => row.id,
         id: 'id',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => {
-          return (
+        // When grouped, the comment is shown on the main row via GroupedCell, so
+        // hide it on the nested leaf rows; when ungrouped (depth 0) show it here.
+        Cell: ({ row }) =>
+          row.depth === 0 ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <OverflowTip sx={{ fontSize: 'inherit' }}>
-                {row.original.data_modified_comment ?? 'No comment'}
+                {row.original.entity_modified_comment ?? 'No comment'}
               </OverflowTip>
             </Box>
-          );
-        },
-        size: 350,
+          ) : null,
+        size: 450,
         GroupedCell: ({ row }) => {
           return (
             <Box
@@ -129,7 +159,7 @@ function HistoryEntries() {
                   mx: 0.5,
                 }}
               >
-                {row.original.data_modified_comment ?? 'No comment'}
+                {row.original.entity_modified_comment ?? 'No comment'}
               </OverflowTip>
             </Box>
           );
@@ -143,46 +173,78 @@ function HistoryEntries() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        // On the main (grouped) row: show the single change inline, or a
+        // click-to-expand count when the entry changed multiple fields.
+        AggregatedCell: ({ row }) => {
+          const subRows = row.subRows ?? [];
+          if (subRows.length === 1) return subRows[0].original.updated_field;
+          return (
+            <Link
+              component="button"
+              onClick={() => row.toggleExpanded()}
+              sx={{ fontSize: 'inherit' }}
+            >
+              {subRows.length} changes
+            </Link>
+          );
+        },
         Cell: ({ row }) => row.original.updated_field,
-        size: 250,
+        size: 350,
       },
       {
         header: 'Value',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.updated_value,
+        accessorFn: (row) => transformUpdatedFieldValue(row.updated_value),
         id: 'updated_value',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        AggregatedCell: ({ row }) => {
+          const subRows = row.subRows ?? [];
+          if (subRows.length === 1)
+            return transformUpdatedFieldValue(
+              subRows[0].original.updated_value
+            );
+          return null;
+        },
         Cell: ({ row }) =>
           transformUpdatedFieldValue(row.original.updated_value),
-        size: 250,
+        size: 350,
       },
 
       {
         header: 'Modified Time',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.data_modified_time),
-        id: 'data_modified_time',
-        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
-        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
+        // Returned as a formatted string so the AggregatedCell renders
+        // as MRT does not display aggregated cells for non-string accessor values
+        accessorFn: (row) =>
+          formatDateTimeStrings(row.entity_modified_time, true),
+        id: 'entity_modified_time',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 350,
         enableGrouping: false,
         enableHiding: true,
+        AggregatedCell: ({ row }) =>
+          formatDateTimeStrings(row.original.entity_modified_time, true),
         Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.data_modified_time, true),
+          row.depth === 0
+            ? formatDateTimeStrings(row.original.entity_modified_time, true)
+            : null,
       },
       {
         header: 'Modified By',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.data_modified_by,
-        id: 'data_modified_by',
+        accessorFn: (row) => row.entity_modified_by,
+        id: 'entity_modified_by',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => row.original.data_modified_by,
-        size: 250,
+        AggregatedCell: ({ row }) => row.original.entity_modified_by,
+        Cell: ({ row }) =>
+          row.depth === 0 ? row.original.entity_modified_by : null,
+        size: 350,
       },
       {
         header: 'Operation Type',
@@ -192,13 +254,18 @@ function HistoryEntries() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => getOperationTypeName(row.original.operation_type),
+        AggregatedCell: ({ row }) =>
+          getOperationTypeName(row.original.operation_type),
+        Cell: ({ row }) =>
+          row.depth === 0
+            ? getOperationTypeName(row.original.operation_type)
+            : null,
         size: 250,
       },
     ];
   }, []);
 
-  const noResultsText = 'No results found';
+  const noResultsText = 'No results found: Refresh to try again';
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -283,8 +350,10 @@ function HistoryEntries() {
               );
             },
           },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
+    },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -329,4 +398,4 @@ function HistoryEntries() {
   );
 }
 
-export default HistoryEntries;
+export default HistoryTable;

@@ -1,4 +1,4 @@
-import { queryOptions, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { historyApi } from './api';
 import {
   HistoryEntry,
@@ -17,21 +17,12 @@ const getHistoryEntries = async (
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entity_id);
 
-  return historyApi.get(`/v1/history-entries/${collection}`, {
-    params: queryParams,
-  });
+  return historyApi
+    .get(`/v1/history-entries/${collection}`, {
+      params: queryParams,
+    })
+    .then((response) => response.data);
 };
-
-// export const getHistoryEntriesQuery = (
-//   collection: string,
-//   entity_id: string,
-//   retry?: boolean
-// ) =>
-//   queryOptions<HistoryEntry[], AxiosError>({
-//     queryKey: ['history_entries', collection, entity_id],
-//     queryFn: () => getHistoryEntries(collection, entity_id),
-//     retry: retry ? false : undefined,
-//   });
 
 export const useGetHistoryEntries = (
   collection: string,

@@ -18,7 +18,6 @@ import {
   CatalogueItemPost,
   HistoryEntry,
   ImageMetadataPatch,
-  InUseDefinition,
   Item,
   ItemPatch,
   ItemPost,
@@ -1465,16 +1464,16 @@ export const handlers = [
       const url = new URL(request.url);
       const { collection } = params;
       const historyParams = url.searchParams;
-      const elementId = historyParams.get('element_id');
+      const entityId = historyParams.get('entity_id');
       let data;
 
       if (collection == 'manufacturers') {
         data = HistoryJSON.filter(
-          (history) => history.element_id == elementId
+          (history) => history.entity_id == entityId
         ).sort(
           (a, b) =>
-            new Date(b.data_modified_time).getTime() -
-            new Date(a.data_modified_time).getTime()
+            new Date(b.entity_modified_time).getTime() -
+            new Date(a.entity_modified_time).getTime()
         ) as HistoryEntry[];
       }
 

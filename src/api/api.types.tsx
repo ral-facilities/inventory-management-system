@@ -250,11 +250,11 @@ export interface Item
 
 export interface HistoryEntry {
   id: string;
-  element_id: string;
+  entity_id: string;
   operation_type: string;
-  data_modified_time: string;
-  data_modified_comment: string | null;
-  data_modified_by: string;
+  entity_modified_time: string;
+  entity_modified_comment: string | null;
+  entity_modified_by: string;
   updated_fields: Record<string, unknown>;
 }
 

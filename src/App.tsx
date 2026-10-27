@@ -75,7 +75,7 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
-import HistoryEntries from './history/history.component';
+import HistoryTable from './history/historyTable.component';
 import ItemSystemHistory from './history/itemSystemHistoryTable.component';
 
 export const queryClient = new QueryClient({
@@ -261,8 +261,8 @@ const routeObject: RouteObject[] = [
                 loader: manufacturerLayoutLoader(queryClient),
               },
               {
-                path: paths.history,
-                Component: HistoryEntries,
+                path: paths.manufacturerHistory,
+                Component: HistoryTable,
                 loader: manufacturerLayoutLoader(queryClient),
               },
               {
@@ -273,11 +273,6 @@ const routeObject: RouteObject[] = [
           },
         ],
       },
-      // {
-      //   path: paths.history,
-      //   Component: HistoryLayout,
-      //   children: [{ index: true, Component: HistoryEntries }],
-      // },
     ],
   },
 ];

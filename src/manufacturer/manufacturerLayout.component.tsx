@@ -26,11 +26,11 @@ export const ManufacturerLayoutErrorComponent = () => {
 export const manufacturerLayoutLoader =
   (queryClient: QueryClient) =>
   async ({ params }: LoaderFunctionArgs) => {
-    const { manufacturer_id: manufacturerId, element_id: element_id } = params;
+    const { manufacturer_id: manufacturerId } = params;
 
-    if (manufacturerId || element_id) {
+    if (manufacturerId) {
       await queryClient.ensureQueryData(
-        getManufacturerQuery(manufacturerId ?? element_id, true)
+        getManufacturerQuery(manufacturerId, true)
       );
     }
 
@@ -38,12 +38,9 @@ export const manufacturerLayoutLoader =
   };
 
 function ManufacturerLayout() {
-  const { manufacturer_id: manufacturerId, element_id: element_id } =
-    useParams();
+  const { manufacturer_id: manufacturerId } = useParams();
 
-  const { data: manufacturerData } = useGetManufacturer(
-    manufacturerId ?? element_id
-  );
+  const { data: manufacturerData } = useGetManufacturer(manufacturerId);
 
   const [manufacturerBreadcrumbs, setManufacturerBreadcrumbs] = React.useState<
     BreadcrumbsInfo | undefined
@@ -56,9 +53,9 @@ function ManufacturerLayout() {
       setManufacturerBreadcrumbs({
         full_trail: true,
         trail: [
-          [`/${manufacturerData.id}`, manufacturerData.name],
+          [manufacturerData.id, manufacturerData.name],
           ...((location.pathname.includes('history')
-            ? [['/history', 'History']]
+            ? [[`${manufacturerData.id}/history`, 'History']]
             : []) satisfies BreadcrumbsInfo['trail']),
         ],
       });
@@ -68,7 +65,7 @@ function ManufacturerLayout() {
         trail: [],
       });
     }
-  }, [element_id, location.pathname, manufacturerData]);
+  }, [location.pathname, manufacturerData]);
 
   return (
     <BaseLayoutHeader
