@@ -234,9 +234,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }

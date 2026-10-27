@@ -389,7 +389,7 @@ describe('Manufacturer', () => {
       name: 'History',
     }).click();
 
-    cy.findByText('Telephone number has changes').should('be.visible');
+    cy.findByText('Telephone number has changed').should('be.visible');
     cy.findByText('07565848959').should('be.visible');
   });
 

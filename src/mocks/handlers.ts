@@ -18,6 +18,7 @@ import {
   CatalogueItemPost,
   HistoryEntry,
   ImageMetadataPatch,
+  InUseDefinition,
   Item,
   ItemPatch,
   ItemPost,
@@ -1417,6 +1418,16 @@ export const handlers = [
     () => {
       return HttpResponse.json(
         { system_types: [SystemTypesJSON[0]] },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.get<PathParams, DefaultBodyType, InUseDefinition>(
+    '/v1/settings/in-use-definition',
+    () => {
+      return HttpResponse.json(
+        { system_types: [SystemTypesJSON[1]] },
         { status: 200 }
       );
     }
