@@ -377,6 +377,22 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
+  it('navigates to history page from landing page, and displays data correctly', () => {
+    cy.findByText('Manufacturer A').click();
+    cy.findByText('Telephone number:').should('exist');
+
+    cy.findAllByRole('link', { name: 'History' })
+      .should('have.attr', 'href')
+      .should('include', '/manufacturers/1/history');
+
+    cy.findAllByRole('link', {
+      name: 'History',
+    }).click();
+
+    cy.findByText('Telephone number has changes').should('be.visible');
+    cy.findByText('07565848959').should('be.visible');
+  });
+
   it('displays expired landing page message and navigates back to manufacturer table view', () => {
     cy.visit('/manufacturers/invalid');
 
