@@ -292,6 +292,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                         >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
                           Created
                         </p>
                         <p
@@ -856,6 +870,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
                           02 Jan 2024 13:10
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -1442,6 +1470,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                         >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Alex Chen
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
                           Created
                         </p>
                         <p
@@ -1946,6 +1988,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (withou
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
                           02 Jan 2024 13:10
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -2478,6 +2534,20 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
                           02 Jan 2024 13:10
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -3084,6 +3154,20 @@ exports[`Catalogue Items details panel > renders details panel correctly in crit
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                         >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
                           Created
                         </p>
                         <p
@@ -3621,6 +3705,20 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
                           02 Jan 2024 13:10
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -4173,6 +4271,20 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                         >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
                           Created
                         </p>
                         <p
@@ -4711,6 +4823,20 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                         >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
                           Created
                         </p>
                         <p
@@ -5224,6 +5350,20 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
                           02 Jan 2024 13:10
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        >
+                          Modified By
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                        >
+                          Marcus Vance
                         </p>
                       </div>
                       <div

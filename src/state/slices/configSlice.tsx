@@ -15,6 +15,7 @@ const initialSettings: InventoryManagementSystemSettings = {
   osApiUrl: '',
   imsJsApiUrl: '',
   imsIngestApiUrl: '',
+  imsHistoryApiUrl: '',
   maxAttachmentSizeBytes: 104857600,
   attachmentAllowedFileExtensions: [
     '.csv',

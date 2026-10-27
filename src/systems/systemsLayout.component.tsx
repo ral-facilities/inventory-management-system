@@ -2,7 +2,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  type LoaderFunctionArgs,
+} from 'react-router';
 import {
   getSystemQuery,
   useGetSystem,
@@ -16,6 +21,7 @@ import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import { criticalityHeaderStyle } from '../utils';
 import { getSCriticalityLabel } from './systems.component';
+import { BreadcrumbsInfo } from '../api/api.types';
 
 export const SystemsErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Systems" />;
@@ -43,51 +49,95 @@ export const systemsLayoutLoader =
 
 function SystemsLayout() {
   const { system_id: systemId } = useParams();
+
+  const location = useLocation();
+  // Remove the trailing slash (if it exists) before splitting
+  const cleanPath = location.pathname.replace(/\/$/, '');
+
+  // Now split the cleaned path
+  const systemPath = cleanPath.split('/');
+
+  const lastSegmentOfSystemPath = systemPath[systemPath.length - 1];
+
   const { isCriticalMode } = useAppSelector(selectCriticality);
   const apiSettings = React.useContext(APISettingsContext);
   const isSparesDefinitionDefined = !!apiSettings.spares;
 
-  const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
+  const { data: breadcrumbs } = useGetSystemsBreadcrumbs(systemId);
   const { data: system } = useGetSystem(systemId);
   const showFlagged = system?.is_flagged;
+
+  const [systemBreadcrumbs, setSystemBreadCrumbs] = React.useState<
+    BreadcrumbsInfo | undefined
+  >(breadcrumbs);
+  React.useEffect(() => {
+    if (breadcrumbs) {
+      setSystemBreadCrumbs({
+        ...breadcrumbs,
+        trail: [
+          // System page
+          ...(system && lastSegmentOfSystemPath === system.id
+            ? [...breadcrumbs.trail]
+            : []),
+          // System items history page
+          ...((system && lastSegmentOfSystemPath === 'items-history'
+            ? [...breadcrumbs.trail, [system.id, 'Items history']]
+            : []) satisfies BreadcrumbsInfo['trail']),
+        ],
+      });
+    } else {
+      setSystemBreadCrumbs(undefined);
+    }
+  }, [breadcrumbs, lastSegmentOfSystemPath, system]);
 
   return (
     <BaseLayoutHeader
       homeLocation="Systems"
-      breadcrumbsInfo={systemsBreadcrumbs}
+      breadcrumbsInfo={systemBreadcrumbs}
     >
       <Box
-        sx={(theme) => ({
+        sx={{
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 1,
-          padding: 1,
-          mt: 1,
-          mx: 1,
-          ...(isCriticalMode &&
-            isSparesDefinitionDefined &&
-            showFlagged !== undefined &&
-            criticalityHeaderStyle({ theme, showFlagged })),
-        })}
+          p: 1,
+          gap: 0.5,
+        }}
       >
-        {isCriticalMode &&
-          isSparesDefinitionDefined &&
-          showFlagged !== undefined && (
-            <CriticalityTooltipIcon
-              showFlagged={showFlagged}
-              label={getSCriticalityLabel(showFlagged)}
-            />
-          )}
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 'bold',
-            wordWrap: 'break-word',
-          }}
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+            width: '100%',
+            gap: 1,
+            padding: 1,
+            ...(isCriticalMode &&
+              isSparesDefinitionDefined &&
+              showFlagged !== undefined &&
+              criticalityHeaderStyle({ theme, showFlagged })),
+          })}
         >
-          {system?.name}
-        </Typography>
+          {isCriticalMode &&
+            isSparesDefinitionDefined &&
+            showFlagged !== undefined && (
+              <CriticalityTooltipIcon
+                showFlagged={showFlagged}
+                label={getSCriticalityLabel(showFlagged)}
+              />
+            )}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              wordWrap: 'break-word',
+            }}
+          >
+            {system?.name}
+          </Typography>
+        </Box>
       </Box>
       <Outlet />
     </BaseLayoutHeader>
