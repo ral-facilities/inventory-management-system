@@ -22,12 +22,14 @@ import {
   Item,
   ItemPatch,
   ItemPost,
+  ItemSystemsHistoryEntry,
   Job,
   JobStatus,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
   System,
+  SystemItemsHistoryEntry,
   SystemPatch,
   SystemPost,
   SystemType,
@@ -53,6 +55,8 @@ import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
 import HistoryJSON from './History.json';
+import HistoryItemSystemsEntriesJSON from './HistoryItemSystemsEntries.json';
+import HistorySystemItemsEntriesJSON from './HistorySystemItemsEntries.json';
 
 /* Values defined on the backend that may change */
 
@@ -395,7 +399,9 @@ export const handlers = [
           );
         }
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem, {
+          status: 200,
+        });
       }
     }
   ),
@@ -412,7 +418,9 @@ export const handlers = [
           (catalogueItem) => catalogueItem.catalogue_category_id === id
         );
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem[], {
+          status: 200,
+        });
       } else {
         return HttpResponse.json({ detail: '' }, { status: 422 });
       }
@@ -533,6 +541,8 @@ export const handlers = [
           telephone: '07349612203',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'This is a comment',
+          modified_by: 'IMS user',
         },
         { status: 200 }
       );
@@ -601,6 +611,8 @@ export const handlers = [
           telephone: '0000000000',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );
@@ -969,6 +981,8 @@ export const handlers = [
           code: 'kelvin',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );
@@ -1025,6 +1039,8 @@ export const handlers = [
           code: 'archived',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );
@@ -1261,6 +1277,11 @@ export const handlers = [
         } else {
           image = {
             ...ImagesJSON[1],
+            ...(id === 1 && {
+              primary: entityId !== '90',
+              entity_id: entityId,
+              ...(entityId === '3' && { thumbnail_base64: 'test' }),
+            }),
             ...(id === 3 && {
               thumbnail_base64: 'test',
               description: undefined,
@@ -1402,6 +1423,40 @@ export const handlers = [
     }
   ),
 
+  // --------------------------------- JOB SCHEDULER ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/jobs/criticality/run',
+    () => {
+      return HttpResponse.json(undefined, { status: 204 });
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, Job>('/jobs/criticality', () => {
+    return HttpResponse.json(
+      {
+        id: '1',
+        last_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_executed_end_time: '2026-03-10T17:12:15.141Z',
+        status: JobStatus.Finished,
+        last_successful_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_successful_executed_end_time: '2026-03-10T17:12:15.141Z',
+        last_successful_duration_seconds: 0.123,
+        next_scheduled_execution_time: '2026-03-10T17:12:15.141Z',
+      },
+      { status: 200 }
+    );
+  }),
+  // --------------------------------- INGEST ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/spreadsheets/catalogue-items/ingest',
+    async () => {
+      return new HttpResponse(undefined, {
+        status: 204,
+      });
+    }
+  ),
+
   // ------------------------------------ HISTORY ------------------------------------------------
 
   http.get<PathParams, DefaultBodyType, HistoryEntry[]>(
@@ -1424,6 +1479,36 @@ export const handlers = [
       }
 
       return HttpResponse.json(data, { status: 200 });
+    }
+  ),
+
+  http.get<{ item_id: string }, DefaultBodyType, ItemSystemsHistoryEntry[]>(
+    '/v1/item-system-entries/item-systems/:item_id',
+    ({ params }) => {
+      const { item_id } = params;
+
+      const data = HistoryItemSystemsEntriesJSON.filter(
+        (entry) => entry.item_id === item_id
+      ) as ItemSystemsHistoryEntry[];
+
+      return HttpResponse.json(data, {
+        status: 200,
+      });
+    }
+  ),
+
+  http.get<{ system_id: string }, DefaultBodyType, SystemItemsHistoryEntry[]>(
+    '/v1/item-system-entries/system-items/:system_id',
+    ({ params }) => {
+      const { system_id } = params;
+
+      const data = HistorySystemItemsEntriesJSON.filter(
+        (entry) => entry.system_id === system_id
+      ) as SystemItemsHistoryEntry[];
+
+      return HttpResponse.json(data, {
+        status: 200,
+      });
     }
   ),
 ];

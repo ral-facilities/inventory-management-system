@@ -39,6 +39,7 @@ import { APISettingsContext } from '../../apiConfigProvider.component';
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import ErrorPage from '../../common/errorPage.component';
@@ -265,6 +266,15 @@ function CatalogueCardView() {
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 500,
         enableGrouping: false,
+      },
+      {
+        header: 'Modified by',
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 300,
       },
       {
         header: 'Created',
@@ -597,6 +607,7 @@ function CatalogueCardView() {
             height: cardViewHeight,
             maxHeight: cardViewHeight,
             width: '100%',
+            minHeight: MINIMUM_TABLE_HEIGHT,
           }}
         >
           {isCriticalFilterApplied && isCriticalMode && (

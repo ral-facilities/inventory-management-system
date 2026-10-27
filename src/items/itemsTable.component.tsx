@@ -36,6 +36,9 @@ import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
@@ -52,7 +55,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -154,7 +156,6 @@ export function ItemsTable(props: ItemTableProps) {
   >('create');
 
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
-
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -193,6 +194,16 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.modified_time, true),
         enableGrouping: false,
+      },
+      {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.modified_by,
+        id: 'item.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 225,
       },
       {
         header: 'Created',
@@ -465,14 +476,23 @@ export function ItemsTable(props: ItemTableProps) {
     if (preservedState.columnFilters.length !== 1) return false;
     if (preservedState.columnFilters[0].id !== 'system.type.value')
       return false;
-    const orderedColumnFilterValues = sortDataList(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      preservedState.columnFilters[0].value as any[]
-    );
+    const orderedColumnFilterValues = sortDataList({
+      data: preservedState.columnFilters[0].value as string[],
+      config: {
+        type: 'string',
+        selector: (value) => value,
+      },
+    });
     const sparesSystemTypeValues = sparesDefinition.system_types.map(
       (type) => type.value
     );
-    const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
+    const orderedSparesDefinitionValues = sortDataList({
+      data: sparesSystemTypeValues,
+      config: {
+        type: 'string',
+        selector: (value) => value,
+      },
+    });
 
     return (
       JSON.stringify(orderedColumnFilterValues) ===
@@ -546,21 +566,12 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
+
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: () => {
       return {
-        sx: {
-          height: dense
-            ? '360.4px'
-            : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + header + extra
-                `50px + 110px + 78px + 44px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
-              ),
-          flexShrink: 1,
-        },
+        sx: FLEX_TABLE_CONTAINER_PROP,
+
         'data-testid': 'items-table-container',
       };
     },
@@ -818,7 +829,7 @@ export function ItemsTable(props: ItemTableProps) {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT }}>
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
@@ -838,6 +849,7 @@ export function ItemsTable(props: ItemTableProps) {
           />
         )}
       <MaterialReactTable table={table} />
+
       {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
@@ -850,7 +862,7 @@ export function ItemsTable(props: ItemTableProps) {
           isAdminMode={isAdminDialog}
         />
       )}
-    </div>
+    </Box>
   );
 }
 

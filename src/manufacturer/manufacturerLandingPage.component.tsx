@@ -241,7 +241,7 @@ function ManufacturerLandingPage() {
                 textAlign: 'center',
               }}
             >
-              Last modified:
+              Last Modified:
             </Typography>
           </Grid>
           <Grid size={12}>
@@ -254,6 +254,34 @@ function ManufacturerLandingPage() {
               }}
             >
               {formatDateTimeStrings(manufacturerData.modified_time, true)}
+            </Typography>
+          </Grid>
+
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              Modified by:
+            </Typography>
+          </Grid>
+          <Grid size={12}>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mx: '8px',
+              }}
+            >
+              {manufacturerData.modified_by}
             </Typography>
           </Grid>
 

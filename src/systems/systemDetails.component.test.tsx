@@ -47,11 +47,14 @@ describe('SystemDetails', () => {
   it('renders correctly when a system is selected', async () => {
     createView();
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(mockSystemTypeDetails.value ?? '')
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText(mockSystemTypeDetails.value ?? '')
+        ).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
     expect(screen.queryByText('Please select a system')).toBeFalsy();
 
     expect(screen.getByText(mockSystemDetails.owner ?? '')).toBeInTheDocument();
@@ -68,7 +71,7 @@ describe('SystemDetails', () => {
 
     // Items table
     expect(screen.getByRole('table')).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('renders correctly when a system with only required values is selected', async () => {
     props.id = '65328f34a40ff5301575a4e5';

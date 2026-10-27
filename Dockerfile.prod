@@ -1,7 +1,7 @@
 # Dockerfile to build and serve inventory management system
 
 # Build stage
-FROM node:24.14.1-alpine3.23@sha256:8510330d3eb72c804231a834b1a8ebb55cb3796c3e4431297a24d246b8add4d5 AS builder
+FROM node:24.22.1-alpine3.244@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS builder
 
 WORKDIR /inventory-management-system-build
 
@@ -30,11 +30,11 @@ RUN set -eux; \
     yarn build;
 
 # Run stage
-FROM httpd:2.4.67-alpine3.23@sha256:0136c2d4462f3b8ecc92bea70efdfef4d06523999ae8d7aa533969dea6db4576
+FROM httpd:2.4.69-alpine3.24@sha256:759a1d9178d351185978e41be37a3e91675a4ddc0653aa5df493cfd4c67e24ec
 
 # Install specific version of jq (Used for assigning config values in entrypoint script)
 # Reference: https://pkgs.alpinelinux.org/package/edge/main/x86/jq
-RUN apk add --no-cache jq=1.8.1-r0
+RUN apk add --no-cache jq=1.8.2-r0
 
 WORKDIR /usr/local/apache2/htdocs
 
@@ -69,11 +69,16 @@ USER www-data
 ENV IMS_API_URL="/inventory-management-system-api"
 ENV OS_API_URL="/object-storage-api"
 ENV IMS_JS_API_URL="/ims-job-scheduler-api"
+ENV IMS_INGEST_API_URL="/ims-ingest-api"
+ENV IMS_HISTORY_API_URL="/ims-history-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 ENV MAX_ATTACHMENT_SIZE_BYTES=104857600
 ENV ATTACHMENT_ALLOWED_FILE_EXTENSIONS='[".csv", ".doc", ".docx", ".pdf", ".rtf", ".txt", ".xls", ".xlsx"]'
 ENV IMAGE_ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]'
 ENV MAX_IMAGE_SIZE_BYTES=52428800
+ENV SERIAL_NUMBER_PREFILL_ENABLED="true"
+ENV MAX_SPREADSHEET_SIZE_BYTES=10485760
+ENV SPREADSHEET_ALLOWED_FILE_EXTENSIONS='[".xlsx"]' 
 ENV PRIVILEGED_ROLES='["admin"]'
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/

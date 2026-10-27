@@ -8,12 +8,6 @@ import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 
-const mockedUseNavigate = vi.fn();
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Catalogue Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string, preloadedState?: Partial<RootState>) => {
@@ -269,6 +263,68 @@ describe('Catalogue Items Landing Page', () => {
 
     // Clean up the mock
     spy.mockRestore();
+  });
+
+  it('opens and closes add item dialog', async () => {
+    createView('/catalogue/4/items/1');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'add item button',
+      })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens and closes add item dialog in admin mode', async () => {
+    createView('/catalogue/4/items/1', {
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
+
+    await user.click(screen.getByText('Add Item as Admin'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(within(screen.getByRole('dialog')).getByText('Add Item as Admin')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 
   it('navigates to items table view', async () => {

@@ -68,10 +68,18 @@ import {
 } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
+import { useAppSelector } from '../state/hook';
+import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import HistoryCommentDialog from '../history/historyCommentDialog.component';
+import { sortDataList } from '../utils.tsx';
 
-function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
+function toItemDetailsStep(
+  item: Item | undefined,
+  catalogueItem: CatalogueItem | undefined,
+  serialNumberPrefillEnabled: boolean
+): ItemDetailsStep {
   if (!item) {
     return {
       purchase_order_number: '',
@@ -80,12 +88,14 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
       warranty_end_date: null,
       asset_number: '',
       serial_number: {
-        serial_number: '',
+        serial_number:
+          (serialNumberPrefillEnabled && catalogueItem?.name + '/%s') || '',
         starting_value: '',
         quantity: '',
       },
       delivered_date: null,
       notes: '',
+      modified_comment: '',
     };
   }
 
@@ -102,6 +112,7 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
     },
     delivered_date: item.delivered_date,
     notes: item.notes ?? '',
+    modified_comment: '',
   };
 }
 
@@ -121,6 +132,7 @@ function convertToItemDetailsStepPost(
       ? new Date(item.delivered_date).toISOString()
       : null,
     notes: item.notes ?? null,
+    modified_comment: item.modified_comment ?? null,
   };
 }
 
@@ -164,6 +176,10 @@ function ItemDialog(props: ItemDialogProps) {
     isAdminMode,
   } = props;
 
+  const {
+    settings: { serialNumberPrefillEnabled },
+  } = useAppSelector(selectSettings);
+
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
   const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
     props.catalogueCategory ? undefined : catalogueItem?.catalogue_category_id
@@ -177,6 +193,9 @@ function ItemDialog(props: ItemDialogProps) {
     () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
   );
+
+  const [historyCommentDialog, setHistoryCommentDialog] =
+    React.useState<boolean>(false);
 
   const [showAdvancedSerialNumberOptions, setShowAdvancedSerialNumberOptions] =
     React.useState(false);
@@ -232,7 +251,11 @@ function ItemDialog(props: ItemDialogProps) {
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
     ),
-    defaultValues: toItemDetailsStep(selectedItem),
+    defaultValues: toItemDetailsStep(
+      selectedItem,
+      catalogueItem,
+      serialNumberPrefillEnabled
+    ),
   });
 
   const {
@@ -271,7 +294,9 @@ function ItemDialog(props: ItemDialogProps) {
   const serialNumberAdvancedOptions = itemDetails.serial_number;
   // Load the values for editing.
   React.useEffect(() => {
-    resetDetailsStep(toItemDetailsStep(selectedItem));
+    resetDetailsStep(
+      toItemDetailsStep(selectedItem, catalogueItem, serialNumberPrefillEnabled)
+    );
     resetPropertiesStep({
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -282,6 +307,7 @@ function ItemDialog(props: ItemDialogProps) {
     });
   }, [
     catalogueCategory,
+    catalogueItem,
     catalogueItem?.properties,
     duplicate,
     requestType,
@@ -289,6 +315,7 @@ function ItemDialog(props: ItemDialogProps) {
     resetPropertiesStep,
     selectedItem,
     selectedItem?.properties,
+    serialNumberPrefillEnabled,
   ]);
 
   // Set usage status based on the selected Rule
@@ -356,10 +383,14 @@ function ItemDialog(props: ItemDialogProps) {
   ]);
 
   React.useEffect(() => {
-    if (
+    const neitherProvided =
       !serialNumberAdvancedOptions.quantity &&
-      !serialNumberAdvancedOptions.starting_value
-    ) {
+      !serialNumberAdvancedOptions.starting_value;
+    const bothProvided =
+      serialNumberAdvancedOptions.quantity ||
+      serialNumberAdvancedOptions.starting_value;
+
+    if (neitherProvided || bothProvided) {
       clearErrorsDetailsStep([
         'serial_number.quantity',
         'serial_number.serial_number',
@@ -442,6 +473,8 @@ function ItemDialog(props: ItemDialogProps) {
         const isSystemIdUpdated = data.system_id !== selectedItem.system_id;
 
         const item: ItemPatch = {};
+
+        item.modified_comment = data.modified_comment; // always set modified comment
 
         if (isSerialNumberUpdated) item.serial_number = data.serial_number;
         if (isPurchaseOrderNumberUpdated)
@@ -569,7 +602,7 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   const handleFinish = React.useCallback(
-    async (event: React.SyntheticEvent) => {
+    async (event: React.SyntheticEvent, allowSubmit: boolean) => {
       let hasErrors = false;
       const {
         detailsStepData,
@@ -596,6 +629,11 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       }
       if (hasErrors) return;
+
+      if (!allowSubmit) {
+        setHistoryCommentDialog(true);
+        return;
+      }
 
       if (detailsStepData && propertiesStepData && parentSystemId) {
         const data: ItemPost = {
@@ -764,19 +802,43 @@ function ItemDialog(props: ItemDialogProps) {
                       )
                     }
                   >
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ml: 1,
-                        mb: 0,
-                        cursor: 'pointer',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
-                    >
-                      {showAdvancedSerialNumberOptions
-                        ? 'Close advanced options'
-                        : 'Show advanced options'}
-                    </Typography>
+                    <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                      <Tooltip
+                        title={
+                          <Box>
+                            <Typography>
+                              When adding multiple items, %s marks where the
+                              generated number will appear. This number is based
+                              on the Starting Value and Quantity.
+                            </Typography>
+                            <Typography sx={{ mt: 2 }}>Example: </Typography>
+                            <Typography>
+                              Serial number: item %s. Quantity: 2. Starting
+                              value: 1
+                            </Typography>
+                            <Typography>
+                              Resulting serial numbers: item 1, item 2
+                            </Typography>
+                          </Box>
+                        }
+                        aria-label="Serial Number Advanced Options Tooltip"
+                      >
+                        <InfoOutlinedIcon fontSize="small" />
+                      </Tooltip>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          ml: 1,
+                          mb: 0,
+                          cursor: 'pointer',
+                          '&:hover': { textDecoration: 'underline' },
+                        }}
+                      >
+                        {showAdvancedSerialNumberOptions
+                          ? 'Close advanced options'
+                          : 'Show advanced options'}
+                      </Typography>
+                    </Box>
                   </Grid>
                   <Grid container size={12}>
                     <Collapse
@@ -1009,7 +1071,13 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                     sx={{ alignItems: 'center' }}
                     fullWidth
-                    options={usageStatuses ?? []}
+                    options={sortDataList({
+                      data: usageStatuses ?? [],
+                      config: {
+                        type: 'string',
+                        selector: (value) => value.code,
+                      },
+                    })}
                     isOptionEqualToValue={(option, value) =>
                       option.id == value.id
                     }
@@ -1152,7 +1220,19 @@ function ItemDialog(props: ItemDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={property.allowed_values?.values ?? []}
+                                options={sortDataList({
+                                  data: property.allowed_values?.values ?? [],
+                                  config:
+                                    property.type === 'number'
+                                      ? {
+                                          type: 'number',
+                                          selector: (value) => Number(value),
+                                        }
+                                      : {
+                                          type: 'string',
+                                          selector: (value) => String(value),
+                                        },
+                                })}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||
@@ -1339,7 +1419,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.values(errorsDetailsStep).length !== 0 ||
               !!parentSystemIdError
             }
-            onClick={handleFinish}
+            onClick={(event) => handleFinish(event, false)}
             sx={{ mr: 3 }}
             endIcon={
               isAddItemsPending || isAddItemPending || isEditItemPending ? (
@@ -1347,7 +1427,7 @@ function ItemDialog(props: ItemDialogProps) {
               ) : null
             }
           >
-            Finish
+            Continue
           </Button>
         ) : (
           <Button
@@ -1374,6 +1454,19 @@ function ItemDialog(props: ItemDialogProps) {
           </FormHelperText>
         </Box>
       )}
+      <HistoryCommentDialog
+        open={historyCommentDialog}
+        onSubmit={(event) => {
+          setHistoryCommentDialog(false);
+          handleFinish(event, true);
+        }}
+        onChange={registerDetailsStep('modified_comment')}
+        onCancel={() => {
+          setHistoryCommentDialog(false);
+        }}
+        action={requestType === 'post' || duplicate ? 'adding' : 'editing'}
+        entityTypeName={'Item'}
+      />
     </Dialog>
   );
 }

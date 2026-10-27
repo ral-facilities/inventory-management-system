@@ -25,6 +25,9 @@ import { Manufacturer } from '../api/api.types';
 import { useGetManufacturers } from '../api/manufacturers';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -40,7 +43,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../utils';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
@@ -56,8 +58,6 @@ function ManufacturerTable() {
   const [selectedManufacturer, setSelectedManufacturer] = React.useState<
     Manufacturer | undefined
   >(undefined);
-
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [manufacturerDialogType, setManufacturerDialogType] =
     React.useState<RequestType>('post');
@@ -95,6 +95,19 @@ function ManufacturerTable() {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 250,
       },
       {
         header: 'Created',
@@ -233,8 +246,10 @@ function ManufacturerTable() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
+    },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

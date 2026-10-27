@@ -2,6 +2,7 @@ import { Box, Button, Paper, alpha, styled } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 import { useAppSelector } from '../state/hook';
@@ -130,6 +131,7 @@ const LightBlueButton = styled(Button)(({ theme }) => ({
 }));
 
 const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
+  const [t] = useTranslation();
   return (
     <div id="dg-homepage">
       <div
@@ -158,10 +160,14 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
             }}
           >
             <Typography variant="h2" sx={backgroundTitleStyles}>
-              <strong>Inventory Management</strong>
+              <Trans i18nKey="home_page.title_line1">
+                <strong>Inventory Management</strong>
+              </Trans>
             </Typography>
             <Typography variant="h2" sx={backgroundTitleStyles}>
-              for <strong>EPAC</strong>
+              <Trans i18nKey="home_page.title_line2">
+                for <strong>EPAC</strong>
+              </Trans>
             </Typography>
           </Box>
         </div>
@@ -187,12 +193,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     marginBottom: theme.spacing(2),
                   })}
                 >
-                  {'Catalogue'}
+                  {t('home_page.card1.title')}
                 </Typography>
                 <PaperDescription variant="body1">
-                  {
-                    'Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.'
-                  }
+                  {t('home_page.card1.description')}
                 </PaperDescription>
                 <Box
                   sx={{
@@ -207,10 +211,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to="/catalogue"
+                    to={t('home_page.card1.link')}
                     data-testid="catalogue-button"
                   >
-                    {'Explore'}
+                    {t('home_page.card1.button')}
                   </Button>
                 </Box>
               </Box>
@@ -240,11 +244,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           <Grid size={{ xs: 12, md: 4 }}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
-                <PaperHeading variant="h4">{'Systems'}</PaperHeading>
+                <PaperHeading variant="h4">
+                  {t('home_page.card2.title')}
+                </PaperHeading>
                 <PaperDescription variant="body1">
-                  {
-                    'Navigate through systems and their sub systems to view their component items.'
-                  }
+                  {t('home_page.card2.description')}
                 </PaperDescription>
                 <Box
                   sx={{
@@ -259,10 +263,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to="/systems"
+                    to={t('home_page.card2.link')}
                     data-testid="systems-button"
                   >
-                    {'Explore'}
+                    {t('home_page.card2.button')}
                   </Button>
                 </Box>
               </Box>
@@ -271,9 +275,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           <Grid size={{ xs: 12, md: 4 }}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
-                <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
+                <PaperHeading variant="h4">
+                  {t('home_page.card3.title')}
+                </PaperHeading>
                 <PaperDescription variant="body1">
-                  {'View the manufacturers of parts used by EPAC.'}
+                  {t('home_page.card3.description')}
                 </PaperDescription>
                 <Box
                   sx={{
@@ -288,10 +294,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to="/manufacturers"
+                    to={t('home_page.card3.link')}
                     data-testid="manufacturer-button"
                   >
-                    {'Explore'}
+                    {t('home_page.card3.button')}
                   </Button>
                 </Box>
               </Box>
@@ -312,11 +318,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 }}
               >
                 <Box sx={paperContentStyles}>
-                  <BluePaperHeading variant="h4">{'EPAC'}</BluePaperHeading>
+                  <BluePaperHeading variant="h4">
+                    {t('home_page.card4.title')}
+                  </BluePaperHeading>
                   <BluePaperDescription color="#ffffff" variant="body1">
-                    {
-                      'World-leading centre for scientific and industrial research.'
-                    }
+                    {t('home_page.card4.description')}
                   </BluePaperDescription>
                   <Box
                     sx={{
@@ -326,12 +332,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     <LightBlueButton
                       color="primary"
                       variant="contained"
-                      href={
-                        'https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx'
-                      }
+                      href={t('home_page.card4.link')}
                       data-testid="facility-button"
                     >
-                      {'Read more'}
+                      {t('home_page.card4.button')}
                     </LightBlueButton>
                   </Box>
                 </Box>

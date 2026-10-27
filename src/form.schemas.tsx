@@ -607,6 +607,18 @@ export const ItemDetailsStepSchema = (
 
         if (
           typeof data.starting_value !== 'number' &&
+          typeof data.quantity !== 'number' &&
+          data.serial_number?.includes('%s')
+        ) {
+          issues.push({
+            path: ['serial_number'],
+            message: 'Please remove %s or fill in the advanced options fields.',
+            code: 'custom',
+          });
+        }
+
+        if (
+          typeof data.starting_value !== 'number' &&
           typeof data.quantity === 'number'
         ) {
           issues.push({
@@ -640,6 +652,7 @@ export const ItemDetailsStepSchema = (
       dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
     }),
     notes: OptionalOrNullableStringSchema({ requestType }),
+    modified_comment: NullableStringSchema(),
   });
 };
 
@@ -651,4 +664,10 @@ export const FileSchemaPatch = z.object({
   }),
   title: NullableStringSchema(),
   description: NullableStringSchema(),
+});
+
+// ------------------------------------ HISTORY ------------------------------------
+
+export const HistoryComment = z.object({
+  modified_comment: NullableStringSchema(),
 });

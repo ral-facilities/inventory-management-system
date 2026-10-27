@@ -114,7 +114,10 @@ export const modifyItem = (
     cy.findByRole('option', { name: values.broken }).click();
   }
 
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
 
   if (!ignoreChecks) {
     if (values.serialNumber) {
@@ -137,6 +140,7 @@ export const modifyItem = (
 export const editProperty = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses').click();
+  cy.findByText('Spherical Lenses').should('exist');
   cy.findByRole('button', {
     name: `Card Actions`,
   }).click();
@@ -166,6 +170,7 @@ export const editProperty = () => {
   cy.findByRole('button', { name: 'Close' }).click();
 
   cy.findByText('Spherical Lenses').click();
+  cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Plano-Convex Lens').click();
 
   cy.findByText('Type (mm)').should('exist');
@@ -189,6 +194,7 @@ export const editProperty = () => {
 export const addProperty = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses').click();
+  cy.findByText('Spherical Lenses').should('exist');
   cy.findByRole('button', {
     name: `Card Actions`,
   }).click();
@@ -225,6 +231,7 @@ export const addProperty = () => {
   cy.findByRole('button', { name: 'Close' }).click();
 
   cy.findByText('Spherical Lenses').click();
+  cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Plano-Convex Lens').click();
 
   cy.findByText('Shape').should('exist');
@@ -242,6 +249,7 @@ export const addProperty = () => {
 export const deleteProperty = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses').click();
+  cy.findByText('Spherical Lenses').should('exist');
   cy.findByRole('button', {
     name: `Card Actions`,
   }).click();
@@ -263,6 +271,7 @@ export const deleteProperty = () => {
   cy.findByRole('button', { name: 'Close' }).click();
 
   cy.findByText('Spherical Lenses').click();
+  cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Plano-Convex Lens').click();
 
   cy.findByText('Substrate').should('exist');
@@ -293,7 +302,10 @@ export const duplicateItem = (serialNumber: string, index: number) => {
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
 
   cy.findAllByText(serialNumber).should('have.length.gte', 2);
 };

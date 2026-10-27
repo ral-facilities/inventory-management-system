@@ -132,9 +132,11 @@ describe('Catalogue Category', () => {
     cy.location('search').should('eq', '');
 
     // Categories per page
+    cy.findByRole('combobox', { name: 'Categories per page' }).scrollIntoView();
     cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
       cy.findByText('30').should('be.visible')
     );
+    cy.findByRole('combobox', { name: 'Categories per page' }).scrollIntoView();
     cy.findByRole('combobox', { name: 'Categories per page' }).click();
     cy.findByRole('listbox').within(() => {
       cy.findByText('45').click();
@@ -148,6 +150,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Test 1').should('exist');
     cy.findByText('Test 1').click();
     cy.location('search').should('eq', '');
+    cy.findByRole('combobox', { name: 'Categories per page' }).scrollIntoView();
     cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
       cy.findByText('30').should('be.visible')
     );
@@ -159,6 +162,7 @@ describe('Catalogue Category', () => {
       'eq',
       '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
+    cy.findByRole('combobox', { name: 'Categories per page' }).scrollIntoView();
     cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
       cy.findByText('45').should('be.visible')
     );
@@ -717,6 +721,8 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category name updated',
+          modified_by: 'Alex Chen',
           is_flagged: false,
         })
       );
@@ -785,6 +791,8 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category code updated',
+          modified_by: 'Sarah Jenkins',
           is_flagged: false,
         })
       );
@@ -798,6 +806,8 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category name updated',
+          modified_by: 'Alex Chen',
           is_flagged: false,
         })
       );
@@ -848,6 +858,8 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category name updated',
+          modified_by: 'Alex Chen',
           is_flagged: false,
         })
       );
@@ -916,6 +928,8 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category code updated',
+          modified_by: 'Sarah Jenkins',
           is_flagged: false,
         })
       );
@@ -929,6 +943,8 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'category name updated',
+          modified_by: 'Alex Chen',
           is_flagged: false,
         })
       );

@@ -6,13 +6,6 @@ import SettingsLayout, {
   SettingsErrorComponent,
 } from './settingsLayout.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Settings Layout', () => {
   let user: UserEvent;
 
@@ -65,7 +58,17 @@ describe('Settings Layout', () => {
   });
 
   it('calls useNavigate when the home button is clicked', async () => {
-    createView('/settings/usage-statuses', 'settingsUsageStatuses');
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+    const { router } = createView(
+      '/settings/usage-statuses',
+      'settingsUsageStatuses'
+    );
 
     await waitFor(() => {
       expect(screen.getByText('Usage statuses')).toBeInTheDocument();
@@ -77,8 +80,10 @@ describe('Settings Layout', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/settings');
+    expect(router.state.location.pathname).toBe('/settings');
+
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 });
 

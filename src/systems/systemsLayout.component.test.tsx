@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import type { LoaderFunctionArgs } from 'react-router';
+import { type LoaderFunctionArgs } from 'react-router';
 import APIConfigProvider from '../apiConfigProvider.component';
 import { server } from '../mocks/server';
 import { URLPathKeyType } from '../paths';
@@ -12,13 +12,6 @@ import SystemsLayout, {
   SystemsLayoutErrorComponent,
   systemsLayoutLoader,
 } from './systemsLayout.component';
-
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
 
 describe('Systems Layout', () => {
   let user: UserEvent;
@@ -99,7 +92,17 @@ describe('Systems Layout', () => {
   });
 
   it('calls useNavigate when the home button is clicked', async () => {
-    createView('/systems/65328f34a40ff5301575a4e3', 'system');
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+    const { router } = createView(
+      '/systems/65328f34a40ff5301575a4e3',
+      'system'
+    );
 
     await waitFor(() => {
       expect(screen.getAllByText('Giant laser')).toHaveLength(2);
@@ -111,8 +114,10 @@ describe('Systems Layout', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/systems');
+    expect(router.state.location.pathname).toBe('/systems');
+
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 });
 
@@ -135,7 +140,7 @@ describe('Systems Layout Error Component', () => {
   });
 
   it('renders system error page correctly', async () => {
-    const view = createView();
+    const { asFragment, router } = createView();
 
     await waitFor(() => {
       expect(
@@ -151,10 +156,9 @@ describe('Systems Layout Error Component', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/systems');
+    expect(router.state.location.pathname).toBe('/systems');
 
-    expect(view.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
 

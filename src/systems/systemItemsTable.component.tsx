@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
   Button,
@@ -451,6 +452,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           formatDateTimeStrings(row.original.item.modified_time, true),
       },
       {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.modified_by,
+        id: 'item.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
+      },
+      {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
@@ -549,7 +560,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         'catalogueItem.criticality': isCriticalMode,
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
-      grouping: ['catalogueItem.name'],
       pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
@@ -738,6 +748,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 isAdminMode={true}
               />
             )}
+            <Button
+              startIcon={<HistoryIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              component={Link}
+              to={'items-history'}
+              aria-label={`View ${system.name}'s items history`}
+            >
+              {`View Items History`}
+            </Button>
           </>
         )}
       </Box>

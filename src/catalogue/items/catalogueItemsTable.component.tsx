@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -46,12 +47,15 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import { useAppSelector } from '../../state/hook';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -260,6 +264,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
     React.useState<boolean>(false);
 
+  const [importTemplateDialogOpen, setImportTemplateDialogOpen] =
+    React.useState<boolean>(false);
+
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
   >(undefined);
@@ -276,6 +283,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isLoading = isLoading || query.isLoading;
     return query.data;
   });
+
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch manufacturer
@@ -467,6 +476,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem.modified_by,
+        id: 'catalogueItem.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
+        enableGrouping: false,
       },
       {
         header: 'Created',
@@ -1094,6 +1114,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             Add Catalogue Item
           </Button>
+          {!dense && (
+            <Button
+              startIcon={<UploadIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setImportTemplateDialogOpen(true);
+              }}
+            >
+              Import spreadsheet
+            </Button>
+          )}
           {
             // Don't show for the move to and obsolete dialogues
             requestOrigin === undefined && (
@@ -1239,11 +1271,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   }, [dense, table, isCriticalMode]);
 
   return (
-    <Box sx={{ width: '100%', ...FLEX_CONTAINER_PROPS }}>
+    <Box
+      sx={{
+        width: '100%',
+        ...FLEX_CONTAINER_PROPS,
+        minHeight: MINIMUM_TABLE_HEIGHT,
+      }}
+    >
       <Stack
         sx={{
           ...FLEX_CONTAINER_PROPS,
           width: '100%',
+          minHeight: MINIMUM_TABLE_HEIGHT,
           ...(!dense ? { height: contentHeight, flex: undefined } : { p: 1 }),
         }}
       >
@@ -1268,6 +1307,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
             parentInfo={parentInfo}
+          />
+
+          <ImportTemplateDialog
+            open={importTemplateDialogOpen}
+            onClose={() => setImportTemplateDialogOpen(false)}
+            parentId={parentInfo.id}
+            parentName={parentInfo.name}
+            isAdminMode={isAdminMode}
           />
         </>
       )}

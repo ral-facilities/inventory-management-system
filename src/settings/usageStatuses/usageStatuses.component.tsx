@@ -21,6 +21,9 @@ import { UsageStatus } from '../../api/api.types.tsx';
 import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
@@ -35,7 +38,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
@@ -46,9 +48,6 @@ function UsageStatuses() {
     useGetUsageStatuses();
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
-
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUsageStatusDialog, setDeleteUsageStatusDialog] =
     React.useState<boolean>(false);
@@ -78,6 +77,14 @@ function UsageStatuses() {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
         header: 'Created',
@@ -164,8 +171,10 @@ function UsageStatuses() {
               );
             },
           },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
+    },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

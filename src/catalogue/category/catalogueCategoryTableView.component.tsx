@@ -123,7 +123,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: isCriticalMode ? 680 : 780,
+        size: isCriticalMode ? 460 : 560,
       },
       {
         header: 'Last modified',
@@ -132,10 +132,19 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: isCriticalMode ? 570 : 670,
+        size: isCriticalMode ? 350 : 450,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: isCriticalMode ? 350 : 450,
       },
     ];
   }, [isCriticalMode, isSparesDefinitionDefined]);

@@ -3,6 +3,7 @@ import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
   CatalogueItem,
+  CatalogueItemSpreadsheetMetadata,
   Item,
   ItemPost,
   SparesDefinition,
@@ -182,6 +183,7 @@ export interface ItemDetailsStep {
   };
   delivered_date?: string | null;
   notes?: string | null;
+  modified_comment: string | null;
 }
 
 export interface ItemDetailsStepPost {
@@ -193,6 +195,7 @@ export interface ItemDetailsStepPost {
   serial_number?: string | null;
   delivered_date?: string | null;
   notes?: string | null;
+  modified_comment: string | null;
 }
 
 export interface PostItems {
@@ -210,6 +213,7 @@ export interface BaseMoveItemsToSystem {
   mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
+  modifiedComment: string | null;
 }
 export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
   mode: 'multiple';
@@ -241,6 +245,9 @@ export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
 
+export interface UppySpreadSheetMetadata
+  extends CatalogueItemSpreadsheetMetadata, Body {}
+export interface UppySpreadSheetResponse extends Blob, Body {}
 // --------------------------------- SPARES -----------------------------------------------------------
 
 export interface SparesFilterStateType {

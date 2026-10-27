@@ -61,6 +61,21 @@ describe('Items', () => {
     cy.findAllByText('(Item Details)').should('exist');
   });
 
+  it('navigates to systems history page from landing page, and displays data correctly', () => {
+    cy.visit('/catalogue/4/items/1/items/KvT2Ox7n');
+
+    cy.findAllByRole('link', { name: "5YUQDDjKpz2z's systems history" })
+      .should('have.attr', 'href')
+      .should('include', '/catalogue/4/items/1/items/KvT2Ox7n/systems-history');
+
+    cy.findAllByRole('link', {
+      name: "5YUQDDjKpz2z's systems history",
+    }).click();
+
+    cy.findByText('Giant laser').should('be.visible');
+    cy.findByText('Laser Xpress').should('be.visible');
+  });
+
   it('should be able to navigate back to the catalogue home', () => {
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByText('Motion').should('be.visible');
@@ -103,10 +118,11 @@ describe('Items', () => {
 
   it('should be able to navigate back to the catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Cameras 1' }).click();
-    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('be.visible');
+    cy.findByText('Obsolete reason').scrollIntoView();
+    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText('Older than five years').should('be.visible');
   });
 
@@ -126,9 +142,15 @@ describe('Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
+
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -146,6 +168,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },
@@ -176,7 +199,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
-    cy.findByLabelText('Serial number').type('test %s');
+    cy.findByLabelText('Serial number').type('{selectall}{del}test %s');
     cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
 
@@ -184,7 +207,10 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -204,6 +230,7 @@ describe('Items', () => {
             serial_number: `test ${i + 2}`,
             delivered_date: null,
             notes: null,
+            modified_comment: 'A test comment',
             properties: [
               { id: '1', value: 12 },
               { id: '2', value: 30 },
@@ -234,6 +261,8 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
     cy.findByText('Show advanced options').click();
 
     cy.findByLabelText('Starting value').type('10');
@@ -245,34 +274,36 @@ describe('Items', () => {
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('10a');
-    cy.findByLabelText('Starting value').type('10a');
+    cy.findAllByText('Please enter a valid number.').should('exist');
 
-    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
+    cy.findByLabelText('Starting value').type('10a');
+    cy.findAllByText('Please enter a valid number.').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('10.5');
-    cy.findByLabelText('Starting value').type('10.5');
+    cy.findAllByText('Please enter a valid integer.').should('exist');
 
-    cy.findAllByText('Please enter a valid integer.').should('have.length', 2);
+    cy.findByLabelText('Starting value').type('10.5');
+    cy.findAllByText('Please enter a valid integer.').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('-1');
-    cy.findByLabelText('Starting value').type('-1');
-
-    cy.findByText('Number must be greater than or equal to 0').should('exist');
     cy.findByText('Number must be greater than or equal to 2').should('exist');
+
+    cy.findByLabelText('Starting value').type('-1');
+    cy.findByText('Number must be greater than or equal to 0').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('100');
-    cy.findByLabelText('Starting value').type('2');
-
     cy.findByText('Number must be less than or equal to 99').should('exist');
+
+    cy.findByLabelText('Starting value').type('2');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
@@ -307,6 +338,8 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
+
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
@@ -317,7 +350,10 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'y' }).click();
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -335,6 +371,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
@@ -362,7 +399,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Serial number').type('test1234');
+    cy.findByLabelText('Serial number').type('{selectall}{del}test1234');
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
@@ -385,7 +422,10 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -403,6 +443,7 @@ describe('Items', () => {
           serial_number: 'test1234',
           delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'test',
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 1218 },
             { id: '2', value: 3060 },
@@ -439,10 +480,14 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'In Use' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -460,6 +505,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },
@@ -489,6 +535,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByLabelText('Warranty end date').type('12/02/');
     cy.findByLabelText('Delivered date').type('12/02/');
@@ -520,7 +567,7 @@ describe('Items', () => {
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory.'
@@ -600,7 +647,7 @@ describe('Items', () => {
       'Items that are contained within the system type Storage are classified as spares'
     ).should('exist');
 
-    cy.findAllByRole('button', { name: 'Column Actions' }).eq(3).click();
+    cy.findAllByRole('button', { name: 'Column Actions' }).eq(4).click();
     cy.findByText('Group by Asset Number').click();
 
     cy.findByText('Spares Definition Filter Applied').should('exist');
@@ -890,6 +937,7 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByText('Total Attachments: 35').scrollIntoView();
       cy.findByText('Total Attachments: 35').should('be.visible');
 
       cy.findAllByText('safety-protocols.pdf').should('have.length', 8);
@@ -1250,7 +1298,7 @@ describe('Items', () => {
         cy.findByText('stfc-logo-blue-text').should('exist');
         cy.findByText('stfc-logo-blue-text.png').should('exist');
         cy.findByText('test').should('exist');
-        cy.findByText('No').should('exist');
+        cy.findByText('Yes').should('exist');
 
         cy.findByRole('button', { name: 'Close' }).click();
       });
@@ -1737,7 +1785,11 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1747,6 +1799,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
+          modified_comment: 'A test comment',
           serial_number: 'Zf7P8Qu8TD8ctest1234',
           purchase_order_number: 'hpGBgi0dtest23',
           usage_status_id: '3',
@@ -1780,7 +1833,10 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1789,7 +1845,10 @@ describe('Items', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ serial_number: 'Zf7P8Qu8TD8ctest1234' })
+        JSON.stringify({
+          modified_comment: 'A test comment',
+          serial_number: 'Zf7P8Qu8TD8ctest1234',
+        })
       );
     });
   });
@@ -1812,7 +1871,10 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1822,6 +1884,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 1218 },
             { id: '2', value: 3060 },
@@ -1861,7 +1924,10 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1871,6 +1937,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
+          modified_comment: 'A test comment',
           system_id: '65328f34a40ff5301575a4e3',
         })
       );
@@ -1883,7 +1950,10 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
 
     cy.findByText(
       "There have been no changes made. Please change a field's value or press Cancel to exit."
@@ -1917,7 +1987,10 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1936,6 +2009,7 @@ describe('Items', () => {
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 0 },
             { id: '2', value: null },
@@ -1957,6 +2031,9 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1984,6 +2061,9 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.startSnoopingBrowserMockedRequest();
 

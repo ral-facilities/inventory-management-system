@@ -1,19 +1,12 @@
 import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import type { LoaderFunctionArgs } from 'react-router';
+import { type LoaderFunctionArgs } from 'react-router';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ManufacturerLayout, {
   ManufacturerLayoutErrorComponent,
   manufacturerLayoutLoader,
 } from './manufacturerLayout.component';
-
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
 
 describe('Manufacturer Layout', () => {
   let user: UserEvent;
@@ -33,7 +26,7 @@ describe('Manufacturer Layout', () => {
   });
 
   it('navigates back to the root directory from root', async () => {
-    createView('/manufacturers');
+    const { router } = createView('/manufacturers');
 
     await waitFor(() => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
@@ -45,11 +38,18 @@ describe('Manufacturer Layout', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
+    expect(router.state.location.pathname).toBe('/manufacturers');
   });
   it('navigates back to the root directory from landing page', async () => {
-    createView('/manufacturers/1', true);
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+
+    const { router } = createView('/manufacturers/1', true);
 
     await waitFor(() => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
@@ -61,8 +61,9 @@ describe('Manufacturer Layout', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
+    expect(router.state.location.pathname).toBe('/manufacturers');
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 });
 
@@ -83,7 +84,7 @@ describe('Manufacturer Layout Error Component', () => {
   });
 
   it('renders manufacturer error page correctly', async () => {
-    const view = createView();
+    const { asFragment, router } = createView();
 
     await waitFor(() => {
       expect(
@@ -99,10 +100,9 @@ describe('Manufacturer Layout Error Component', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
+    expect(router.state.location.pathname).toBe('/manufacturers');
 
-    expect(view.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
 

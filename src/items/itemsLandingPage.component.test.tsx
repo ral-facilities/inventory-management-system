@@ -6,13 +6,6 @@ import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ItemsLandingPage from './itemsLandingPage.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string) => {
@@ -182,5 +175,23 @@ describe('Items Landing Page', () => {
 
     const url = await screen.findByText('Manufacturer A');
     expect(url).toHaveAttribute('href', '/manufacturers/1');
+  });
+
+  it('navigates to item systems history page', async () => {
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    const systemsHistoryButton = screen.getByRole('link', {
+      name: "5YUQDDjKpz2z's systems history",
+    });
+
+    expect(systemsHistoryButton).toHaveAttribute(
+      'href',
+      '/catalogue/4/items/1/items/KvT2Ox7n/systems-history'
+    );
   });
 });

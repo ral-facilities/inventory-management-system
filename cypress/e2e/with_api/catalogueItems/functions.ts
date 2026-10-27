@@ -357,12 +357,14 @@ export const addFile = (
   cy.findAllByRole('dialog')
     .first()
     .within(() => {
-      cy.findAllByRole('button', {
+      cy.findByRole('button', {
         name: 'Close Modal',
       })
         .last()
         .click();
     });
+
+  cy.findByRole('dialog').should('not.exist');
 
   if (!ignoreChecks) {
     cy.findByText(tabValue).click();
@@ -526,5 +528,8 @@ export const removePrimaryImage = () => {
       cy.findByText('Continue').click();
     });
   cy.findByRole('dialog').should('not.exist');
-  cy.findByRole('img', { name: 'No Image' }).should('exist');
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Remove Primary Image').should('not.exist');
+  // Click background to dismiss action dialog to stop it covering other elements
+  cy.findByRole('presentation').click(10, 10);
 };

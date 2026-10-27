@@ -1,5 +1,6 @@
 import { Box, LinearProgress } from '@mui/material';
-import { useParams } from 'react-router';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import CatalogueItemsTable from './catalogueItemsTable.component';
 
@@ -8,6 +9,15 @@ const CatalogueItemsPage = () => {
 
   const { data: catalogueCategory, isLoading } =
     useGetCatalogueCategory(catalogueCategoryId);
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    // If it's a non leaf node, redirect to catalogue categories page page
+    if (!isLoading && !catalogueCategory?.is_leaf) {
+      navigate(`/catalogue/${catalogueCategoryId}`);
+    }
+  }, [catalogueCategory?.is_leaf, catalogueCategoryId, isLoading, navigate]);
 
   if (isLoading) {
     return (
