@@ -47,10 +47,10 @@ import {
 import { sortDataList } from '../../../utils.tsx';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
-import AllowedValuesController from './controllers/allowedValuesContoller.component';
-import MandatoryController from './controllers/mandatoryContoller.component';
-import TypeController from './controllers/typeContoller.component';
-import UnitController from './controllers/unitContoller.component';
+import AllowedValuesController from './controllers/allowedValuesController.component.tsx';
+import MandatoryController from './controllers/mandatoryController.component.tsx';
+import TypeController from './controllers/typeController.component.tsx';
+import UnitController from './controllers/unitController.component.tsx';
 
 interface MigrationWarningMessageProps {
   isChecked: boolean;
