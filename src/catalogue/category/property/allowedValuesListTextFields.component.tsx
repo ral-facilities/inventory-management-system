@@ -17,17 +17,54 @@ import {
   useFieldArray,
   useFormContext,
 } from 'react-hook-form';
+import z from 'zod';
+import { AddPropertyMigration } from '../../../app.types';
 import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-  AddPropertyMigration,
-} from '../../../app.types';
+  CatalogueCategoryPropertyPatchSchema,
+  CatalogueCategorySchema,
+} from '../../../form.schemas';
 
-const AllowedValuesListTextFields = (props: {
-  property?: AddCatalogueCategoryPropertyWithPlacementIds;
-  propertyIndex?: number;
-}) => {
-  const { property, propertyIndex } = props;
+type AllowedValueErrors =
+  | Merge<
+      FieldError,
+      (
+        | Merge<
+            FieldError,
+            FieldErrorsImpl<{ av_placement_id: string; value: unknown }>
+          >
+        | undefined
+      )[]
+    >
+  | undefined;
+
+// The three forms that can host this component nest `allowed_values` at
+// different depths, so errors are read by walking the field path rather than
+// by branching on the shape of the errors object.
+function getByPath(obj: unknown, path: string): unknown {
+  return path
+    .split('.')
+    .reduce<unknown>(
+      (current, key) =>
+        current && typeof current === 'object'
+          ? (current as Record<string, unknown>)[key]
+          : undefined,
+      obj
+    );
+}
+
+export interface AllowedValuesListTextFieldsProps {
+  /** Path of the `allowed_values` object within the surrounding form. */
+  name: 'allowed_values' | `properties.${number}.allowed_values`;
+  /** Placement ids already saved on the property, which cannot be edited or removed. */
+  lockedPlacementIds?: string[];
+  /** Whether the surrounding form has a `default_value` field to keep in sync. */
+  hasDefaultValue?: boolean;
+}
+
+const AllowedValuesListTextFields = (
+  props: AllowedValuesListTextFieldsProps
+) => {
+  const { name, lockedPlacementIds, hasDefaultValue } = props;
   const {
     control,
     formState: { errors },
@@ -35,57 +72,41 @@ const AllowedValuesListTextFields = (props: {
     watch,
     setValue,
   } = useFormContext<
-    AddPropertyMigration | AddCatalogueCategoryWithPlacementIds
+    | AddPropertyMigration
+    | z.input<typeof CatalogueCategorySchema>
+    | z.input<typeof CatalogueCategoryPropertyPatchSchema>,
+    undefined,
+    | AddPropertyMigration
+    | z.output<typeof CatalogueCategorySchema>
+    | z.output<typeof CatalogueCategoryPropertyPatchSchema>
   >();
 
   const propertyRHF = watch();
+  const valuesName = `${name}.values.values` as const;
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name:
-      typeof propertyIndex === 'number' && 'properties' in propertyRHF
-        ? `properties.${propertyIndex}.allowed_values.values.values`
-        : `allowed_values.values.values`,
+    name: valuesName,
   });
 
-  const allowedValuesIds = property?.allowed_values?.values?.values.map(
-    (val) => val.av_placement_id
-  );
-
   const clearDuplicateValueErrors = React.useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const getErrorIndexes = (errorsArray: any) => {
-      if (!Array.isArray(errorsArray)) {
-        return [];
-      }
-      return errorsArray
-        .map((error, index) =>
-          error?.value?.message === 'Duplicate value.' ? index : -1
-        )
-        .filter((index) => index !== -1);
-    };
+    const errorsArray = getByPath(errors, valuesName);
+    if (!Array.isArray(errorsArray)) return;
 
-    if ('allowed_values' in errors) {
-      const errorIndexes = getErrorIndexes(
-        errors?.allowed_values?.values?.values
-      );
-      errorIndexes.forEach((errorIndex) =>
-        clearErrors(`allowed_values.values.values.${errorIndex}`)
-      );
-    } else if ('properties' in errors && typeof propertyIndex === 'number') {
-      const errorIndexes = getErrorIndexes(
-        errors?.properties?.[propertyIndex]?.allowed_values?.values?.values
-      );
-      errorIndexes.forEach((errorIndex) =>
+    errorsArray.forEach((error, index) => {
+      if (error?.value?.message === 'Duplicate value.') {
         clearErrors(
-          `properties.${propertyIndex}.allowed_values.values.values.${errorIndex}`
-        )
-      );
-    }
-  }, [clearErrors, errors, propertyIndex]);
+          // Composed from `name`, which is always a valid path on the host form.
+          `${valuesName}.${index}` as Parameters<typeof clearErrors>[0]
+        );
+      }
+    });
+  }, [clearErrors, errors, valuesName]);
 
   const clearDefaultValue = React.useCallback(
     (av_placement_id: string) => {
       if (
+        hasDefaultValue &&
         'default_value' in propertyRHF &&
         av_placement_id === propertyRHF.default_value.value.av_placement_id
       ) {
@@ -96,48 +117,18 @@ const AllowedValuesListTextFields = (props: {
         });
       }
     },
-    [clearErrors, propertyRHF, setValue]
+    [clearErrors, hasDefaultValue, propertyRHF, setValue]
   );
 
-  let allowedValueErrors:
-    | Merge<
-        FieldError,
-        (
-          | Merge<
-              FieldError,
-              FieldErrorsImpl<{
-                av_placement_id: string;
-                value: unknown;
-              }>
-            >
-          | undefined
-        )[]
-      >
-    | undefined;
-
-  if ('allowed_values' in errors)
-    allowedValueErrors = errors?.allowed_values?.values?.values;
-  if ('properties' in errors && typeof propertyIndex === 'number') {
-    allowedValueErrors =
-      errors?.properties?.[propertyIndex]?.allowed_values?.values?.values;
-  }
+  const allowedValueErrors = getByPath(errors, valuesName) as AllowedValueErrors;
 
   return (
     <>
       {fields.map((field, index) => {
-        let allowedValueError:
-          | FieldError
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          | Merge<FieldError, FieldErrorsImpl<any>>
-          | undefined = undefined;
-
-        if ('allowed_values' in errors)
-          allowedValueError =
-            errors?.allowed_values?.values?.values?.[index]?.value;
-        if ('properties' in errors && typeof propertyIndex === 'number')
-          allowedValueError =
-            errors?.properties?.[propertyIndex]?.allowed_values?.values
-              ?.values?.[index]?.value;
+        const allowedValueError = getByPath(
+          errors,
+          `${valuesName}.${index}.value`
+        ) as FieldError | undefined;
 
         return (
           <Stack
@@ -148,26 +139,24 @@ const AllowedValuesListTextFields = (props: {
           >
             <Controller
               control={control}
-              name={
-                typeof propertyIndex === 'number' && 'properties' in propertyRHF
-                  ? `properties.${propertyIndex}.allowed_values.values.values.${index}`
-                  : `allowed_values.values.values.${index}`
-              }
+              name={`${valuesName}.${index}` as const}
               render={({ field: controllerField }) => (
                 <TextField
-                  disabled={allowedValuesIds?.includes(field.av_placement_id)}
-                  id={`list-item-input-${controllerField.value.av_placement_id}`}
+                  disabled={lockedPlacementIds?.includes(field.av_placement_id)}
+                  id={`list-item-input-${controllerField.value?.av_placement_id}`}
                   label="List item"
                   variant="outlined"
                   fullWidth
                   {...controllerField}
-                  value={controllerField.value.value}
+                  value={controllerField.value?.value}
                   onChange={(event) => {
                     controllerField.onChange({
-                      av_placement_id: controllerField.value.av_placement_id,
+                      av_placement_id: controllerField.value?.av_placement_id,
                       value: event.target.value,
                     });
-                    clearDefaultValue(controllerField.value.av_placement_id);
+                    clearDefaultValue(
+                      controllerField.value?.av_placement_id ?? ''
+                    );
                     clearDuplicateValueErrors();
                   }}
                   error={!!allowedValueError}
@@ -176,7 +165,7 @@ const AllowedValuesListTextFields = (props: {
               )}
             />
 
-            {!allowedValuesIds?.includes(field.av_placement_id) && (
+            {!lockedPlacementIds?.includes(field.av_placement_id) && (
               <Tooltip title="Delete Allowed Value">
                 <span>
                   <IconButton

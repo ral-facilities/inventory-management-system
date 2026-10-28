@@ -20,16 +20,13 @@ import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../../api/api.types';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-} from '../../../app.types';
 import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -49,12 +46,13 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import z from 'zod';
 import { useGetUnits } from '../../../api/units';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../../common/consts';
-import { RequestType } from '../../../form.schemas';
+import { CatalogueCategorySchema, RequestType } from '../../../form.schemas';
 import { useAppSelector } from '../../../state/hook';
 import { selectAuthorisation } from '../../../state/slices/authorisationSlice';
 import DeletePropertyDialog from './deletePropertyDialog.component';
@@ -70,12 +68,15 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
 
-  const { control, clearErrors } =
-    useFormContext<AddCatalogueCategoryWithPlacementIds>();
-  // fields don't get updated when textfield has changed
-  const properties = control._getFieldArray(
-    'properties'
-  ) as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const { control, clearErrors } = useFormContext<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >();
+  const properties = control._getFieldArray('properties') as z.input<
+    typeof CatalogueCategorySchema
+  >['properties'];
+
   const { append, remove } = useFieldArray({
     control,
     name: 'properties',
@@ -90,14 +91,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     React.useState<boolean>(false);
 
   const [selectedProperty, setSelectedProperty] = React.useState<
-    AddCatalogueCategoryPropertyWithPlacementIds | undefined
+    | NonNullable<z.input<typeof CatalogueCategorySchema>['properties']>[number]
+    | undefined
   >(undefined);
 
   const [index, setIndex] = React.useState<number | undefined>();
 
   const { data: units } = useGetUnits();
   const columns = React.useMemo<
-    MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
+    MRT_ColumnDef<
+      NonNullable<z.input<typeof CatalogueCategorySchema>['properties']>[number]
+    >[]
   >(() => {
     const allowedValues = catalogueCategory?.properties
       .flatMap((prop) => prop.allowed_values?.values)
@@ -200,9 +204,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
           // Request type 'post' is storing the unit_id only, so it needs to find the unit value
-          requestType === 'patch'
-            ? row.unit
-            : (units?.find((unit) => row.unit_id === unit.id) || null)?.value,
+          units?.find((unit) => row.unit_id === unit.id)?.value,
         id: 'unit',
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
@@ -223,15 +225,10 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         ],
         filterSelectOptions: unitValues,
         size: 250,
-        Cell: ({ renderedCellValue, row }) => (
-          <>
-            {requestType === 'patch'
-              ? renderedCellValue
-              : (
-                  units?.find((unit) => row.original.unit_id === unit.id) ||
-                  null
-                )?.value}
-          </>
+        Cell: ({ row }) => (
+          <OverflowTip sx={{ font: 'inherit' }}>
+            {units?.find((unit) => row.original.unit_id === unit.id)?.value}
+          </OverflowTip>
         ),
         GroupedCell: TableGroupedCell,
       },
@@ -246,7 +243,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, [catalogueCategory, units, requestType]);
+  }, [catalogueCategory, units]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -378,7 +375,6 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
                 name: '',
                 type: CatalogueCategoryPropertyType.Text,
                 mandatory: 'false',
-                unit: null,
                 allowed_values: null,
               });
             }

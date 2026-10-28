@@ -40,16 +40,16 @@ const DeleteCatalogueCategoryDialog = (
   const handleClose = React.useCallback(
     (props: { successfulDeletion: boolean }) => {
       onClose({ successfulDeletion: props.successfulDeletion });
+      onChangeCatalogueCategory(undefined);
       setError(false);
       setErrorMessage('');
     },
-    [onClose]
+    [onChangeCatalogueCategory, onClose]
   );
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueCategory) {
       deleteCatalogueCategory(catalogueCategory.id)
         .then(() => {
-          onChangeCatalogueCategory(undefined);
           handleClose({ successfulDeletion: true });
         })
         .catch((error: AxiosError) => {
@@ -67,12 +67,7 @@ const DeleteCatalogueCategoryDialog = (
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [
-    catalogueCategory,
-    deleteCatalogueCategory,
-    handleClose,
-    onChangeCatalogueCategory,
-  ]);
+  }, [catalogueCategory, deleteCatalogueCategory, handleClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">
