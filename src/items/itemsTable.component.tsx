@@ -105,6 +105,7 @@ const ItemsTableActionMenu = (props: {
         }]: []),
         ...(isSparesShown ? [{
           label: 'Show Spare Items',
+          icon: <FilterAlt />,
           onClick: onShowSparesClick,
           isDisabled: isSparesDisabled
         }]: []),

@@ -39,15 +39,20 @@ export const TableActionMenu = (props: TableActionMenuProps) => {
   return (
     <Box sx={{ display: 'flex' }}>
       {isMenuShrunk ? (
-        <Button
-          endIcon={<ExpandMoreIcon />}
-          variant="outlined"
-          onClick={handleClick}
-          aria-label={`${ariaLabelPrefix} table actions menu`}
-          sx={{ display: { xs: 'flex', md: 'none' }, flexShrink: 0 }}
-        >
-          Actions
-        </Button>
+        <Tooltip title={`${ariaLabelPrefix} table actions menu`}>
+          <span>
+            <IconButton
+              onClick={handleClick}
+              aria-label={`${ariaLabelPrefix} table actions menu`}
+              sx={(theme) => ({
+                backgroundColor: theme.palette.primary.dark,
+                color: theme.palette.common.white,
+              })}
+            >
+              <MoreHorizIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
       ) : (
         <Stack
           direction="row"
