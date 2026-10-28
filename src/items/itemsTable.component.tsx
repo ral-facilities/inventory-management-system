@@ -3,6 +3,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import FilterAlt from '@mui/icons-material/FilterAlt';
 import {
   Box,
   Divider,

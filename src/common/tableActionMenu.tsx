@@ -1,6 +1,10 @@
 import {
   Box,
-  Button, ListItemIcon, ListItemText,
+  Button,
+  IconButton,
+  Tooltip,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Stack,
@@ -8,7 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 type TableActionMenuItem = {
   label: string;
