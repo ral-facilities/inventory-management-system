@@ -297,6 +297,7 @@ function HistoryTable() {
     enableColumnVirtualization: false,
     enableGrouping: true,
     enablePagination: true,
+    paginateExpandedRows: false,
     // Other settings
     filterFns: customFilterFunctions,
     manualFiltering: false,
@@ -364,6 +365,10 @@ function HistoryTable() {
       shape: 'rounded',
       variant: 'outlined',
     },
+    // Hide expand toggle for rows with a single sub-row
+    muiExpandButtonProps: ({ row }) => ({
+      sx: { display: (row.subRows?.length ?? 0) <= 1 ? 'none' : undefined },
+    }),
     muiDetailPanelProps: {
       sx: {
         '.MuiCollapse-vertical': {
