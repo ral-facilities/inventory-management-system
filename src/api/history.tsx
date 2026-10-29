@@ -1,7 +1,39 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { historyApi } from './api';
-import { ItemSystemsHistoryEntry, SystemItemsHistoryEntry } from './api.types';
+import {
+  HistoryEntry,
+  ItemSystemsHistoryEntry,
+  SystemItemsHistoryEntry,
+} from './api.types';
 import { AxiosError } from 'axios';
+
+const getHistoryEntries = async (
+  collection: string,
+  entity_id: string
+  // The other filterable params will be added in at a later date
+  // operation_type: string,
+  // order_descending: boolean
+): Promise<HistoryEntry[]> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append('entity_id', entity_id);
+
+  return historyApi
+    .get(`/v1/history-entries/${collection}`, {
+      params: queryParams,
+    })
+    .then((response) => response.data);
+};
+
+export const useGetHistoryEntries = (
+  collection: string,
+  entity_id: string
+): UseQueryResult<HistoryEntry[], AxiosError> => {
+  return useQuery({
+    queryKey: ['HistoryEntries', collection, entity_id],
+    queryFn: () => getHistoryEntries(collection, entity_id),
+    enabled: !!entity_id,
+  });
+};
 
 const getItemSystemsEntries = async (
   item_id: string

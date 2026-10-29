@@ -246,6 +246,18 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+// ------------------------------------ HISTORY API -----------------------------------------
+
+export interface HistoryEntry {
+  id: string;
+  entity_id: string;
+  operation_type: string;
+  entity_modified_time: string;
+  entity_modified_comment: string | null;
+  entity_modified_by: string;
+  updated_fields: Record<string, unknown>;
+}
+
 // ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
 export interface ObjectFilePostBase {

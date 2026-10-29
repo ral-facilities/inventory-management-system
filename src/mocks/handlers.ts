@@ -16,6 +16,7 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  HistoryEntry,
   ImageMetadataPatch,
   InUseDefinition,
   Item,
@@ -53,6 +54,7 @@ import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
+import HistoryJSON from './History.json';
 import HistoryItemSystemsEntriesJSON from './HistoryItemSystemsEntries.json';
 import HistorySystemItemsEntriesJSON from './HistorySystemItemsEntries.json';
 
@@ -1420,7 +1422,6 @@ export const handlers = [
       );
     }
   ),
-  // --------------------------------- SPARES DEFINITION ------------------------------------------------------
 
   http.get<PathParams, DefaultBodyType, InUseDefinition>(
     '/v1/settings/in-use-definition',
@@ -1467,6 +1468,29 @@ export const handlers = [
   ),
 
   // ------------------------------------ HISTORY ------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, HistoryEntry[]>(
+    '/v1/history-entries/:collection',
+    ({ request, params }) => {
+      const url = new URL(request.url);
+      const { collection } = params;
+      const historyParams = url.searchParams;
+      const entityId = historyParams.get('entity_id');
+      let data;
+
+      if (collection == 'manufacturers') {
+        data = HistoryJSON.filter(
+          (history) => history.entity_id == entityId
+        ).sort(
+          (a, b) =>
+            new Date(b.entity_modified_time).getTime() -
+            new Date(a.entity_modified_time).getTime()
+        ) as HistoryEntry[];
+      }
+
+      return HttpResponse.json(data, { status: 200 });
+    }
+  ),
 
   http.get<{ item_id: string }, DefaultBodyType, ItemSystemsHistoryEntry[]>(
     '/v1/item-system-entries/item-systems/:item_id',

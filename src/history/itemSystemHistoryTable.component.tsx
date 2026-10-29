@@ -13,6 +13,11 @@ import {
 import { Link } from 'react-router';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import {
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
+} from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -26,7 +31,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../utils.tsx';
 import {
@@ -49,9 +53,6 @@ function ItemSystemHistory() {
 
   const { data: historyData, isLoading: historyDataLoading } =
     isItemSystemsHistoryView ? itemSystemsHistory : systemItemsHistory;
-
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px + 78px');
 
   const columns = React.useMemo<
     MRT_ColumnDef<ItemSystemsHistoryEntry | SystemItemsHistoryEntry>[]
@@ -250,8 +251,10 @@ function ItemSystemHistory() {
               );
             },
           },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
+    },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

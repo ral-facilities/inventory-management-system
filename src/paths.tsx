@@ -20,6 +20,7 @@ export const paths = {
   systemItemsHistory: '/systems/:system_id/items-history',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
+  manufacturerHistory: '/manufacturers/:manufacturer_id/history',
 };
 
 export type URLPathKeyType = keyof typeof paths;
