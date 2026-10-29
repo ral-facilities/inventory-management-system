@@ -90,6 +90,10 @@ jobs:
           repository: ral-facilities/inventory-management-system-api
           ref: develop
 
+      - name: Debug kernel
+        run: |
+          uname -a
+          cat /proc/version
       # This is required as need to setup api in a different directory as checkout will attempt delete
       # all existing files which in this case will include a data directory created by docker causing
       # a permission error (checkout action also can't specify a different directory to clone into)
