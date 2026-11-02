@@ -7,7 +7,6 @@ import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
 import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
   AddPropertyMigration,
   EditPropertyMigration,
 } from '../../../app.types';
@@ -724,9 +723,10 @@ describe('PropertyDialog', () => {
   });
 
   describe('edit', () => {
-    const formattedProperties = transformToAddCatalogueCategoryWithPlacementIds(
-      getCatalogueCategoryById('12') as CatalogueCategory
-    ).properties as AddCatalogueCategoryPropertyWithPlacementIds[];
+    const formattedProperties =
+      transformToAddCatalogueCategoryWithPlacementIds(
+        getCatalogueCategoryById('12') as CatalogueCategory
+      ).properties ?? [];
 
     beforeEach(() => {
       props = {
