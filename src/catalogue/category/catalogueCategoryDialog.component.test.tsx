@@ -2,12 +2,13 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
+import z from 'zod';
 import { imsApi } from '../../api/api';
 import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../api/api.types';
-import { AddCatalogueCategoryProperty } from '../../app.types';
+import { CatalogueCategoryPropertyPatchSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import handleTransferState from '../../handleTransferState';
 import { server } from '../../mocks/server';
@@ -29,14 +30,17 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
-  interface TestAddCatalogueCategoryProperty extends Omit<
-    AddCatalogueCategoryProperty,
-    'type'
-  > {
+  interface TestAddCatalogueCategoryProperty {
+    name: string;
+    type: string;
     unit?: string;
+    unit_id?: string | null;
+    mandatory: string;
+    allowed_values?: z.input<
+      typeof CatalogueCategoryPropertyPatchSchema
+    >['allowed_values'];
     skipSave?: boolean;
     skipSaveValidation?: boolean;
-    type: string;
   }
   const createView = () => {
     return renderComponentWithRouterProvider(
