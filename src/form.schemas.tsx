@@ -155,8 +155,8 @@ const OptionalOrNullableDateSchema = (props: PostPatchZodDateSchemaProps) =>
 const OptionalOrNullableURLSchema = (props: PostPatchZodSchemaProps) => {
   const urlSchema = z.url({ error: props.errorMessage });
   return props.requestType === 'post'
-    ? OptionalStringSchema().pipe(urlSchema)
-    : NullableStringSchema().pipe(urlSchema);
+    ? OptionalStringSchema().pipe(urlSchema.optional())
+    : NullableStringSchema().pipe(urlSchema.nullable());
 };
 
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
