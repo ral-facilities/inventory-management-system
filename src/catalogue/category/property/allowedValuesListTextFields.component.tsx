@@ -53,11 +53,8 @@ function getByPath(obj: unknown, path: string): unknown {
 }
 
 export interface AllowedValuesListTextFieldsProps {
-  /** Path of the `allowed_values` object within the surrounding form. */
   name: 'allowed_values' | `properties.${number}.allowed_values`;
-  /** Placement ids already saved on the property, which cannot be edited or removed. */
   lockedPlacementIds?: string[];
-  /** Whether the surrounding form has a `default_value` field to keep in sync. */
   hasDefaultValue?: boolean;
 }
 
@@ -122,7 +119,10 @@ const AllowedValuesListTextFields = (
     [clearErrors, hasDefaultValue, propertyRHF, setValue]
   );
 
-  const allowedValueErrors = getByPath(errors, valuesName) as AllowedValueErrors;
+  const allowedValueErrors = getByPath(
+    errors,
+    valuesName
+  ) as AllowedValueErrors;
 
   return (
     <>

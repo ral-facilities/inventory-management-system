@@ -41,18 +41,7 @@ export enum RoutesHomeLocation {
 }
 export type RoutesHomeLocationType = keyof typeof RoutesHomeLocation;
 
-export interface AllowedValuesList {
-  type: 'list';
-  values: {
-    valueType: 'number' | 'string';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    values: { av_placement_id: string; value: any }[];
-  };
-}
-
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
-
-export type AllowedValues = AllowedValuesList;
 
 export interface MoveToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
