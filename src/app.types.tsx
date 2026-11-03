@@ -83,9 +83,6 @@ export interface PropertyValue {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: { av_placement_id: string; value: any };
 }
-export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
-  default_value: PropertyValue;
-}
 
 export interface MoveToCatalogueCategory {
   selectedCategories: CatalogueCategory[];

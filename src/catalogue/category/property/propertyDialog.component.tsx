@@ -21,7 +21,6 @@ import React from 'react';
 import {
   Controller,
   FormProvider,
-  Resolver,
   useForm,
   useFormContext,
 } from 'react-hook-form';
@@ -37,7 +36,6 @@ import {
   usePostCatalogueCategoryProperty,
 } from '../../../api/catalogueCategories';
 import { useGetUnits } from '../../../api/units';
-import { AddPropertyMigration } from '../../../app.types';
 import {
   CatalogueCategoryPropertyPatchSchema,
   CatalogueCategoryPropertyPostSchema,
@@ -99,14 +97,18 @@ export const MigrationWarningMessage = (
   );
 };
 
+type DefaultValue = z.input<
+  typeof CatalogueCategoryPropertyPostSchema
+>['default_value'];
+
 function transformAddPropertyMigrationToCatalogueCategoryPropertyPost(
-  property: AddPropertyMigration
+  property: z.output<typeof CatalogueCategoryPropertyPostSchema>
 ): CatalogueCategoryPropertyPost {
   return {
     name: property.name,
-    type: property.type as CatalogueCategoryPropertyType, // Assuming 'type' field is already correct
+    type: property.type,
     ...(property.unit_id && { unit_id: property.unit_id }),
-    mandatory: String(property.mandatory) === 'true',
+    mandatory: property.mandatory,
     ...(property.allowed_values && {
       allowed_values: transformAllowedValues(property.allowed_values),
     }),
@@ -169,17 +171,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
   const typeAdd = propertyAdd.properties && propertyAdd.properties[index]?.type;
 
   const formMethodsMigPost = useForm({
-    // Zod correctly validates and discriminates the `properties` union at runtime,
-    // but TypeScript is unable to fully infer the resulting shape of complex
-    // `z.discriminatedUnion` schemas (specifically the nested `value.value` field).
-    // This causes the inferred resolver type from `zodResolver` to conflict with
-    //  the form's declared `AddPropertyMigration` type, even though the runtime behaviour
-    //  is correct.
-    //  We therefore explicitly assert the resolver to `Resolver<AddPropertyMigration>`
-    //  to bridge the gap between Zod's runtime guarantees and React Hook Form's
-    resolver: zodResolver(
-      CatalogueCategoryPropertyPostSchema
-    ) as unknown as Resolver<AddPropertyMigration>,
+    resolver: zodResolver(CatalogueCategoryPropertyPostSchema),
     defaultValues: {
       name: '',
       type: CatalogueCategoryPropertyType.Text,
@@ -190,7 +182,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       },
       ...(type === 'patch' && {
         ...selectedProperty,
-        unit_id: selectedProperty?.unit_id ?? null,
+        unit_id: selectedProperty?.unit_id ?? undefined,
       }),
     },
   });
@@ -376,7 +368,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
   );
 
   const onSubmitMigPost = React.useCallback(
-    (data: AddPropertyMigration) => {
+    (data: z.output<typeof CatalogueCategoryPropertyPostSchema>) => {
       const transformedData =
         transformAddPropertyMigrationToCatalogueCategoryPropertyPost(data);
 
@@ -402,7 +394,8 @@ const PropertyDialog = (props: PropertyDialogProps) => {
   const resetDefaultValue = React.useCallback(
     () =>
       setValueMigPost('default_value', {
-        valueType: `${propertyMigPost.type}_${propertyMigPost.mandatory}`,
+        valueType:
+          `${propertyMigPost.type}_${propertyMigPost.mandatory}` as DefaultValue['valueType'],
         value: { av_placement_id: crypto.randomUUID(), value: '' },
       }),
     [propertyMigPost, setValueMigPost]
@@ -589,7 +582,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                   control={controlMigPost}
                   name={`default_value`}
                   render={({ field: { value: defaultValue, onChange } }) => (
-                    <Autocomplete
+                    <Autocomplete<DefaultValue['value'], false, boolean>
                       disableClearable={propertyMigPost.mandatory === 'true'}
                       slotProps={{
                         clearIndicator: { onClick: resetDefaultValue },

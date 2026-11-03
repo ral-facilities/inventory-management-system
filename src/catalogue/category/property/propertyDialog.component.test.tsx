@@ -6,7 +6,6 @@ import { MockInstance } from 'vitest';
 import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
-import { AddPropertyMigration } from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
@@ -17,14 +16,14 @@ import PropertyDialog, {
   PropertyDialogProps,
 } from './propertyDialog.component';
 
-interface TestAddPropertyMigration extends Omit<
-  AddPropertyMigration,
-  'default_value' | 'allowed_values' | 'type'
-> {
+interface TestAddPropertyMigration {
+  name: string;
+  type: string;
   unit?: string;
+  unit_id?: string | null;
+  mandatory: string;
   default_value?: string;
   allowed_values?: AllowedValues;
-  type: string;
 }
 
 interface TestEditPropertyMigration {
