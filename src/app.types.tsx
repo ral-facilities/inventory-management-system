@@ -112,9 +112,6 @@ export interface CatalogueItemDetailsStepPost {
   notes?: string | null;
 }
 
-export interface PropertiesStep {
-  properties: PropertyValue[];
-}
 export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
