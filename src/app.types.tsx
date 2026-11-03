@@ -197,13 +197,7 @@ export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
 }
 
 export type MoveItemsToSystem =
-  | MoveItemsMultipleUsageStatus
-  | MoveItemsSingleUsageStatus;
-
-export interface AdvancedSerialNumberOptionsType {
-  quantity: string | null;
-  starting_value: string | null;
-}
+  MoveItemsMultipleUsageStatus | MoveItemsSingleUsageStatus;
 
 // ------------------------------------ UPPY --------------------------------------------------------
 
