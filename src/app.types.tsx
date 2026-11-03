@@ -87,11 +87,6 @@ export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
   default_value: PropertyValue;
 }
 
-export interface EditPropertyMigration {
-  name?: string;
-  allowed_values?: AllowedValues | null;
-}
-
 export interface MoveToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root

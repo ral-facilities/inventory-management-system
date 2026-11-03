@@ -6,10 +6,7 @@ import { MockInstance } from 'vitest';
 import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
-import {
-  AddPropertyMigration,
-  EditPropertyMigration,
-} from '../../../app.types';
+import { AddPropertyMigration } from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
@@ -30,10 +27,8 @@ interface TestAddPropertyMigration extends Omit<
   type: string;
 }
 
-interface TestEditPropertyMigration extends Omit<
-  EditPropertyMigration,
-  'allowed_values'
-> {
+interface TestEditPropertyMigration {
+  name?: string;
   allowed_values?: AllowedValues;
   unit?: string;
 }
