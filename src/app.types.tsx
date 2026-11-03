@@ -4,6 +4,7 @@ import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
   CatalogueItem,
+  CatalogueItemPost,
   CatalogueItemSpreadsheetMetadata,
   Item,
   ItemPost,
@@ -99,18 +100,14 @@ export interface MoveToCatalogueCategory {
 
 // ------------------------------------ CATALOGUE ITEM ------------------------------------
 
-export interface CatalogueItemDetailsStepPost {
-  manufacturer_id: string;
-  name: string;
-  description?: string | null;
-  cost_gbp: number;
-  cost_to_rework_gbp?: number | null;
-  days_to_replace: number;
-  days_to_rework?: number | null;
-  expected_lifetime_days?: number | null;
-  item_model_number?: string | null;
-  notes?: string | null;
-}
+export type CatalogueItemDetailsStepPost = Omit<
+  CatalogueItemPost,
+  | 'catalogue_category_id'
+  | 'is_obsolete'
+  | 'obsolete_reason'
+  | 'obsolete_replacement_catalogue_item_id'
+  | 'properties'
+>;
 
 export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
@@ -156,16 +153,10 @@ export interface SystemTableType extends System {
 }
 // ------------------------------------ ITEMS ------------------------------------
 
-export interface ItemDetailsStepPost {
-  purchase_order_number?: string | null;
-  is_defective: boolean;
-  usage_status_id: string;
-  warranty_end_date?: string | null;
-  asset_number?: string | null;
-  serial_number?: string | null;
-  delivered_date?: string | null;
-  notes?: string | null;
-}
+export type ItemDetailsStepPost = Omit<
+  ItemPost,
+  'catalogue_item_id' | 'system_id' | 'properties'
+>;
 
 export interface PostItems {
   quantity: number;
