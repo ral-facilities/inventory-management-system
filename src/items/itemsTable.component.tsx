@@ -3,9 +3,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import FilterAlt from '@mui/icons-material/FilterAlt';
 import {
   Box,
-  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -36,6 +36,9 @@ import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
@@ -52,7 +55,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -65,6 +67,59 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
+
+const ItemsTableActionMenu = (props: {
+  isAdminMode: boolean,
+  isSparesShown: boolean,
+  isSparesDisabled: boolean,
+  filtersEnabled: boolean,
+  onAddItemClick: () => void,
+  onAddItemAdminClick: () => void,
+  onShowSparesClick: () => void,
+  onClearFiltersClick: () => void,
+}) => {
+  const {
+    isAdminMode,
+    isSparesShown,
+    isSparesDisabled,
+    filtersEnabled,
+    onAddItemClick,
+    onAddItemAdminClick,
+    onShowSparesClick,
+    onClearFiltersClick
+  } = props;
+
+  return (
+    <TableActionMenu
+      ariaLabelPrefix="items"
+      items={[
+        {
+          label: 'Add Item',
+          icon: <AddIcon />,
+          onClick: onAddItemClick
+        },
+        ...(isAdminMode ? [{
+          label: 'Add Item as Admin',
+          icon: <AddIcon />,
+          onClick: onAddItemAdminClick
+        }]: []),
+        ...(isSparesShown ? [{
+          label: 'Show Spare Items',
+          icon: <FilterAlt />,
+          onClick: onShowSparesClick,
+          isDisabled: isSparesDisabled
+        }]: []),
+        {
+          label: 'Clear Filters',
+          icon: <ClearIcon />,
+          onClick: onClearFiltersClick,
+          isDisabled: !filtersEnabled
+        },
+      ]}
+    />
+  )
+}
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -554,21 +609,12 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
+
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: () => {
       return {
-        sx: {
-          height: dense
-            ? '360.4px'
-            : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + header + extra
-                `50px + 110px + 78px + 44px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
-              ),
-          flexShrink: 1,
-        },
+        sx: FLEX_TABLE_CONTAINER_PROP,
+
         'data-testid': 'items-table-container',
       };
     },
@@ -646,65 +692,33 @@ export function ItemsTable(props: ItemTableProps) {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setItemsDialogType('create');
-            setIsAdminDialog(false);
-            table.setCreatingRow(true);
-          }}
-        >
-          Add Item
-        </Button>
-
-        {isAdminMode && (
-          <Button
-            startIcon={<AddIcon />}
-            sx={{ mx: 0.5 }}
-            variant="outlined"
-            onClick={() => {
-              setItemsDialogType('create');
-              setIsAdminDialog(true);
-              table.setCreatingRow(true);
-            }}
-          >
-            Add Item as Admin
-          </Button>
-        )}
-
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-        {isSparesDefinitionDefined && sparesColumnsFilters && (
-          <Button
-            sx={{ mx: 0.5 }}
-            variant="outlined"
-            disabled={isSparesFilterApplied}
-            onClick={() => {
-              onPreservedStatesChange.onColumnFiltersChange(
-                sparesColumnsFilters.cF.map((filter) => ({
-                  id: filter.id,
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  value: (filter.value as any[]).map((val) => val.value),
-                }))
-              );
-            }}
-          >
-            Show Spare Items
-          </Button>
-        )}
-      </Box>
+      <ItemsTableActionMenu
+        isAdminMode={isAdminMode}
+        isSparesShown={isSparesDefinitionDefined && !!sparesColumnsFilters}
+        isSparesDisabled={isSparesFilterApplied}
+        filtersEnabled={preservedState.columnFilters.length > 0}
+        onAddItemClick={() => {
+          setItemsDialogType('create');
+          setIsAdminDialog(false);
+          table.setCreatingRow(true);
+        }}
+        onAddItemAdminClick={() => {
+          setItemsDialogType('create');
+          setIsAdminDialog(true);
+          table.setCreatingRow(true);
+        }}
+        onShowSparesClick={() => {
+          if (!sparesColumnsFilters) { return }
+          onPreservedStatesChange.onColumnFiltersChange(
+            sparesColumnsFilters.cF.map((filter) => ({
+              id: filter.id,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              value: (filter.value as any[]).map((val) => val.value),
+            }))
+          );
+        }}
+        onClearFiltersClick={() => table.resetColumnFilters()}
+      />
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
@@ -826,7 +840,7 @@ export function ItemsTable(props: ItemTableProps) {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT }}>
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
@@ -846,6 +860,7 @@ export function ItemsTable(props: ItemTableProps) {
           />
         )}
       <MaterialReactTable table={table} />
+
       {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
@@ -858,7 +873,7 @@ export function ItemsTable(props: ItemTableProps) {
           isAdminMode={isAdminDialog}
         />
       )}
-    </div>
+    </Box>
   );
 }
 
