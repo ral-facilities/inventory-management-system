@@ -46,7 +46,7 @@ const StyledI = styled('i')(({ index }: { index: number }) => {
 });
 
 const Preloader: React.FC<PreloaderProps> = (props: PreloaderProps) => (
-  <div>
+  <div style={{ height: '100%' }}>
     {props.loading ? (
       <Box
         sx={{

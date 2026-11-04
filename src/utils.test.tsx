@@ -341,6 +341,27 @@ describe('Utility functions', () => {
         { age: 36 },
       ]);
     });
+
+    it('should sort date data based on given value to be sorted on', () => {
+      const testList = [
+        { dob: new Date('2026-01-03T12:00:00.0Z') },
+        { dob: new Date('2026-01-05T12:00:00.0Z') },
+        { dob: new Date('2026-01-02T12:00:00.0Z') },
+        { dob: new Date('2026-01-04T12:00:00.0Z') },
+      ];
+
+      const sortedList = sortDataList({
+        data: testList,
+        config: { type: 'date', selector: (val) => val.dob },
+      });
+
+      expect(sortedList).deep.equal([
+        { dob: new Date('2026-01-02T12:00:00.0Z') },
+        { dob: new Date('2026-01-03T12:00:00.0Z') },
+        { dob: new Date('2026-01-04T12:00:00.0Z') },
+        { dob: new Date('2026-01-05T12:00:00.0Z') },
+      ]);
+    });
   });
 
   it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {

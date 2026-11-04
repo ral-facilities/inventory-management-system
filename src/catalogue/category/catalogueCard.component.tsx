@@ -119,8 +119,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             row={card.row as MRT_Row<CatalogueCategory>}
             table={table}
             sx={{
-              mx: 0.5,
-              padding: 0,
+              padding: 1,
             }}
           />
         </CardActions>
