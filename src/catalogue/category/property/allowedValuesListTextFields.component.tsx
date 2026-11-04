@@ -37,9 +37,6 @@ type AllowedValueErrors =
     >
   | undefined;
 
-// The three forms that can host this component nest `allowed_values` at
-// different depths, so errors are read by walking the field path rather than
-// by branching on the shape of the errors object.
 function getByPath(obj: unknown, path: string): unknown {
   return path
     .split('.')
