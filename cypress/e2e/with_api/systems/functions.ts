@@ -70,10 +70,12 @@ export const duplicateSystem = (name: string, index: number) => {
 };
 
 export const deleteSystem = (name: string, index: number) => {
+  cy.findAllByLabelText('Row Actions').eq(index).scrollIntoView();
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Delete`).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
   cy.findByText(name).should('not.exist');
 };
 
