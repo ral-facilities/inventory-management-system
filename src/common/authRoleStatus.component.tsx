@@ -11,7 +11,6 @@ function AuthRoleStatus() {
     <Paper
       square
       sx={{
-        height: '100%',
         backgroundColor: (theme: Theme) =>
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (theme as any).colours?.warning,
@@ -20,6 +19,7 @@ function AuthRoleStatus() {
         paddingRight: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 'auto',
         py: 0.5,
       }}
     >
