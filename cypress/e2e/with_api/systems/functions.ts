@@ -138,7 +138,10 @@ export const moveToSystems = (values: {
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
   }
-  cy.go('back');
+  cy.findByRole('button', { name: 'navigate to systems home' }).click();
+  cy.findByText('Root systems').should('exist');
+  cy.findByText('Total Systems', { exact: false }).should('exist');
+  cy.get('body').type('{esc}');
 };
 
 export const moveItemToSystem = (values: {
@@ -177,6 +180,9 @@ export const moveItemToSystem = (values: {
     cy.findByText(values.checkedItemsNames[i]).should('exist');
   }
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
+  cy.findByText('Root systems').should('exist');
+  cy.findByText('Total Systems', { exact: false }).should('exist');
+  cy.get('body').type('{esc}');
 };
 
 export const addSystems = (ignoreChecks?: boolean) => {
