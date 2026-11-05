@@ -16,6 +16,8 @@ import {
 
 describe('items', () => {
   beforeEach(() => {
+    // Full HD standard desktop resolution
+    cy.viewport(1920, 1080);
     cy.dropIMSCollections([
       'catalogue_categories',
       'catalogue_items',

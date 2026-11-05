@@ -236,7 +236,7 @@ exports[`SystemItemsTable > renders correctly (without spares) 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1ntf59v-MuiTableContainer-root"
+        class="MuiTableContainer-root css-jugvw9-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
@@ -4129,7 +4129,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1ntf59v-MuiTableContainer-root"
+        class="MuiTableContainer-root css-jugvw9-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
@@ -8381,7 +8381,7 @@ exports[`SystemItemsTable > renders correctly in critical mode  1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1ntf59v-MuiTableContainer-root"
+        class="MuiTableContainer-root css-jugvw9-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
