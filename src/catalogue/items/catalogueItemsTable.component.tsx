@@ -80,6 +80,7 @@ import {
   roundUpTenth,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
+import { useCatalogueItemsImportConfig } from './catalogueItemsImportConfig';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
@@ -316,6 +317,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   });
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
+
+  const catalogueItemsImportConfig = useCatalogueItemsImportConfig();
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch manufacturer
@@ -1290,6 +1293,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             parentId={parentInfo.id}
             parentName={parentInfo.name}
             isAdminMode={isAdminMode}
+            config={catalogueItemsImportConfig}
           />
         </>
       )}

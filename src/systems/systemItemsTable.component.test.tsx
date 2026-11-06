@@ -382,6 +382,36 @@ describe('SystemItemsTable', () => {
     });
   });
 
+  it('opens import spreadsheet dialog and can close the dialog', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const importSpreadsheetButton = screen.getByRole('button', {
+      name: 'Import spreadsheet',
+    });
+
+    await user.click(importSpreadsheetButton);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the edit dialog and close it again', async () => {
     createView();
 

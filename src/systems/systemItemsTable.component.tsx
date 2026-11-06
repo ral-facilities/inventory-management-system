@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Divider,
@@ -38,8 +39,10 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
@@ -67,8 +70,8 @@ import {
   mrtTheme,
   roundUpTenth,
 } from '../utils';
+import { useItemsImportConfig } from './itemsImportConfig';
 import SystemItemsDialog from './systemItemsDialog.component';
-import { TableActionMenu } from '../common/tableActionMenu.tsx';
 
 const SystemItemsTableActionMenu = (props: {
   isAdminMode: boolean;
@@ -84,14 +87,14 @@ const SystemItemsTableActionMenu = (props: {
     selectedItems,
     onChangeSelectedItems,
     filtersEnabled,
-    onClearFiltersClick
+    onClearFiltersClick,
   } = props;
 
-  const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
-    React.useState<boolean>(false);
-  const [isDialogAdminMode, setDialogAdminMode] =
-    React.useState<boolean>(false);
+  const [openDialog, setOpenDialog] = React.useState<
+    'move' | 'moveAdmin' | 'import' | null
+  >(null);
 
+  const itemsImportConfig = useItemsImportConfig();
   return (
     <>
       <TableActionMenu
@@ -103,41 +106,62 @@ const SystemItemsTableActionMenu = (props: {
             onClick: onClearFiltersClick,
             isDisabled: !filtersEnabled,
           },
-          ...(system ? [
-            {
-              label: 'Move to',
-              icon: <DriveFileMoveOutlinedIcon />,
-              onClick: () => {
-                setDialogAdminMode(false);
-                setMoveItemsDialogOpen(true);
-              },
-              isDisabled: selectedItems.length === 0,
-            },
-            ...(isAdminMode ? [{
-              label: 'Move to as Admin',
-              icon: <DriveFileMoveOutlinedIcon />,
-              onClick: () => {
-                setDialogAdminMode(true);
-                setMoveItemsDialogOpen(true);
-              },
-              isDisabled: selectedItems.length === 0,
-            }]: [])
-          ]: [])
+          ...(system
+            ? [
+                {
+                  label: 'Import spreadsheet',
+                  icon: <UploadIcon />,
+                  onClick: () => {
+                    setOpenDialog('import');
+                  },
+                },
+                {
+                  label: 'Move to',
+                  icon: <DriveFileMoveOutlinedIcon />,
+                  onClick: () => {
+                    setOpenDialog('move');
+                  },
+                  isDisabled: selectedItems.length === 0,
+                },
+                ...(isAdminMode
+                  ? [
+                      {
+                        label: 'Move to as Admin',
+                        icon: <DriveFileMoveOutlinedIcon />,
+                        onClick: () => {
+                          setOpenDialog('moveAdmin');
+                        },
+                        isDisabled: selectedItems.length === 0,
+                      },
+                    ]
+                  : []),
+              ]
+            : []),
         ]}
       />
       {system && (
-        <SystemItemsDialog
-          open={moveItemsDialogOpen}
-          onClose={() => setMoveItemsDialogOpen(false)}
-          selectedItems={selectedItems}
-          onChangeSelectedItems={onChangeSelectedItems}
-          parentSystemId={system.id}
-          isAdminMode={isDialogAdminMode}
-        />
+        <>
+          <SystemItemsDialog
+            open={openDialog === 'move' || openDialog === 'moveAdmin'}
+            onClose={() => setOpenDialog(null)}
+            selectedItems={selectedItems}
+            onChangeSelectedItems={onChangeSelectedItems}
+            parentSystemId={system.id}
+            isAdminMode={openDialog === 'moveAdmin'}
+          />
+          <ImportTemplateDialog
+            open={openDialog === 'import'}
+            onClose={() => setOpenDialog(null)}
+            parentId={system.id}
+            parentName={system.name}
+            isAdminMode={isAdminMode}
+            config={itemsImportConfig}
+          />
+        </>
       )}
     </>
   );
-}
+};
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
