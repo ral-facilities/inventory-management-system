@@ -5291,9 +5291,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-backend@npm:^4.0.0":
-  version: 4.0.2
-  resolution: "i18next-http-backend@npm:4.0.2"
-  checksum: 10c0/23515d90f57d58505d68b7847a13c01ee1fe7668931ee4ca82499f7ea36f2740aa58125f0050ce1026b18ae16826f6c10ffb1b9e5bed358aa305dab820dbf49f
+  version: 4.0.9
+  resolution: "i18next-http-backend@npm:4.0.9"
+  checksum: 10c0/5092b498e7d682a473ef60b38a6bfb69843d7c570be3b213696763b84b7c6a85036d5eff3685fb54652fb8b4ca249099d63b6461a9b99573ba5f9ff4496b5566
   languageName: node
   linkType: hard
 
