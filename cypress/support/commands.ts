@@ -83,7 +83,8 @@ Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
       containerName = 'ims-api-mongodb';
       databaseName = 'ims';
     }
-    cy.exec(
+    cy.task(
+      'exec',
       `docker exec -i $(docker ps | grep ${containerName} | awk '{ print $1 }') mongosh ${databaseName} --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
     );
   });
