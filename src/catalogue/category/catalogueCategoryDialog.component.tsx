@@ -174,12 +174,7 @@ const formControl = createFormControlWithRootErrorClearing<
   customCallback: ({ name, errors }) => {
     if (errors && !!getProperty(errors, name)) {
       formControl.clearErrors(
-        name as
-          | FieldPath<z.input<typeof CatalogueCategorySchema>>
-          | FieldPath<z.input<typeof CatalogueCategorySchema>>[]
-          | readonly FieldPath<z.input<typeof CatalogueCategorySchema>>[]
-          | `root.${string}`
-          | 'root'
+        name as FieldPath<z.input<typeof CatalogueCategorySchema>>
       );
     }
   },

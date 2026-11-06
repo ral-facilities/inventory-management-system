@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
@@ -8,6 +9,13 @@ export default defineConfig({
     retries: {
       runMode: 3,
       openMode: 1,
+    },
+    setupNodeEvents(on) {
+      on('task', {
+        exec(command: string) {
+          return execSync(command, { encoding: 'utf-8' });
+        },
+      });
     },
   },
 });
