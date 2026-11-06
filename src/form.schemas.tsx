@@ -1,4 +1,4 @@
-import { z, ZodDiscriminatedUnionOption } from 'zod';
+import { z } from 'zod';
 import {
   CatalogueCategoryPropertyType,
   SystemImportanceType,
@@ -63,24 +63,17 @@ const OptionalOrNullableStringSchema = (props: PostPatchZodSchemaProps) =>
 
 const MandatoryStringSchema = (props: BaseZodSchemaProps) =>
   withOptionalTrim(
-    z.string({
-      required_error: props.errorMessage,
-    }),
+    z.string({ error: props.errorMessage }),
     props.disableTrim
-  ).min(1, { message: props.errorMessage });
+  ).min(1, { error: props.errorMessage });
 
 const MandatoryBooleanSchema = (props: BaseZodSchemaProps) =>
   z
     .string()
-    .min(1, { message: props.errorMessage })
+    .min(1, { error: props.errorMessage })
     .toLowerCase()
     .transform((val) => (!val ? null : JSON.parse(val)))
-    .pipe(
-      z.boolean({
-        required_error: props.errorMessage,
-        invalid_type_error: props.errorMessage,
-      })
-    );
+    .pipe(z.boolean({ error: props.errorMessage }));
 
 const OptionalBooleanSchema = z
   .string()
@@ -88,146 +81,83 @@ const OptionalBooleanSchema = z
   .transform((val) => (!val ? undefined : JSON.parse(val)))
   .pipe(z.boolean().optional());
 
+const NumberSchema = (props: NumberZodSchemaProps) => {
+  let schema = z.coerce.number<string>({
+    error: props.invalidTypeErrorMessage,
+  });
+  if (props.min !== undefined)
+    schema = schema.min(props.min, {
+      error: `Number must be greater than or equal to ${props.min}`,
+    });
+  if (props.max !== undefined)
+    schema = schema.max(props.max, {
+      error: `Number must be less than or equal to ${props.max}`,
+    });
+  if (props.isInteger)
+    schema = schema.int({ error: 'Please enter a valid integer.' });
+  return schema;
+};
+
 const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
     .trim()
-    .min(1, {
-      message: props.requiredErrorMessage,
-    })
-    .pipe(
-      z.coerce
-        .number({
-          invalid_type_error: props.invalidTypeErrorMessage,
-          required_error: props.requiredErrorMessage,
-        })
-        .min(props.min ?? -Infinity, {
-          message: `Number must be greater than or equal to ${props.min}`,
-        })
-        .max(props.max ?? Infinity, {
-          message: `Number must be less than or equal to ${props.max}`,
-        })
-        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
-          message: 'Please enter a valid integer.',
-        })
-    );
+    .min(1, { error: props.requiredErrorMessage })
+    .pipe(NumberSchema(props));
 
 const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
     .trim()
     .transform((val) => (!val ? undefined : val))
-    .pipe(
-      z.coerce
-        .number({
-          invalid_type_error: props.invalidTypeErrorMessage,
-        })
-        .min(props.min ?? -Infinity, {
-          message: `Number must be greater than or equal to ${props.min}`,
-        })
-        .max(props.max ?? Infinity, {
-          message: `Number must be less than or equal to ${props.max}`,
-        })
-        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
-          message: 'Please enter a valid integer.',
-        })
-        .optional()
-    );
+    .pipe(NumberSchema(props).optional());
 
 const NullableNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
     .transform((val) => (!val ? null : val))
-    .pipe(
-      z.coerce
-        .number({
-          invalid_type_error: props.invalidTypeErrorMessage,
-        })
-        .min(props.min ?? -Infinity, {
-          message: `Number must be greater than or equal to ${props.min}`,
-        })
-        .max(props.max ?? Infinity, {
-          message: `Number must be less than or equal to ${props.max}`,
-        })
-        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
-          message: 'Please enter a valid integer.',
-        })
-        .nullable()
-    );
-
-const NullableDateSchema = (props: DateZodSchemaProps) =>
-  z
-    .string()
-    .transform((val) => (!val ? null : val))
-    .pipe(
-      z.coerce
-        .date({
-          errorMap: (issue, { defaultError }) => ({
-            message:
-              issue.code === 'invalid_date'
-                ? props.dateFormatErrorMessage || defaultError
-                : defaultError,
-          }),
-        })
-        .max(props.maxDate, {
-          message: `Date cannot be later than ${props.maxDate.toLocaleDateString()}.`,
-        })
-        .min(props.minDate, {
-          message: `Date cannot be earlier than ${props.minDate.toLocaleDateString()}.`,
-        })
-        .nullable()
-    );
-
-const OptionalDateSchema = (props: DateZodSchemaProps) =>
-  z
-    .string()
-    .transform((val) => (!val ? undefined : val))
-    .pipe(
-      z.coerce
-        .date({
-          errorMap: (issue, { defaultError }) => ({
-            message:
-              issue.code === 'invalid_date'
-                ? props.dateFormatErrorMessage || defaultError
-                : defaultError,
-          }),
-        })
-        .max(props.maxDate, {
-          message: `Date cannot be later than ${props.maxDate.toLocaleDateString()}.`,
-        })
-        .min(props.minDate, {
-          message: `Date cannot be earlier than ${props.minDate.toLocaleDateString()}.`,
-        })
-        .optional()
-    );
-
-const OptionalOrNullableDateSchema = (props: PostPatchZodDateSchemaProps) =>
-  props.requestType === 'post'
-    ? OptionalDateSchema({ ...props })
-    : NullableDateSchema({ ...props });
+    .pipe(NumberSchema(props).nullable());
 
 const OptionalOrNullableNumberSchema = (
   props: PostPatchZodNumberSchemaProps
 ) =>
   props.requestType === 'post'
-    ? OptionalNumberSchema({
-        ...props,
-      })
-    : NullableNumberSchema({
-        ...props,
-      });
+    ? OptionalNumberSchema(props)
+    : NullableNumberSchema(props);
 
-const OptionalUrlSchema = (props: BaseZodSchemaProps) =>
-  z.string().trim().url({ message: props.errorMessage }).optional();
+const DateSchema = (props: DateZodSchemaProps) =>
+  z.coerce
+    .date<string>({ error: props.dateFormatErrorMessage })
+    .max(props.maxDate, {
+      error: `Date cannot be later than ${props.maxDate.toLocaleDateString()}.`,
+    })
+    .min(props.minDate, {
+      error: `Date cannot be earlier than ${props.minDate.toLocaleDateString()}.`,
+    });
 
-const OptionalOrNullableURLSchema = (props: PostPatchZodSchemaProps) =>
+const NullableDateSchema = (props: DateZodSchemaProps) =>
+  z
+    .string()
+    .transform((val) => (!val ? null : val))
+    .pipe(DateSchema(props).nullable());
+
+const OptionalDateSchema = (props: DateZodSchemaProps) =>
+  z
+    .string()
+    .transform((val) => (!val ? undefined : val))
+    .pipe(DateSchema(props).optional());
+
+const OptionalOrNullableDateSchema = (props: PostPatchZodDateSchemaProps) =>
   props.requestType === 'post'
-    ? OptionalUrlSchema({ errorMessage: props.errorMessage }).or(
-        z.literal('').transform(() => undefined)
-      )
-    : OptionalUrlSchema({ errorMessage: props.errorMessage })
-        .or(z.literal('').transform(() => null))
-        .nullable();
+    ? OptionalDateSchema(props)
+    : NullableDateSchema(props);
+
+const OptionalOrNullableURLSchema = (props: PostPatchZodSchemaProps) => {
+  const urlSchema = z.url({ error: props.errorMessage });
+  return props.requestType === 'post'
+    ? OptionalStringSchema().pipe(urlSchema.optional())
+    : NullableStringSchema().pipe(urlSchema.nullable());
+};
 
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
@@ -277,7 +207,7 @@ export const SystemsSchema = (requestType: RequestType) =>
     description: OptionalOrNullableStringSchema({ requestType }),
     location: OptionalOrNullableStringSchema({ requestType }),
     owner: OptionalOrNullableStringSchema({ requestType }),
-    importance: z.nativeEnum(SystemImportanceType),
+    importance: z.enum(SystemImportanceType),
     type_id: MandatoryStringSchema({
       errorMessage: 'Please select a type.',
     }),
@@ -287,30 +217,31 @@ export const SystemsPostSchema = SystemsSchema('post');
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleAllowedValuesErrors = (data: any, ctx: z.RefinementCtx) => {
-  const issues: z.ZodIssue[] = [];
+const handleAllowedValuesErrors = (
+  data: {
+    valueType: 'string' | 'number';
+    values: z.output<typeof allowedValuesObject>[];
+  },
+  ctx: z.RefinementCtx
+) => {
+  const numberSchema = MandatoryNumberSchema({
+    requiredErrorMessage: 'Please enter a value.',
+    invalidTypeErrorMessage: 'Please enter a valid number.',
+  });
 
-  // Validate each value in the data array using the appropriate schema
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data.values.forEach((item: any, index: number) => {
-    const numberSchema = MandatoryNumberSchema({
-      requiredErrorMessage: 'Please enter a value.',
-      invalidTypeErrorMessage: 'Please enter a valid number.',
-    });
+  const stringSchema = MandatoryStringSchema({
+    errorMessage: 'Please enter a value.',
+  });
 
-    const stringSchema = MandatoryStringSchema({
-      errorMessage: 'Please enter a value.',
-    });
-
+  data.values.forEach((item, index) => {
     const result =
       data.valueType === 'number'
         ? numberSchema.safeParse(item.value)
         : stringSchema.safeParse(item.value);
     if (!result.success) {
-      issues.push({
+      ctx.addIssue({
         path: ['values', index, 'value'],
-        message: result.error.errors[0]?.message || 'Invalid value.',
+        message: result.error.issues[0]?.message || 'Invalid value.',
         code: 'custom',
       });
     }
@@ -318,8 +249,7 @@ const handleAllowedValuesErrors = (data: any, ctx: z.RefinementCtx) => {
 
   // Check for duplicates
   const duplicateIds = checkForDuplicates({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: data.values.map((val: { av_placement_id: string; value: any }) => ({
+    data: data.values.map((val) => ({
       ...val,
       value: data.valueType === 'number' ? Number(val.value) : val.value,
     })),
@@ -327,63 +257,44 @@ const handleAllowedValuesErrors = (data: any, ctx: z.RefinementCtx) => {
     field: 'value',
   });
 
-  if (duplicateIds.length > 0) {
-    duplicateIds.forEach((duplicateId) => {
-      const itemIndex = data.values.findIndex(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (item: any) => item.av_placement_id === duplicateId
-      );
+  duplicateIds.forEach((duplicateId) => {
+    const itemIndex = data.values.findIndex(
+      (item) => item.av_placement_id === duplicateId
+    );
 
-      issues.push({
-        path: ['values', itemIndex, 'value'],
-        message: 'Duplicate value.',
-        code: 'custom',
-      });
+    ctx.addIssue({
+      path: ['values', itemIndex, 'value'],
+      message: 'Duplicate value.',
+      code: 'custom',
     });
-  }
-
-  // Add all queued issues in one loop
-  issues.forEach((issue) => {
-    ctx.addIssue(issue);
   });
-
-  return data;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const checkForDuplicatePropertyNames = (data: any[], ctx: z.RefinementCtx) => {
+const checkForDuplicatePropertyNames = (
+  data: z.output<typeof CatalogueCategoryPostPropertySchema>[],
+  ctx: z.RefinementCtx
+) => {
   const duplicateIds = checkForDuplicates({
     data,
     idName: 'cip_placement_id',
     field: 'name',
   });
 
-  if (duplicateIds.length > 0) {
-    const duplicateIssues: z.ZodIssue[] = duplicateIds.map((duplicateId) => {
-      const itemIndex = data.findIndex(
-        (item) => item.cip_placement_id === duplicateId
-      );
+  duplicateIds.forEach((duplicateId) => {
+    const itemIndex = data.findIndex(
+      (item) => item.cip_placement_id === duplicateId
+    );
 
-      return {
-        path: [itemIndex, 'name'],
-        message:
-          'Duplicate property name. Please change the name or remove the property.',
-        code: 'custom',
-      };
+    ctx.addIssue({
+      path: [itemIndex, 'name'],
+      message:
+        'Duplicate property name. Please change the name or remove the property.',
+      code: 'custom',
     });
-
-    duplicateIssues.forEach((issue) => {
-      ctx.addIssue(issue);
-    });
-  }
-
-  return data;
+  });
 };
 
-const propertiesTypeList: [
-  ZodDiscriminatedUnionOption<'valueType'>,
-  ...ZodDiscriminatedUnionOption<'valueType'>[],
-] = [
+const propertiesTypeList = [
   z.object({
     valueType: z.literal('number_true'),
     value: z.object({
@@ -453,7 +364,7 @@ const propertiesTypeList: [
       av_placement_id: z.string(),
     }),
   }),
-];
+] as const;
 
 const allowedValuesObject = z.object({
   value: z.any().transform((val) => {
@@ -472,9 +383,9 @@ const AllowedValuesListSchema = z.object({
       valueType: z.enum(['string', 'number']),
       values: z
         .array(allowedValuesObject)
-        .min(1, { message: 'Please create a valid list item.' }),
+        .min(1, { error: 'Please create a valid list item.' }),
     })
-    .superRefine((data, ctx) => handleAllowedValuesErrors(data, ctx)),
+    .superRefine(handleAllowedValuesErrors),
 });
 
 export const CatalogueCategoryPropertyPatchSchema = z.object({
@@ -482,21 +393,21 @@ export const CatalogueCategoryPropertyPatchSchema = z.object({
     errorMessage: 'Please enter a property name.',
   }),
   allowed_values: AllowedValuesListSchema.nullable().optional(),
-  unit_id: OptionalOrNullableStringSchema({ requestType: 'patch' }),
+  unit_id: NullableStringSchema(),
 });
 
 export const CatalogueCategoryPostPropertySchema =
   CatalogueCategoryPropertyPatchSchema.extend({
     cip_placement_id: z.string(),
-    type: z.nativeEnum(CatalogueCategoryPropertyType),
-    unit_id: OptionalOrNullableStringSchema({ requestType: 'post' }),
+    type: z.enum(CatalogueCategoryPropertyType),
+    unit_id: OptionalStringSchema(),
     mandatory: MandatoryBooleanSchema({}),
   });
 
 export const CatalogueCategoryPropertyPostSchema =
   CatalogueCategoryPropertyPatchSchema.extend({
-    type: z.nativeEnum(CatalogueCategoryPropertyType),
-    unit_id: OptionalOrNullableStringSchema({ requestType: 'post' }),
+    type: z.enum(CatalogueCategoryPropertyType),
+    unit_id: OptionalStringSchema(),
     mandatory: MandatoryBooleanSchema({}),
     default_value: z.discriminatedUnion('valueType', propertiesTypeList),
   });
@@ -506,7 +417,7 @@ export const CatalogueCategorySchema = z.object({
   is_leaf: MandatoryBooleanSchema({}),
   properties: z
     .array(CatalogueCategoryPostPropertySchema)
-    .superRefine((data, ctx) => checkForDuplicatePropertyNames(data, ctx))
+    .superRefine(checkForDuplicatePropertyNames)
     .optional(),
 });
 
@@ -597,14 +508,12 @@ export const ItemDetailsStepSchema = (
         }),
       })
       .superRefine((data, ctx) => {
-        const issues: z.ZodIssue[] = [];
-
         if (
           (typeof data.starting_value === 'number' ||
             typeof data.quantity === 'number') &&
           !data.serial_number?.includes('%s')
         ) {
-          issues.push({
+          ctx.addIssue({
             path: ['serial_number'],
             message:
               'Please use %s to specify the location you want to append the number to serial number.',
@@ -617,7 +526,7 @@ export const ItemDetailsStepSchema = (
           typeof data.quantity !== 'number' &&
           data.serial_number?.includes('%s')
         ) {
-          issues.push({
+          ctx.addIssue({
             path: ['serial_number'],
             message: 'Please remove %s or fill in the advanced options fields.',
             code: 'custom',
@@ -628,7 +537,7 @@ export const ItemDetailsStepSchema = (
           typeof data.starting_value !== 'number' &&
           typeof data.quantity === 'number'
         ) {
-          issues.push({
+          ctx.addIssue({
             path: ['starting_value'],
             message: 'Please enter a starting value.',
             code: 'custom',
@@ -639,18 +548,12 @@ export const ItemDetailsStepSchema = (
           typeof data.starting_value === 'number' &&
           typeof data.quantity !== 'number'
         ) {
-          issues.push({
+          ctx.addIssue({
             path: ['quantity'],
             message: 'Please enter a quantity value.',
             code: 'custom',
           });
         }
-
-        // Add all queued issues in one loop
-        issues.forEach((issue) => {
-          ctx.addIssue(issue);
-        });
-        return data;
       }),
     delivered_date: OptionalOrNullableDateSchema({
       requestType: requestType,
