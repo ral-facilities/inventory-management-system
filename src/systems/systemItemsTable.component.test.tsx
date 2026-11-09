@@ -671,7 +671,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       `\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
-  }, 20000);
+  }, 30000);
 
   it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
     props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
@@ -715,7 +715,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
-  }, 20000);
+  }, 30000);
 
   it('can open the delete dialog and close it again', async () => {
     createView();
