@@ -75,6 +75,7 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import HistoryTable from './history/historyTable.component';
 import ItemSystemHistory from './history/itemSystemHistoryTable.component';
 
 export const queryClient = new QueryClient({
@@ -257,6 +258,11 @@ const routeObject: RouteObject[] = [
               {
                 path: paths.manufacturer,
                 Component: ManufacturerLandingPage,
+                loader: manufacturerLayoutLoader(queryClient),
+              },
+              {
+                path: paths.manufacturerHistory,
+                Component: HistoryTable,
                 loader: manufacturerLayoutLoader(queryClient),
               },
               {

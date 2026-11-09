@@ -90,4 +90,18 @@ describe('Manufacturer Landing page', () => {
     // Clean up the mock
     spy.mockRestore();
   });
+
+  it('navigates to history page', async () => {
+    createView('/manufacturers/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    const historyButton = screen.getByRole('link', {
+      name: 'History',
+    });
+
+    expect(historyButton).toHaveAttribute('href', '/manufacturers/1/history');
+  });
 });
