@@ -37,6 +37,7 @@ import {
 import { useGetHistoryEntries } from '../api/history.tsx';
 import { HistoryEntry } from '../api/api.types.tsx';
 import { useLocation } from 'react-router';
+import { isValid, parseISO } from 'date-fns';
 
 const getOperationTypeName = (operation: string) => {
   switch (operation) {
@@ -68,7 +69,7 @@ const transformUpdatedFieldValue = (value: unknown): string => {
       .map(([key, val]) => `${key}: ${transformUpdatedFieldValue(val)}`)
       .join(', ');
   }
-  if (typeof value === 'string' && !isNaN(Date.parse(value))) {
+  if (typeof value === 'string' && isValid(parseISO(value))) {
     return formatDateTimeStrings(value, true);
   }
   return String(value);
