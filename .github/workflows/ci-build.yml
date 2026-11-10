@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.21.0
+          node-version: 24.22.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -62,7 +62,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.21.0
+          node-version: 24.22.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -81,7 +81,9 @@ jobs:
 
   e2e-tests-api:
     name: End-to-End (with api) Tests
-    runs-on: ubuntu-latest
+    # TODO: Remove this workaround once an upstream MongoDB fix is available. Ubuntu 22.04 is used temporarily as
+    # MongoDB 8.0 fails to start on newer Linux kernels, causing E2E test failures.
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone IMS api repo
@@ -198,7 +200,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.21.0
+          node-version: 24.22.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -247,7 +249,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.21.0
+          node-version: 24.22.1
           cache: 'yarn'
 
       - name: Install dependencies
