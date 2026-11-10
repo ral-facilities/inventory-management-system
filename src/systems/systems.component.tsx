@@ -418,10 +418,13 @@ function Systems() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('xl'));
 
   const subsystemsPanelParam = searchParams.get(SUBSYSTEMS_PANEL_URL_PARAM);
+  const isRoot = systemId === null;
   const subsystemsCollapsed =
     subsystemsPanelParam !== null
       ? subsystemsPanelParam === 'hide'
-      : !isLoading && subsystemsData?.length === 0;
+      : isRoot
+        ? false
+        : !isLoading && subsystemsData?.length === 0;
 
   const onChangeSubsystemsCollapsed = React.useCallback(
     (collapsed: boolean) =>
@@ -894,15 +897,19 @@ function Systems() {
               <MRT_ToggleFullScreenButton table={table} />
             </Box>
           </Box>
-          {selectedSystems.length > 0 && (
-            <Box sx={{ mx: 1 }}>
-              <SystemsTableButtons
-                selectedSystems={selectedSystems}
-                onChangeSelectedSystems={table.setRowSelection}
-                parentSystemId={systemId}
-              />
-            </Box>
-          )}
+          <Box
+            aria-hidden={selectedSystems.length === 0}
+            sx={{
+              mx: 1,
+              visibility: selectedSystems.length > 0 ? 'visible' : 'hidden',
+            }}
+          >
+            <SystemsTableButtons
+              selectedSystems={selectedSystems}
+              onChangeSelectedSystems={table.setRowSelection}
+              parentSystemId={systemId}
+            />
+          </Box>
         </>
       );
     },
