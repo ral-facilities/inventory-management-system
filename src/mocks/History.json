@@ -99,5 +99,16 @@
     "updated_fields": {
       "url": "http://test.com"
     }
+  },
+  {
+    "id": "17",
+    "entity_id": "5",
+    "operation_type": "update",
+    "entity_modified_time": "2024-01-04T12:00:00.000+00:00",
+    "entity_modified_comment": "Telephone number has changed",
+    "entity_modified_by": "User A",
+    "updated_fields": {
+      "telephone": "93606"
+    }
   }
 ]

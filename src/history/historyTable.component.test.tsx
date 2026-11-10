@@ -73,4 +73,13 @@ describe('History Table', () => {
     expect(screen.getByText('url')).toBeInTheDocument();
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
   });
+
+  it('correctly renders numeric values not as dates', async () => {
+    createView('/manufacturers/5/history');
+
+    await waitFor(() => {
+      expect(screen.getByText('93606')).toBeInTheDocument();
+    });
+    expect(screen.getByText('telephone')).toBeInTheDocument();
+  });
 });
