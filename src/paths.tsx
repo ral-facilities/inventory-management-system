@@ -18,6 +18,7 @@ export const paths = {
   systems: '/systems',
   system: '/systems/:system_id',
   systemItemsHistory: '/systems/:system_id/items-history',
+  systemHistory: '/systems/:system_id/history',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
   manufacturerHistory: '/manufacturers/:manufacturer_id/history',
