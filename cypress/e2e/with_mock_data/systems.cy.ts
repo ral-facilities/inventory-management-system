@@ -879,7 +879,7 @@ describe('Systems', () => {
     cy.findByRole('menuitem', { name: 'View History' }).should('exist');
     cy.findByRole('menuitem', { name: 'View History' }).click();
 
-    cy.url().should('include', '/systems/657f8c3b2a1b4e5d8f9b3c4e5/history');
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e3/history');
 
     cy.findByText('Change system description').should('be.visible');
   });
