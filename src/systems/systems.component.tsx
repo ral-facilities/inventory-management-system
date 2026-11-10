@@ -7,7 +7,6 @@ import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Backdrop,
@@ -19,7 +18,6 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
-  Menu,
   MenuItem,
   Link as MuiLink,
   Tooltip,
@@ -60,6 +58,7 @@ import {
   usePreservedTableState,
 } from '../common/preservedTableState.component';
 import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
@@ -75,6 +74,7 @@ import {
   generateUniqueName,
   getCombinedFlagged,
   getInitialColumnFilterFnState,
+  getSciGatewayPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -146,81 +146,136 @@ const AddSystemButton = (props: {
   );
 };
 
-const SystemsActionMenu = (props: {
+const SystemsTableButtons = (props: {
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
 }) => {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
-    null
-  );
   const [dialogType, setDialogType] = React.useState<
     'moveTo' | 'copyTo' | null
   >(null);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  const handleDialogOpen = (type: 'moveTo' | 'copyTo') => {
-    setDialogType(type);
-    handleMenuClose();
-  };
-
-  const handleDialogClose = () => {
-    setDialogType(null);
-  };
-
-  const ariaLabelText = props.parentSystemId
-    ? 'Subsystems more options'
-    : 'Systems more options';
-
   return (
-    <>
-      <Tooltip title={ariaLabelText}>
-        <span>
-          <IconButton aria-label={ariaLabelText} onClick={handleMenuOpen}>
-            <MoreHorizIcon />
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Menu
-        anchorEl={menuAnchorEl}
-        open={Boolean(menuAnchorEl)}
-        onClose={handleMenuClose}
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 1,
+          minWidth: 0,
+          maxWidth: '100%',
+          '& .MuiButton-root': { whiteSpace: 'nowrap', flexShrink: 0 },
+        }}
       >
-        <MenuItem onClick={() => handleDialogOpen('moveTo')}>
-          <ListItemIcon>
-            <DriveFileMoveOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Move to</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleDialogOpen('copyTo')}>
-          <ListItemIcon>
-            <FolderCopyOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Copy to</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => props.onChangeSelectedSystems({})}>
-          <ListItemIcon>
-            <ClearIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{props.selectedSystems.length} selected</ListItemText>
-        </MenuItem>
-      </Menu>
+        <Button
+          variant="outlined"
+          startIcon={<DriveFileMoveOutlinedIcon fontSize="small" />}
+          onClick={() => setDialogType('moveTo')}
+        >
+          Move to
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<FolderCopyOutlinedIcon fontSize="small" />}
+          onClick={() => setDialogType('copyTo')}
+        >
+          Copy to
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<ClearIcon fontSize="small" />}
+          onClick={() => props.onChangeSelectedSystems({})}
+        >
+          {props.selectedSystems.length} selected
+        </Button>
+      </Box>
 
       {dialogType && (
         <SystemDirectoryDialog
           open={Boolean(dialogType)}
-          onClose={handleDialogClose}
+          onClose={() => setDialogType(null)}
           selectedSystems={props.selectedSystems}
           onChangeSelectedSystems={props.onChangeSelectedSystems}
           parentSystemId={props.parentSystemId}
           type={dialogType}
+        />
+      )}
+    </Box>
+  );
+};
+
+const SystemsTableActionMenu = (props: {
+  systemId: string | null;
+  selectedSystems: System[];
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
+  filtersEnabled: boolean;
+  onClearFiltersClick: () => void;
+}) => {
+  const {
+    systemId,
+    selectedSystems,
+    onChangeSelectedSystems,
+    filtersEnabled,
+    onClearFiltersClick,
+  } = props;
+
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+  const [directoryDialogType, setDirectoryDialogType] = React.useState<
+    'moveTo' | 'copyTo' | null
+  >(null);
+
+  return (
+    <>
+      <TableActionMenu
+        ariaLabelPrefix={systemId === null ? 'systems' : 'subsystems'}
+        items={[
+          {
+            label: 'Clear Filters',
+            icon: <ClearIcon />,
+            onClick: onClearFiltersClick,
+            isDisabled: !filtersEnabled,
+          },
+          {
+            label: systemId === null ? 'Add System' : 'Add Subsystem',
+            icon: <AddIcon />,
+            onClick: () => setAddSystemDialogOpen(true),
+          },
+          ...(selectedSystems.length > 0
+            ? [
+                {
+                  label: 'Move to',
+                  icon: <DriveFileMoveOutlinedIcon />,
+                  onClick: () => setDirectoryDialogType('moveTo'),
+                },
+                {
+                  label: 'Copy to',
+                  icon: <FolderCopyOutlinedIcon />,
+                  onClick: () => setDirectoryDialogType('copyTo'),
+                },
+                {
+                  label: `${selectedSystems.length} selected`,
+                  icon: <ClearIcon />,
+                  onClick: () => onChangeSelectedSystems({}),
+                },
+              ]
+            : []),
+        ]}
+      />
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={systemId}
+        requestType="post"
+      />
+      {directoryDialogType && (
+        <SystemDirectoryDialog
+          open={Boolean(directoryDialogType)}
+          onClose={() => setDirectoryDialogType(null)}
+          selectedSystems={selectedSystems}
+          onChangeSelectedSystems={onChangeSelectedSystems}
+          parentSystemId={systemId}
+          type={directoryDialogType}
         />
       )}
     </>
@@ -822,13 +877,6 @@ function Systems() {
               <MRT_GlobalFilterTextField table={table} />
             </Box>
             <Box sx={{ marginLeft: 'auto' }}>
-              {selectedSystems.length > 0 && (
-                <SystemsActionMenu
-                  selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={table.setRowSelection}
-                  parentSystemId={systemId}
-                />
-              )}
               <Tooltip title="Clear Filters">
                 <span>
                   <IconButton
@@ -846,24 +894,28 @@ function Systems() {
               <MRT_ToggleFullScreenButton table={table} />
             </Box>
           </Box>
+          {selectedSystems.length > 0 && (
+            <Box sx={{ mx: 1 }}>
+              <SystemsTableButtons
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={table.setRowSelection}
+                parentSystemId={systemId}
+              />
+            </Box>
+          )}
         </>
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-        <AddSystemButton systemId={systemId} />
-      </Box>
+      <SystemsTableActionMenu
+        systemId={systemId}
+        selectedSystems={table
+          .getSelectedRowModel()
+          .rows.map((row) => row.original)}
+        onChangeSelectedSystems={table.setRowSelection}
+        filtersEnabled={preservedState.columnFilters.length > 0}
+        onClearFiltersClick={() => table.resetColumnFilters()}
+      />
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
@@ -975,7 +1027,10 @@ function Systems() {
           : {
               flex: '0 0 auto',
               minWidth: 0,
-              minHeight: MINIMUM_TABLE_HEIGHT,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
               padding: 1,
               paddingRight: 2,
               paddingBottom: 0,
@@ -991,6 +1046,8 @@ function Systems() {
       sx={{
         flex: '1 1 auto',
         minWidth: 0,
+        minHeight: 0,
+        overflow: 'auto',
         textAlign: 'left',
         padding: 1,
       }}
@@ -1006,15 +1063,20 @@ function Systems() {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'stretch',
+          // Fill the remaining visible height so the table footer stays on screen
+          flex: '1 1 0',
           minHeight: MINIMUM_TABLE_HEIGHT,
+          overflow: 'hidden',
 
           ...(!subsystemsCollapsed && subsystemsOverlaid
             ? {
                 position: 'fixed',
-                zIndex: theme.zIndex.drawer - 2,
+                zIndex: subsystemsTable.getState().isFullScreen
+                  ? theme.zIndex.drawer
+                  : theme.zIndex.drawer - 2,
                 // Main app bar
                 top: '64px',
-                height: 'calc(100vh - 64px)',
+                height: getSciGatewayPageHeightCalc(),
               }
             : { position: 'relative' }),
         })}

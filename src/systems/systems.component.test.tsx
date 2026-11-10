@@ -313,7 +313,7 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Subsystems more options' })
+        screen.getByRole('button', { name: '1 selected' })
       ).toBeInTheDocument();
     });
 
@@ -321,7 +321,7 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByRole('button', { name: 'Subsystems more options' })
+        screen.queryByRole('button', { name: '1 selected' })
       ).not.toBeInTheDocument();
     });
   });
@@ -346,29 +346,21 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
+    expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    expect(
-      screen.getByRole('menuitem', { name: 'Copy to' })
-    ).toBeInTheDocument();
-
-    await user.click(
-      await screen.findByRole('menuitem', { name: '2 selected' })
-    );
+    await user.click(await screen.findByRole('button', { name: '2 selected' }));
 
     await waitFor(() => {
       expect(
-        screen.queryByRole('menuitem', { name: 'Move to' })
+        screen.queryByRole('button', { name: 'Move to' })
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByRole('menuitem', { name: 'Copy to' })
+      screen.queryByRole('button', { name: 'Copy to' })
     ).not.toBeInTheDocument();
   });
 
@@ -388,15 +380,11 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
-
-    await user.click(screen.getByRole('menuitem', { name: 'Move to' }));
+    await user.click(screen.getByRole('button', { name: 'Move to' }));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -425,15 +413,11 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
-
-    await user.click(screen.getByRole('menuitem', { name: 'Copy to' }));
+    await user.click(screen.getByRole('button', { name: 'Copy to' }));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

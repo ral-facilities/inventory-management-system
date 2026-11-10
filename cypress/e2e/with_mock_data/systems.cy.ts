@@ -918,8 +918,7 @@ describe('Systems', () => {
     cy.visit('/systems');
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(1).click();
 
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
       .should('exist')
@@ -939,8 +938,7 @@ describe('Systems', () => {
     cy.visit('/systems');
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Move to' }).click();
+    cy.findByRole('button', { name: 'Move to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -979,8 +977,7 @@ describe('Systems', () => {
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
 
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
