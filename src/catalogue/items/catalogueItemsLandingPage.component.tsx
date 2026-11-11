@@ -1,5 +1,6 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import HistoryIcon from '@mui/icons-material/History';
 import NotesIcon from '@mui/icons-material/Notes';
 import AddIcon from '@mui/icons-material/Add';
 import {
@@ -14,7 +15,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
@@ -69,7 +70,8 @@ const AddItemActions = (props: {
   catalogueCategory: CatalogueCategory;
 }) => {
   const { catalogueItem, catalogueCategory } = props;
-  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+  const [createItemDialogOpen, setCreateItemDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
     <Grid>
@@ -96,7 +98,7 @@ const AddItemActions = (props: {
       )}
     </Grid>
   );
-}
+};
 
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -104,9 +106,11 @@ const CatalogueItemsActionMenu = (props: {
 }) => {
   const { isAdminMode } = useAppSelector(selectAuthorisation);
   const { catalogueItem, catalogueCategory } = props;
+  const navigate = useNavigate();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
-  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+  const [createItemDialogOpen, setCreateItemDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
     <ActionMenu
@@ -126,23 +130,36 @@ const CatalogueItemsActionMenu = (props: {
           />
         ),
       }}
-      otherItems={isAdminMode ? [
+      otherItems={[
         {
-          label: 'Add Item as Admin',
-          icon: <AddIcon fontSize="small" sx={{ mr: 1 }} />,
-          onClick: () => setCreateItemDialogOpen(true),
-          dialog: (
-            <ItemDialog
-              open={createItemDialogOpen}
-              onClose={() => setCreateItemDialogOpen(false)}
-              requestType="post"
-              isAdminMode={true}
-              catalogueCategory={catalogueCategory}
-              catalogueItem={catalogueItem}
-            />
-          ),
-        }
-      ] : undefined}
+          label: 'View History',
+          icon: <HistoryIcon fontSize="small" />,
+          onClick: () =>
+            navigate(
+              `/catalogue/${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/history`
+            ),
+          dialog: null,
+        },
+        ...(isAdminMode
+          ? [
+              {
+                label: 'Add Item as Admin',
+                icon: <AddIcon fontSize="small" sx={{ mr: 1 }} />,
+                onClick: () => setCreateItemDialogOpen(true),
+                dialog: (
+                  <ItemDialog
+                    open={createItemDialogOpen}
+                    onClose={() => setCreateItemDialogOpen(false)}
+                    requestType="post"
+                    isAdminMode={true}
+                    catalogueCategory={catalogueCategory}
+                    catalogueItem={catalogueItem}
+                  />
+                ),
+              },
+            ]
+          : []),
+      ]}
     />
   );
 };
