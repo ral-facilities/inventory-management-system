@@ -26,8 +26,13 @@ import {
 } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { getNameAndExtension } from '../utils';
+import {
+  createFormControlWithRootErrorClearing,
+  getNameAndExtension,
+} from '../utils';
 
+const formControl =
+  createFormControlWithRootErrorClearing<ObjectFilePatchBase>();
 export interface BaseFileDialogProps {
   open: boolean;
   onClose: () => void;
@@ -74,11 +79,11 @@ const EditFileDialog = (props: FileDialogProps) => {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
     setError,
     clearErrors,
     reset,
   } = useForm<ObjectFilePatchBase>({
+    formControl,
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
@@ -87,14 +92,6 @@ const EditFileDialog = (props: FileDialogProps) => {
   React.useEffect(() => {
     reset(initialFile);
   }, [initialFile, reset]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    if (errors.root?.formError) {
-      const subscription = watch(() => clearErrors('root.formError'));
-      return () => subscription.unsubscribe();
-    }
-  }, [clearErrors, errors, selectedFile, watch]);
 
   const handleClose = React.useCallback(() => {
     reset();
