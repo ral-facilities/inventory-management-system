@@ -75,6 +75,19 @@ const transformUpdatedFieldValue = (value: unknown): string => {
   return String(value);
 };
 
+// Properties are stored positionally (e.g. `properties.0.name` or the whole
+// `properties.0` object), so the numeric index is shown as `Property <n>`
+// and the field label is shown as `Property <n> (field)`
+const formatFieldName = (field: string): string => {
+  const parts = field.split('.');
+  if (parts[0] === 'properties' && /^\d+$/.test(parts[1] ?? '')) {
+    const propertyLabel = `Property ${Number(parts[1]) + 1}`;
+    const remainder = parts.slice(2).join('.');
+    return remainder ? `${propertyLabel} (${remainder})` : propertyLabel;
+  }
+  return field;
+};
+
 // Recursively unravel nested fields into one leaf per changed value,
 // modifies nested field name to `field.nested` (e.g. `address.address_line`)
 const flattenUpdatedField = (
@@ -169,7 +182,7 @@ function HistoryTable() {
       {
         header: 'Field',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.updated_field,
+        accessorFn: (row) => formatFieldName(row.updated_field),
         id: 'updated_field',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
@@ -178,7 +191,8 @@ function HistoryTable() {
         // click-to-expand count when the entry changed multiple fields.
         AggregatedCell: ({ row }) => {
           const subRows = row.subRows ?? [];
-          if (subRows.length === 1) return subRows[0].original.updated_field;
+          if (subRows.length === 1)
+            return formatFieldName(subRows[0].original.updated_field);
           return (
             <Link
               component="button"
@@ -189,7 +203,7 @@ function HistoryTable() {
             </Link>
           );
         },
-        Cell: ({ row }) => row.original.updated_field,
+        Cell: ({ row }) => formatFieldName(row.original.updated_field),
         size: 350,
       },
       {
