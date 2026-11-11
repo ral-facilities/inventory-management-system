@@ -181,13 +181,6 @@ const SystemsTableButtons = (props: {
         >
           Copy to
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<ClearIcon fontSize="small" />}
-          onClick={() => props.onChangeSelectedSystems({})}
-        >
-          {props.selectedSystems.length} selected
-        </Button>
       </Box>
 
       {dialogType && (
@@ -252,11 +245,6 @@ const SystemsTableActionMenu = (props: {
                   label: 'Copy to',
                   icon: <FolderCopyOutlinedIcon />,
                   onClick: () => setDirectoryDialogType('copyTo'),
-                },
-                {
-                  label: `${selectedSystems.length} selected`,
-                  icon: <ClearIcon />,
-                  onClick: () => onChangeSelectedSystems({}),
                 },
               ]
             : []),

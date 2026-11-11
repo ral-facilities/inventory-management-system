@@ -296,36 +296,6 @@ describe('Systems', () => {
     });
   });
 
-  it('can select and deselect systems', async () => {
-    createView('/systems/65328f34a40ff5301575a4e3', 'system');
-
-    await waitFor(() => {
-      expect(screen.getByText('Subsystems')).toBeInTheDocument();
-    });
-
-    const checkboxes = await screen.findAllByRole('checkbox', {
-      name: 'Toggle select row',
-    });
-
-    const smallerLaserCheckbox = checkboxes[0];
-
-    await user.click(smallerLaserCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: '1 selected' })
-      ).toBeInTheDocument();
-    });
-
-    await user.click(smallerLaserCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('button', { name: '1 selected' })
-      ).not.toBeInTheDocument();
-    });
-  });
-
   it('can deselect all selected systems at once', async () => {
     createView('/systems');
 
@@ -333,16 +303,11 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const checkboxes = await screen.findAllByRole('checkbox', {
-      name: 'Toggle select row',
+    const toggleAllSelect = await screen.findByRole('checkbox', {
+      name: 'Toggle select all',
     });
 
-    const giantLaserCheckbox = checkboxes[1];
-
-    const pulseLaserCheckbox = checkboxes[2];
-
-    await user.click(giantLaserCheckbox);
-    await user.click(pulseLaserCheckbox);
+    await user.click(toggleAllSelect);
 
     await waitFor(() => {
       expect(
@@ -352,7 +317,7 @@ describe('Systems', () => {
 
     expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    await user.click(await screen.findByRole('button', { name: '2 selected' }));
+    await user.click(toggleAllSelect);
 
     await waitFor(() => {
       expect(
