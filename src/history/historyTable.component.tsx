@@ -102,7 +102,22 @@ const flattenUpdatedField = (
   ) {
     return [];
   }
-  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+  if (Array.isArray(value)) {
+    // Arrays of objects (e.g. the whole `properties` array on creation) are
+    // unravelled per element so each object becomes its own set of rows
+    // (`properties.0.name`, ...).
+    // Arrays of primitives (e.g. allowed_values) stay as a single comma-separated leaf.
+    const hasObjectItems = value.some(
+      (item) => item !== null && typeof item === 'object'
+    );
+    if (hasObjectItems) {
+      return value.flatMap((item, index) =>
+        flattenUpdatedField(`${field}.${index}`, item)
+      );
+    }
+    return [{ updated_field: field, updated_value: value }];
+  }
+  if (value !== null && typeof value === 'object') {
     return Object.entries(value).flatMap(([childField, childValue]) =>
       flattenUpdatedField(`${field}.${childField}`, childValue)
     );
@@ -110,11 +125,11 @@ const flattenUpdatedField = (
   return [{ updated_field: field, updated_value: value }];
 };
 
-function HistoryTable() {
+function HistoryTable(props: { entity_type: string }) {
   const location = useLocation();
-  const historyPath = location.pathname.split('/');
-  const collection = historyPath[historyPath.length - 3];
+  const historyPath = location.pathname.split('/').filter(Boolean);
   const entity_id = historyPath[historyPath.length - 2];
+  const collection = props.entity_type;
 
   const { data: historyData, isLoading: historyDataLoading } =
     useGetHistoryEntries(collection, entity_id);

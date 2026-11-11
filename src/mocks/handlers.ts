@@ -1489,7 +1489,7 @@ export const handlers = [
           json = HistorySystemEntriesJSON;
           break;
 
-        case 'catalogue':
+        case 'catalogue_categories':
           json = HistoryCatalogueCategoryEntriesJSON;
           break;
       }

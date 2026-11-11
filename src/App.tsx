@@ -153,7 +153,9 @@ const routeObject: RouteObject[] = [
                   },
                   {
                     path: paths.catalogueCategoryHistory,
-                    Component: HistoryTable,
+                    Component: () => (
+                      <HistoryTable entity_type="catalogue_categories" />
+                    ),
                     loader: catalogueLayoutLoader(queryClient),
                   },
                   {
@@ -252,7 +254,7 @@ const routeObject: RouteObject[] = [
                     children: [
                       {
                         index: true,
-                        Component: HistoryTable,
+                        Component: () => <HistoryTable entity_type="systems" />,
                         loader: systemsLayoutLoader(queryClient),
                       },
                     ],
@@ -278,7 +280,7 @@ const routeObject: RouteObject[] = [
               },
               {
                 path: paths.manufacturerHistory,
-                Component: HistoryTable,
+                Component: () => <HistoryTable entity_type="manufacturers" />,
                 loader: manufacturerLayoutLoader(queryClient),
               },
               {
