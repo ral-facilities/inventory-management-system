@@ -39,7 +39,21 @@ import { HistoryEntry } from '../api/api.types.tsx';
 import { useLocation } from 'react-router';
 import { isValid, parseISO } from 'date-fns';
 
-const getOperationTypeName = (operation: string) => {
+const getCollectionName = (path: string[]): string => {
+  if (path.includes('manufacturers')) return 'manufacturers';
+  if (path.includes('systems')) return 'systems';
+  if (path.includes('catalogue') && !path.includes('items')) {
+    return 'catalogue_categories';
+  }
+  if (path.includes('catalogue') && path.includes('items')) {
+    const itemCount = path.filter((segment) => segment === 'items').length;
+    return itemCount > 1 ? 'items' : 'catalogue_items';
+  }
+
+  return ''; // Will just cause no data to be returned
+};
+
+const getOperationTypeName = (operation: string): string => {
   switch (operation) {
     case 'insert':
       return 'Create';
@@ -125,11 +139,11 @@ const flattenUpdatedField = (
   return [{ updated_field: field, updated_value: value }];
 };
 
-function HistoryTable(props: { entity_type: string }) {
+function HistoryTable() {
   const location = useLocation();
-  const historyPath = location.pathname.split('/').filter(Boolean);
+  const historyPath = location.pathname.split('/');
   const entity_id = historyPath[historyPath.length - 2];
-  const collection = props.entity_type;
+  const collection = getCollectionName(historyPath);
 
   const { data: historyData, isLoading: historyDataLoading } =
     useGetHistoryEntries(collection, entity_id);
