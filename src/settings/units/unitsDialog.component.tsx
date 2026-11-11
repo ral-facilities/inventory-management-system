@@ -13,6 +13,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import z from 'zod';
 import { UnitPost } from '../../api/api.types';
 import { usePostUnit } from '../../api/units';
 import { UnitSchema } from '../../form.schemas';
@@ -33,7 +34,7 @@ function UnitsDialog(props: UnitsDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<UnitPost>({
+  } = useForm<z.input<typeof UnitSchema>, undefined, UnitPost>({
     resolver: zodResolver(UnitSchema),
   });
 
