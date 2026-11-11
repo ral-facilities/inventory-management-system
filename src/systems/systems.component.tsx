@@ -49,7 +49,6 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
-  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -404,6 +403,8 @@ function Systems() {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('xl'));
+
+  const isFooterVisible = useMediaQuery(theme.breakpoints.up('md'));
 
   const subsystemsPanelParam = searchParams.get(SUBSYSTEMS_PANEL_URL_PARAM);
   const isRoot = systemId === null;
@@ -1060,7 +1061,7 @@ function Systems() {
           alignItems: 'stretch',
           // Fill the remaining visible height so the table footer stays on screen
           flex: '1 1 0',
-          minHeight: MINIMUM_TABLE_HEIGHT,
+          minHeight: '300px',
           overflow: 'hidden',
 
           ...(!subsystemsCollapsed && subsystemsOverlaid
@@ -1071,7 +1072,7 @@ function Systems() {
                   : theme.zIndex.drawer - 2,
                 // Main app bar
                 top: '64px',
-                height: getSciGatewayPageHeightCalc(),
+                height: getSciGatewayPageHeightCalc(undefined, isFooterVisible),
               }
             : { position: 'relative' }),
         })}
@@ -1084,6 +1085,9 @@ function Systems() {
             onClick={() => onChangeSubsystemsCollapsed(true)}
             sx={{
               zIndex: theme.zIndex.drawer - 2,
+              // Don't cover the main app bar or the footer (only shown on md and up)
+              top: '64px',
+              bottom: { md: '32px' },
             }}
           />
         )}

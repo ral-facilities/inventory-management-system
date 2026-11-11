@@ -87,12 +87,14 @@ export const setLocalStorageToken = (isAdminToken: boolean) => {
 
 /* Returns a calc function giving the page height excluding SciGateway related components
   (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
-  - all SciGateway related heights - 48px)*/
+  - all SciGateway related heights - 48px). The SciGateway footer is only shown on md
+  screens and up, so pass footerVisible = false to exclude its height on smaller screens */
 export const getSciGatewayPageHeightCalc = (
-  additionalSubtraction?: string
+  additionalSubtraction?: string,
+  footerVisible: boolean = true
 ): string => {
-  // Page height - unknown - app bar height - footer height - additional
-  return `calc(100vh - 8px - 64px - 24px${
+  // Page height - app bar height - footer height (if visible) - additional
+  return `calc(100vh - 64px${footerVisible ? ' - 32px' : ''}${
     additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
   })`;
 };
@@ -423,7 +425,8 @@ interface DateSortConfig<T> {
   selector: (item: T) => Date;
 }
 
-type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
+type SortConfig<T> =
+  StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
 
 export function sortDataList<T>(props: {
   data: T[];
@@ -435,9 +438,7 @@ export function sortDataList<T>(props: {
       return config.selector(a) - config.selector(b);
     }
     if (config.type === 'date') {
-      return (
-        config.selector(a).getTime() - config.selector(b).getTime()
-      );
+      return config.selector(a).getTime() - config.selector(b).getTime();
     }
     return config.selector(a).localeCompare(config.selector(b));
   });

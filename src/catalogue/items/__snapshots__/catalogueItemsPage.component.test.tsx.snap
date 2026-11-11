@@ -3,10 +3,10 @@
 exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-ep5mx3"
+    class="MuiBox-root css-1jbe5kh"
   >
     <div
-      class="MuiStack-root css-zzhprt-MuiStack-root"
+      class="MuiStack-root css-1vzdtod-MuiStack-root"
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
