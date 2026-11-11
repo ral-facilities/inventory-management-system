@@ -18,9 +18,9 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import z from 'zod';
-import { AddPropertyMigration } from '../../../app.types';
 import {
   CatalogueCategoryPropertyPatchSchema,
+  CatalogueCategoryPropertyPostSchema,
   CatalogueCategorySchema,
 } from '../../../form.schemas';
 
@@ -66,11 +66,11 @@ const AllowedValuesListTextFields = (
     watch,
     setValue,
   } = useFormContext<
-    | AddPropertyMigration
+    | z.input<typeof CatalogueCategoryPropertyPostSchema>
     | z.input<typeof CatalogueCategorySchema>
     | z.input<typeof CatalogueCategoryPropertyPatchSchema>,
     undefined,
-    | AddPropertyMigration
+    | z.output<typeof CatalogueCategoryPropertyPostSchema>
     | z.output<typeof CatalogueCategorySchema>
     | z.output<typeof CatalogueCategoryPropertyPatchSchema>
   >();
@@ -106,7 +106,9 @@ const AllowedValuesListTextFields = (
       ) {
         clearErrors('default_value.value.value');
         setValue('default_value', {
-          valueType: `${propertyRHF.type}_${propertyRHF.mandatory}`,
+          valueType: `${propertyRHF.type}_${propertyRHF.mandatory}` as z.input<
+            typeof CatalogueCategoryPropertyPostSchema
+          >['default_value']['valueType'],
           value: { av_placement_id: crypto.randomUUID(), value: '' },
         });
       }

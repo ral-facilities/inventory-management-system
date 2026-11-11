@@ -24,7 +24,7 @@ import Grid from '@mui/material/Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, Resolver, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import z from 'zod';
 import {
   CatalogueCategory,
@@ -44,7 +44,7 @@ import {
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import { ItemDetailsStepPost, PropertiesStep } from '../app.types';
+import { ItemDetailsStepPost } from '../app.types';
 import {
   convertToPropertyPost,
   convertToPropertyValueList,
@@ -145,8 +145,11 @@ const dateErrorMessageHandler = (props: {
   }
 };
 
-const formControlPropertiesStep =
-  createFormControlWithRootErrorClearing<PropertiesStep>();
+const formControlPropertiesStep = createFormControlWithRootErrorClearing<
+  z.input<typeof PropertiesStepSchema>,
+  undefined,
+  z.output<typeof PropertiesStepSchema>
+>();
 
 const formControlDetailsStep = createFormControlWithRootErrorClearing<
   z.input<typeof ItemDetailsStepSchemaPost>,
@@ -281,19 +284,9 @@ function ItemDialog(props: ItemDialogProps) {
     setError: setErrorDetailsStep,
   } = ItemDetailsStepFormMethods;
 
-  const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const itemPropertiesStepFormMethods = useForm({
     formControl: formControlPropertiesStep,
-    // Zod correctly validates and discriminates the `properties` union at runtime,
-    // but TypeScript is unable to fully infer the resulting shape of complex
-    // `z.discriminatedUnion` schemas (specifically the nested `value.value` field).
-    // This causes the inferred resolver type from `zodResolver` to conflict with
-    //  the form's declared `PropertiesStep` type, even though the runtime behaviour
-    //  is correct.
-    //  We therefore explicitly assert the resolver to `Resolver<PropertiesStep>`
-    //  to bridge the gap between Zod's runtime guarantees and React Hook Form's
-    resolver: zodResolver(
-      PropertiesStepSchema
-    ) as unknown as Resolver<PropertiesStep>,
+    resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -538,12 +531,12 @@ function ItemDialog(props: ItemDialogProps) {
     ): Promise<{
       hasErrors: boolean;
       detailsStepData: z.output<typeof ItemDetailsStepSchemaPost> | undefined;
-      propertiesStepData: PropertiesStep | undefined;
+      propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
     }> => {
       let hasErrors: boolean = false;
       let detailsStepData:
         z.output<typeof ItemDetailsStepSchemaPost> | undefined;
-      let propertiesStepData: PropertiesStep | undefined;
+      let propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Handle the submission for Step 1
       await handleSubmitDetailsStep((validData) => {

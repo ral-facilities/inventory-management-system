@@ -29,7 +29,6 @@ import {
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
   CatalogueCategoryProperty,
-  CatalogueCategoryPropertyType,
 } from '../../api/api.types';
 import {
   usePatchCatalogueCategory,
@@ -57,7 +56,7 @@ function transformToCatalogueCategoryPost(
 ): CatalogueCategoryPost {
   return {
     name: output.name,
-    is_leaf: String(output.is_leaf) === 'true',
+    is_leaf: output.is_leaf,
     ...(output.properties &&
       output.properties.length !== 0 && {
         properties: output.properties.map(transformProperty),
@@ -72,9 +71,9 @@ function transformProperty(
 ): CatalogueCategoryPostProperty {
   return {
     name: property.name,
-    type: property.type as CatalogueCategoryPropertyType, // Assuming 'type' field is already correct
+    type: property.type,
     ...(property.unit_id && { unit_id: property.unit_id }),
-    mandatory: String(property.mandatory) === 'true',
+    mandatory: property.mandatory,
     ...(property.allowed_values && {
       allowed_values: transformAllowedValues(property.allowed_values),
     }),

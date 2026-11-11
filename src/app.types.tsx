@@ -2,8 +2,8 @@ import type { Body, Meta } from '@uppy/core';
 import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
-  CatalogueCategoryPropertyType,
   CatalogueItem,
+  CatalogueItemPost,
   CatalogueItemSpreadsheetMetadata,
   Item,
   ItemPost,
@@ -41,55 +41,7 @@ export enum RoutesHomeLocation {
 }
 export type RoutesHomeLocationType = keyof typeof RoutesHomeLocation;
 
-export interface AllowedValuesList {
-  type: 'list';
-  values: {
-    valueType: 'number' | 'string';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    values: { av_placement_id: string; value: any }[];
-  };
-}
-
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
-
-export type AllowedValues = AllowedValuesList;
-
-export interface AddCatalogueCategoryProperty {
-  name: string;
-  type: CatalogueCategoryPropertyType;
-  unit_id?: string | null;
-  unit?: string | null;
-  mandatory: string;
-  allowed_values?: AllowedValues | null;
-}
-
-export interface AddCatalogueCategoryWithPlacementIds {
-  name: string;
-  parent_id?: string | null;
-  is_leaf: string;
-  properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
-}
-
-export interface AddCatalogueCategoryPropertyWithPlacementIds extends AddCatalogueCategoryProperty {
-  cip_placement_id: string; // Catalogue item properties (cip)
-}
-
-export interface PropertyValue {
-  valueType: string;
-  // The "value" contains the av_placement_id because it could correspond to an option
-  // from the allowed values in the add migration. Since this option can potentially
-  // be a duplicate, the av_placement_id serves as a unique identifier to differentiate them.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: { av_placement_id: string; value: any };
-}
-export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
-  default_value: PropertyValue;
-}
-
-export interface EditPropertyMigration {
-  name?: string;
-  allowed_values?: AllowedValues | null;
-}
 
 export interface MoveToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
@@ -99,22 +51,15 @@ export interface MoveToCatalogueCategory {
 
 // ------------------------------------ CATALOGUE ITEM ------------------------------------
 
-export interface CatalogueItemDetailsStepPost {
-  manufacturer_id: string;
-  name: string;
-  description?: string | null;
-  cost_gbp: number;
-  cost_to_rework_gbp?: number | null;
-  days_to_replace: number;
-  days_to_rework?: number | null;
-  expected_lifetime_days?: number | null;
-  item_model_number?: string | null;
-  notes?: string | null;
-}
+export type CatalogueItemDetailsStepPost = Omit<
+  CatalogueItemPost,
+  | 'catalogue_category_id'
+  | 'is_obsolete'
+  | 'obsolete_reason'
+  | 'obsolete_replacement_catalogue_item_id'
+  | 'properties'
+>;
 
-export interface PropertiesStep {
-  properties: PropertyValue[];
-}
 export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
@@ -159,16 +104,10 @@ export interface SystemTableType extends System {
 }
 // ------------------------------------ ITEMS ------------------------------------
 
-export interface ItemDetailsStepPost {
-  purchase_order_number?: string | null;
-  is_defective: boolean;
-  usage_status_id: string;
-  warranty_end_date?: string | null;
-  asset_number?: string | null;
-  serial_number?: string | null;
-  delivered_date?: string | null;
-  notes?: string | null;
-}
+export type ItemDetailsStepPost = Omit<
+  ItemPost,
+  'catalogue_item_id' | 'system_id' | 'properties'
+>;
 
 export interface PostItems {
   quantity: number;
@@ -197,13 +136,7 @@ export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
 }
 
 export type MoveItemsToSystem =
-  | MoveItemsMultipleUsageStatus
-  | MoveItemsSingleUsageStatus;
-
-export interface AdvancedSerialNumberOptionsType {
-  quantity: string | null;
-  starting_value: string | null;
-}
+  MoveItemsMultipleUsageStatus | MoveItemsSingleUsageStatus;
 
 // ------------------------------------ UPPY --------------------------------------------------------
 
