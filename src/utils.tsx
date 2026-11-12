@@ -676,7 +676,8 @@ export const CORRUPT_SPREADSHEET_MESSAGE = `This spreadsheet appears to be corru
 function parseSpreadsheetBaseError(message: string): string {
   if (
     message.includes('imsingestapiversion') ||
-    message.includes('not a valid spreadsheet')
+    message.includes('not a valid spreadsheet') ||
+    message.includes('spreadsheet contents has errors')
   ) {
     return CORRUPT_SPREADSHEET_MESSAGE;
   }

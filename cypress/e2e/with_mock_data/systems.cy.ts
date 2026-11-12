@@ -70,6 +70,11 @@ const itemBackendErrorMessage = {
     uiMessage:
       'The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.',
   },
+  InvalidSpreadsheetError: {
+    apiMessage: 'Spreadsheet contents has errors',
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
 };
 
 interface ItemIngestEndpointHelperProps {

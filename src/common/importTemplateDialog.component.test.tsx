@@ -71,6 +71,7 @@ const backendErrorMessage = {
   UnrelatedIssue:
     'Validation failed due to an issue unrelated to the spreadsheet contents',
   Error500: 'Internal server error',
+  InvalidSpreadsheetError: 'Spreadsheet contents has errors',
 };
 
 interface IngestEndpointHelperProps {
@@ -203,6 +204,7 @@ const itemBackendErrorMessage = {
   UnrelatedIssue:
     'Validation failed due to an issue unrelated to the spreadsheet contents',
   Error500: 'Internal server error',
+  InvalidSpreadsheetError: 'Spreadsheet contents has errors',
 };
 
 describe('Upload attachment dialog', () => {
