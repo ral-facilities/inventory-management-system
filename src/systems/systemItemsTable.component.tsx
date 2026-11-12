@@ -141,14 +141,16 @@ const SystemItemsTableActionMenu = (props: {
       />
       {system && (
         <>
-          <SystemItemsDialog
-            open={openDialog === 'move' || openDialog === 'moveAdmin'}
-            onClose={() => setOpenDialog(null)}
-            selectedItems={selectedItems}
-            onChangeSelectedItems={onChangeSelectedItems}
-            parentSystemId={system.id}
-            isAdminMode={openDialog === 'moveAdmin'}
-          />
+          {openDialog !== null && (
+            <SystemItemsDialog
+              open={openDialog === 'move' || openDialog === 'moveAdmin'}
+              onClose={() => setOpenDialog(null)}
+              selectedItems={selectedItems}
+              onChangeSelectedItems={onChangeSelectedItems}
+              parentSystemId={system.id}
+              isAdminMode={openDialog === 'moveAdmin'}
+            />
+          )}
           <ImportTemplateDialog
             open={openDialog === 'import'}
             onClose={() => setOpenDialog(null)}

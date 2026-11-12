@@ -170,11 +170,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   ]);
 
   const handleClose = React.useCallback(() => {
+    onClose();
     setUsageStatuses([]);
     setPlaceIntoSystemError(undefined);
     setActiveStep(0);
     setParentSystemId(props.parentSystemId);
-    onClose();
   }, [onClose, props.parentSystemId, setActiveStep]);
 
   const hasSystemErrors =

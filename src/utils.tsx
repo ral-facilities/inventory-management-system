@@ -683,7 +683,7 @@ function parseSpreadsheetBaseError(message: string): string {
 
   if (
     message.includes(
-      'Validation failed due to an issue unrelated to the spreadsheet contents'
+      'validation failed due to an issue unrelated to the spreadsheet contents'
     )
   ) {
     return 'There was an unexpected error. Please refresh the page and try again or contact the system administrator.';
