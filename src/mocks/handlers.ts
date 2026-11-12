@@ -54,7 +54,8 @@ import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
-import HistoryJSON from './History.json';
+import HistoryManufacturerEntriesJSON from './HistoryManufacturerEntries.json';
+import HistorySystemEntriesJSON from './HistorySystemEntries.json';
 import HistoryItemSystemsEntriesJSON from './HistoryItemSystemsEntries.json';
 import HistorySystemItemsEntriesJSON from './HistorySystemItemsEntries.json';
 
@@ -1476,17 +1477,25 @@ export const handlers = [
       const { collection } = params;
       const historyParams = url.searchParams;
       const entityId = historyParams.get('entity_id');
-      let data;
 
-      if (collection == 'manufacturers') {
-        data = HistoryJSON.filter(
-          (history) => history.entity_id == entityId
-        ).sort(
+      let json: HistoryEntry[] = [];
+      switch (collection) {
+        case 'manufacturers':
+          json = HistoryManufacturerEntriesJSON;
+          break;
+
+        case 'systems':
+          json = HistorySystemEntriesJSON;
+          break;
+      }
+
+      const data = json
+        .filter((history) => history.entity_id == entityId)
+        .sort(
           (a, b) =>
             new Date(b.entity_modified_time).getTime() -
             new Date(a.entity_modified_time).getTime()
-        ) as HistoryEntry[];
-      }
+        );
 
       return HttpResponse.json(data, { status: 200 });
     }
