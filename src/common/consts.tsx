@@ -42,3 +42,6 @@ export const FLEX_TABLE_CONTAINER_PROP: React.CSSProperties = {
 };
 
 export const MINIMUM_TABLE_HEIGHT = '400px';
+
+export const FOOTER_HEIGHT = '32px';
+export const MAIN_APP_BAR_HEIGHT = '64px';

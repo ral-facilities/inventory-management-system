@@ -29,6 +29,7 @@ import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
+import { FOOTER_HEIGHT, MAIN_APP_BAR_HEIGHT } from './common/consts';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
 
@@ -94,7 +95,7 @@ export const getSciGatewayPageHeightCalc = (
   footerVisible: boolean = true
 ): string => {
   // Page height - app bar height - footer height (if visible) - additional
-  return `calc(100vh - 64px${footerVisible ? ' - 32px' : ''}${
+  return `calc(100vh - ${MAIN_APP_BAR_HEIGHT}${footerVisible ? ` - ${FOOTER_HEIGHT}` : ''}${
     additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
   })`;
 };

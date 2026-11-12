@@ -49,6 +49,8 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
+  FOOTER_HEIGHT,
+  MAIN_APP_BAR_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -1071,7 +1073,7 @@ function Systems() {
                   ? theme.zIndex.drawer
                   : theme.zIndex.drawer - 2,
                 // Main app bar
-                top: '64px',
+                top: MAIN_APP_BAR_HEIGHT,
                 height: getSciGatewayPageHeightCalc(undefined, isFooterVisible),
               }
             : { position: 'relative' }),
@@ -1086,8 +1088,8 @@ function Systems() {
             sx={{
               zIndex: theme.zIndex.drawer - 2,
               // Don't cover the main app bar or the footer (only shown on md and up)
-              top: '64px',
-              bottom: { md: '32px' },
+              top: MAIN_APP_BAR_HEIGHT,
+              bottom: { md: FOOTER_HEIGHT },
             }}
           />
         )}
