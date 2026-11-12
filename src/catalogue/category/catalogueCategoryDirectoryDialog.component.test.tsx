@@ -4,7 +4,7 @@ import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import { CatalogueCategoryPropertyType } from '../../api/api.types';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
@@ -55,7 +55,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -65,7 +65,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
       createView();
@@ -86,7 +86,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
       createView();
@@ -134,7 +134,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -144,7 +144,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -179,7 +179,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -189,7 +189,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -218,7 +218,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -228,7 +228,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -260,7 +260,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -270,7 +270,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -327,7 +327,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -337,7 +337,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
       createView();
@@ -358,7 +358,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
       createView();
@@ -379,7 +379,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -389,7 +389,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '5',
@@ -418,7 +418,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
               mandatory: false,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -452,7 +452,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -484,7 +484,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -516,7 +516,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -526,7 +526,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -565,7 +565,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -575,7 +575,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 
@@ -606,7 +606,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_leaf: false,
           is_flagged: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '2',
@@ -616,7 +616,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_leaf: false,
           properties: [],
           is_flagged: false,
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ];
 

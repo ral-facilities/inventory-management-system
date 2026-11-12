@@ -1,9 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ImagesJSON from '../mocks/Images.json';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  hooksWrapperWithProviders,
-} from '../testUtils';
+import { hooksWrapperWithProviders } from '../testUtils';
 import { APIImage, ImageMetadataPatch } from './api.types';
 import {
   useDeleteImage,
@@ -109,7 +106,8 @@ describe('images api functions', () => {
         description: 'a description',
         primary: false,
         thumbnail_base64: 'base64_thumbnail_test',
-        ...CREATED_MODIFIED_TIME_VALUES,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       };
     });
 

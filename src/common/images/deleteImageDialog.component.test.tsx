@@ -9,10 +9,7 @@ import { http } from 'msw';
 import { APIImage } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  renderComponentWithRouterProvider,
-} from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteImageDialog, {
   DeleteImageProps,
 } from './deleteImageDialog.component';
@@ -37,7 +34,8 @@ describe('delete Image dialogue', () => {
       description: 'a description',
       primary: false,
       thumbnail_base64: 'base64_thumbnail_test',
-      ...CREATED_MODIFIED_TIME_VALUES,
+      created_time: '2024-01-01T12:00:00.000+00:00',
+      modified_time: '2024-01-02T13:10:10.000+00:00',
     };
     props = {
       open: true,

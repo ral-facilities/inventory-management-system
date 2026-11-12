@@ -89,7 +89,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuqRVTbQEYCeLJGkzxkAQ1jcGTQWxCMADiXiwxAOwzM4Q9GWR4M8HAoYk1s4SQDua5PAvoANiQwScZh-Ly0wjsQHN-GhgwMUc8ZABfSKA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -104,7 +104,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuqRVTbQEYCeLJGkzxkAQ1jcGTQWxCMADiXiwxAOwzM4Q9GWR4M8HAoYk1s4SQDua5PAvoANiQwScZh-Ly0wjsQHN-GhgwMUc8ZABfSKA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -364,6 +364,21 @@ describe('Systems', () => {
     cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
     cy.findByText('Properties').scrollIntoView();
     cy.findByText('Properties').should('be.visible');
+  });
+
+  it('should be able to navigate to the items history page', () => {
+    cy.findByRole('link', { name: 'Pulse Laser' }).click();
+
+    // Wait for progress bar to disappear
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" })
+      .should('have.attr', 'href')
+      .should('include', '/items-history');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" }).click();
+
+    cy.findByText('Items history').should('be.visible');
   });
 
   it("should be able to navigate to a filtered item's table using the spares value", () => {
@@ -996,6 +1011,8 @@ describe('Systems', () => {
           code: 'pulse-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'system owner updated',
+          modified_by: 'Alex Chen',
           type_id: '2',
           is_flagged: true,
           type: {
@@ -1018,6 +1035,8 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          modified_comment: 'system location updated',
+          modified_by: 'Sarah Jenkins',
           is_flagged: false,
           type: {
             id: '2',
@@ -1073,7 +1092,9 @@ describe('Systems', () => {
           cy.findByText('Item Moving Rule Applied').should('exist');
           cy.findByRole('button', { name: 'Move here' }).click();
         });
-
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1084,6 +1105,7 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
+            modified_comment: 'A test comment',
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
@@ -1091,6 +1113,7 @@ describe('Systems', () => {
         expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
+            modified_comment: 'A test comment',
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
@@ -1148,8 +1171,10 @@ describe('Systems', () => {
       });
       cy.findByRole('option', { name: 'Scrapped' }).click();
 
-      cy.findByRole('button', { name: 'Finish' }).click();
-
+      cy.findByRole('button', { name: 'Continue' }).click();
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1160,6 +1185,7 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
+            modified_comment: 'A test comment',
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
           })
@@ -1167,6 +1193,7 @@ describe('Systems', () => {
         expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
+            modified_comment: 'A test comment',
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '1',
           })
@@ -1235,7 +1262,10 @@ describe('Systems', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1244,7 +1274,10 @@ describe('Systems', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
+        JSON.stringify({
+          modified_comment: 'A test comment',
+          serial_number: 'dfzqkOJbqifOtest1234',
+        })
       );
     });
   });
@@ -1263,7 +1296,10 @@ describe('Systems', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1282,6 +1318,7 @@ describe('Systems', () => {
           delivered_date: '2023-06-15T23:00:00.000Z',
           notes:
             'uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO',
+          modified_comment: 'A test comment',
           properties: [
             {
               id: '13',

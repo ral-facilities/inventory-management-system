@@ -3,8 +3,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
+  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -84,7 +86,7 @@ const SystemItemsTableActionMenu = (props: {
     selectedItems,
     onChangeSelectedItems,
     filtersEnabled,
-    onClearFiltersClick
+    onClearFiltersClick,
   } = props;
 
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
@@ -103,26 +105,32 @@ const SystemItemsTableActionMenu = (props: {
             onClick: onClearFiltersClick,
             isDisabled: !filtersEnabled,
           },
-          ...(system ? [
-            {
-              label: 'Move to',
-              icon: <DriveFileMoveOutlinedIcon />,
-              onClick: () => {
-                setDialogAdminMode(false);
-                setMoveItemsDialogOpen(true);
-              },
-              isDisabled: selectedItems.length === 0,
-            },
-            ...(isAdminMode ? [{
-              label: 'Move to as Admin',
-              icon: <DriveFileMoveOutlinedIcon />,
-              onClick: () => {
-                setDialogAdminMode(true);
-                setMoveItemsDialogOpen(true);
-              },
-              isDisabled: selectedItems.length === 0,
-            }]: [])
-          ]: [])
+          ...(system
+            ? [
+                {
+                  label: 'Move to',
+                  icon: <DriveFileMoveOutlinedIcon />,
+                  onClick: () => {
+                    setDialogAdminMode(false);
+                    setMoveItemsDialogOpen(true);
+                  },
+                  isDisabled: selectedItems.length === 0,
+                },
+                ...(isAdminMode
+                  ? [
+                      {
+                        label: 'Move to as Admin',
+                        icon: <DriveFileMoveOutlinedIcon />,
+                        onClick: () => {
+                          setDialogAdminMode(true);
+                          setMoveItemsDialogOpen(true);
+                        },
+                        isDisabled: selectedItems.length === 0,
+                      },
+                    ]
+                  : []),
+              ]
+            : []),
         ]}
       />
       {system && (
@@ -137,7 +145,7 @@ const SystemItemsTableActionMenu = (props: {
       )}
     </>
   );
-}
+};
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -488,6 +496,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           formatDateTimeStrings(row.original.item.modified_time, true),
       },
       {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.modified_by,
+        id: 'item.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
+      },
+      {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
@@ -746,14 +764,28 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <SystemItemsTableActionMenu
-        isAdminMode={isAdminMode}
-        system={system}
-        selectedItems={selectedItems}
-        onChangeSelectedItems={setRowSelection}
-        filtersEnabled={preservedState.columnFilters.length > 0}
-        onClearFiltersClick={() => table.resetColumnFilters()}
-      />
+      <Box sx={{ display: 'flex' }}>
+        <SystemItemsTableActionMenu
+          isAdminMode={isAdminMode}
+          system={system}
+          selectedItems={selectedItems}
+          onChangeSelectedItems={setRowSelection}
+          filtersEnabled={preservedState.columnFilters.length > 0}
+          onClearFiltersClick={() => table.resetColumnFilters()}
+        />
+        {system && (
+          <Button
+            startIcon={<HistoryIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            component={Link}
+            to={'items-history'}
+            aria-label={`View ${system.name}'s items history`}
+          >
+            {`View Items History`}
+          </Button>
+        )}
+      </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [

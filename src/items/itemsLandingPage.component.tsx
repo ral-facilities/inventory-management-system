@@ -1,7 +1,9 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
+  Button,
   Divider,
   LinearProgress,
   Link as MuiLink,
@@ -194,12 +196,25 @@ function ItemsLandingPage() {
                 </Grid>
 
                 {/* Actions Section */}
-
-                <ItemsActionMenu
-                  item={itemData}
-                  catalogueItem={catalogueItemData}
-                  catalogueCategory={catalogueCategoryData}
-                />
+                <Grid>
+                  <ItemsActionMenu
+                    item={itemData}
+                    catalogueItem={catalogueItemData}
+                    catalogueCategory={catalogueCategoryData}
+                  />
+                </Grid>
+                <Grid>
+                  <Button
+                    startIcon={<HistoryIcon />}
+                    sx={{ ml: 0.5, py: '5.75px' }}
+                    variant="outlined"
+                    component={Link}
+                    to={'systems-history'}
+                    aria-label={`${itemData.serial_number}'s systems history`}
+                  >
+                    {`Systems History`}
+                  </Button>
+                </Grid>
               </Grid>
 
               <TabView
@@ -379,14 +394,21 @@ function ItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
+                            <Box
                               sx={{
-                                color: 'text.primary',
+                                display: 'flex',
+                                alignItems: 'center',
                               }}
                             >
-                              System
-                            </Typography>
+                              <Typography
+                                align="left"
+                                sx={{
+                                  color: 'text.primary',
+                                }}
+                              >
+                                System
+                              </Typography>
+                            </Box>
                             <Typography
                               align="left"
                               sx={{
@@ -429,7 +451,7 @@ function ItemsLandingPage() {
                                 color: 'text.primary',
                               }}
                             >
-                              Last modified
+                              Last Modified
                             </Typography>
                             <Typography
                               align="left"
@@ -441,6 +463,24 @@ function ItemsLandingPage() {
                                 itemData.modified_time,
                                 true
                               )}
+                            </Typography>
+                          </Grid>
+                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
+                              Modified By
+                            </Typography>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
+                              {itemData.modified_by}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>

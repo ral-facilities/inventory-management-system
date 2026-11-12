@@ -10,7 +10,7 @@ import { Manufacturer } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import DeleteManufacturerDialog, {
@@ -43,7 +43,7 @@ describe('Delete Manufacturer Dialog', () => {
       },
       telephone: '056896598',
       id: '1',
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
     };
     props = {
       open: true,

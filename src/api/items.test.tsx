@@ -61,6 +61,7 @@ describe('items api functions', () => {
             value: false,
           },
         ],
+        modified_comment: null,
       };
     });
     it('posts a request to add an item and returns successful response', async () => {
@@ -92,6 +93,7 @@ describe('items api functions', () => {
         usage_status: 'New',
         usage_status_id: '0',
         warranty_end_date: '2024-01-28T00:00:00.000Z',
+        modified_comment: null,
       });
     });
   });
@@ -223,6 +225,8 @@ describe('items api functions', () => {
         warranty_end_date: '2023-04-04T23:00:00.000Z',
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_by: 'Alex Chen',
+        modified_comment: 'asset number updated',
       });
     });
   });
@@ -246,6 +250,7 @@ describe('items api functions', () => {
         usageStatusId: '0',
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
+        modifiedComment: null,
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -273,6 +278,7 @@ describe('items api functions', () => {
           expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
             system_id: moveItemsToSystem.targetSystem.id,
             usage_status_id: moveItemsToSystem.usageStatusId,
+            modified_comment: null,
           });
         }
       });
@@ -314,6 +320,7 @@ describe('items api functions', () => {
             usage_status_id: moveItemsToSystem.usageStatuses.find(
               (status) => status.item_id === item.id
             )?.usage_status_id,
+            modified_comment: null,
           });
         }
       });
@@ -360,6 +367,7 @@ describe('items api functions', () => {
           expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
             system_id: 'new_system_id',
             usage_status_id: moveItemsToSystem.usageStatusId,
+            modified_comment: null,
           });
         }
       });
