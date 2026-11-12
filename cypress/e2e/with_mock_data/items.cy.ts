@@ -675,6 +675,21 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
+  it('navigates to the landing page and to the history table view', () => {
+    cy.findByText('5YUQDDjKpz2z').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+
+    cy.findByRole('button', {
+      name: 'items landing page actions menu',
+    }).click();
+    cy.findByText('View History').click();
+
+    cy.url().should('include', '/catalogue/4/items/1/items/KvT2Ox7n/history');
+    cy.findByLabelText('Updated the resolution').should('be.visible');
+  });
+
   describe('Attachments', () => {
     beforeEach(() => {
       // Catch error to avoid the CI failing unnecessarily

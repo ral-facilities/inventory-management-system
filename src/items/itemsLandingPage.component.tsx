@@ -12,7 +12,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { CatalogueCategory, CatalogueItem, Item } from '../api/api.types';
 import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
@@ -35,6 +35,7 @@ const ItemsActionMenu = (props: {
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
   const { isAdminMode } = useAppSelector(selectAuthorisation);
+  const navigate = useNavigate();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
@@ -69,6 +70,17 @@ const ItemsActionMenu = (props: {
           </>
         ),
       }}
+      otherItems={[
+        {
+          label: 'View History',
+          icon: <HistoryIcon fontSize="small" />,
+          onClick: () =>
+            navigate(
+              `/catalogue/${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}/history`
+            ),
+          dialog: null,
+        },
+      ]}
     />
   );
 };

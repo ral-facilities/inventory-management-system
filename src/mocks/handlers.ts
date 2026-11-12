@@ -56,6 +56,7 @@ import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
 import HistoryCatalogueCategoryEntriesJSON from './HistoryCatalogueCategoryEntries.json';
 import HistoryCatalogueItemEntriesJSON from './HistoryCatalogueItemEntries.json';
+import HistoryItemEntriesJSON from './HistoryItemEntries.json';
 import HistoryManufacturerEntriesJSON from './HistoryManufacturerEntries.json';
 import HistorySystemEntriesJSON from './HistorySystemEntries.json';
 import HistoryItemSystemsEntriesJSON from './HistoryItemSystemsEntries.json';
@@ -1496,6 +1497,10 @@ export const handlers = [
 
         case 'catalogue_items':
           json = HistoryCatalogueItemEntriesJSON;
+          break;
+
+        case 'items':
+          json = HistoryItemEntriesJSON;
           break;
       }
 
