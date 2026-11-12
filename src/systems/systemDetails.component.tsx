@@ -51,7 +51,7 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
       otherItems={[
         {
           label: 'View History',
-          icon: <HistoryIcon />,
+          icon: <HistoryIcon fontSize="small" />,
           onClick: () => navigate(`/systems/${system.id}/history`),
           dialog: null,
         },
