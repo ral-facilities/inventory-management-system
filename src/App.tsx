@@ -199,9 +199,7 @@ const routeObject: RouteObject[] = [
                                   },
                                   {
                                     path: paths.itemHistory,
-                                    Component: () => (
-                                      <HistoryTable entity_type="items" />
-                                    ),
+                                    Component: HistoryTable,
                                     loader: catalogueLayoutLoader(queryClient),
                                   },
                                   {
