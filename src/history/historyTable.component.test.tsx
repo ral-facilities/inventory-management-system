@@ -16,11 +16,10 @@ describe('History Table', () => {
 
   const createView = (
     path: string,
-    urlPathKey: URLPathKeyType = 'manufacturerHistory',
-    entity_type: string = 'manufacturers'
+    urlPathKey: URLPathKeyType = 'manufacturerHistory'
   ) => {
     return renderComponentWithRouterProvider(
-      <HistoryTable entity_type={entity_type} />,
+      <HistoryTable />,
       urlPathKey,
       path
     );
@@ -89,11 +88,7 @@ describe('History Table', () => {
   });
 
   it('correctly displays properties', async () => {
-    createView(
-      '/catalogue/4/history',
-      'catalogueCategoryHistory',
-      'catalogue_categories'
-    );
+    createView('/catalogue/4/history', 'catalogueCategoryHistory');
 
     await waitFor(() => {
       expect(screen.getByText('Updated property constraints'));
