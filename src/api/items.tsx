@@ -120,7 +120,7 @@ export const useGetItems = (
   });
 };
 
-const getItem = async (id: string): Promise<Item> => {
+export const getItem = async (id: string): Promise<Item> => {
   const queryParams = new URLSearchParams();
 
   return imsApi
