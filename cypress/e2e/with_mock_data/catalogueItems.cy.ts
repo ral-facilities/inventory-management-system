@@ -623,6 +623,20 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
+  it('navigates to the landing page, and then navigates to history page', () => {
+    cy.findByText('Cameras 1').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByRole('button', {
+      name: 'catalogue items landing page actions menu',
+    }).click();
+    cy.findByText('View History').click();
+
+    cy.url().should('include', '/catalogue/4/items/1/history');
+    cy.findByLabelText('Marked as obsolete').should('be.visible');
+  });
+
   it('navigates to manufacturer landing page', () => {
     cy.visit('/catalogue/5');
 
