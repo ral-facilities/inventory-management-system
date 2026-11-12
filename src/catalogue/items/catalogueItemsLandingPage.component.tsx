@@ -129,7 +129,7 @@ const CatalogueItemsActionMenu = (props: {
       otherItems={isAdminMode ? [
         {
           label: 'Add Item as Admin',
-          icon: <AddIcon fontSize="small" sx={{ mr: 1 }} />,
+          icon: <AddIcon fontSize="small" />,
           onClick: () => setCreateItemDialogOpen(true),
           dialog: (
             <ItemDialog
