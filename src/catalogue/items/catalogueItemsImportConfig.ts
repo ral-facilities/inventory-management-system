@@ -5,7 +5,7 @@ export const useCatalogueItemsImportConfig = (): ImportSpreadsheetConfig => {
   return {
     endpointSegment: 'catalogue-items',
     parentIdMetaField: 'catalogue_category_id',
-    templateFileNamePrefix: 'CatalogueItemTemplate',
+    templateFileNamePrefix: 'CatalogueItemsTemplate',
     validationFileNamePrefix: 'CatalogueItemsValidation',
     downloadStepTitle: 'Download Catalogue Template',
     downloadStepDescription:

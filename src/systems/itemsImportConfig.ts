@@ -5,7 +5,7 @@ export const useItemsImportConfig = (): ImportSpreadsheetConfig => {
   return {
     endpointSegment: 'items',
     parentIdMetaField: 'system_id',
-    templateFileNamePrefix: 'ItemTemplate',
+    templateFileNamePrefix: 'ItemsTemplate',
     validationFileNamePrefix: 'ItemsValidation',
     downloadStepTitle: 'Download Items Template',
     downloadStepDescription:

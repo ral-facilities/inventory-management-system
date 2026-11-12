@@ -82,7 +82,7 @@ const itemIngestEndpointHelper = async (
 ) => {
   const { warnings, errors, valid } = props;
 
-  const response = await fetch('/src/mocks/CatalogueItemTemplate-test.xlsx');
+  const response = await fetch('/src/mocks/ItemsTemplate-test.xlsx');
   const blob = await response.blob();
 
   return new HttpResponse(blob, {
@@ -90,7 +90,7 @@ const itemIngestEndpointHelper = async (
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': `attachment; filename="ItemTemplate-test-Validated.xlsx"`,
+      'Content-Disposition': `attachment; filename="ItemsTemplate-Validated.xlsx"`,
       'IMSIngestAPI-Validation-Warnings': String(warnings),
       'IMSIngestAPI-Validation-Errors': String(errors),
       'IMSIngestAPI-Validation-Valid': String(valid),
@@ -1553,9 +1553,9 @@ describe('Systems', () => {
         expect(postRequests.length).eq(1);
       });
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     it('displays an error message when there are errors in the spreadsheet', () => {
@@ -1604,9 +1604,9 @@ describe('Systems', () => {
         expect(postRequests.length).eq(1);
       });
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
@@ -1648,9 +1648,9 @@ describe('Systems', () => {
         'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
       ).should('exist');
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     Object.entries(itemBackendErrorMessage).forEach(
@@ -1794,9 +1794,9 @@ describe('Systems', () => {
         'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.'
       ).should('exist');
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     it('displays an error message when there are errors in the spreadsheet', () => {
@@ -1847,9 +1847,9 @@ describe('Systems', () => {
         'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
       ).should('exist');
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
@@ -1892,9 +1892,9 @@ describe('Systems', () => {
         'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
       ).should('exist');
 
-      cy.readFile(
-        './cypress/downloads/ItemTemplate-test-Validated.xlsx'
-      ).should('exist');
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
     });
 
     Object.entries(itemBackendErrorMessage).forEach(

@@ -1,7 +1,6 @@
 import { http, HttpResponse, PathParams } from 'msw';
 import { ErrorResponse } from 'react-router';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
-import SystemsJSON from './Systems.json';
 
 export const browserHandlers = [
   // --------------------------------- INGEST ------------------------------------------------------
@@ -12,7 +11,7 @@ export const browserHandlers = [
     ErrorResponse | Blob
   >('/spreadsheets/catalogue-items/template', async ({ request }) => {
     const { catalogue_category_id: catalogueCategoryId } = await request.json();
-    const response = await fetch('/src/mocks/CatalogueItemTemplate-test.xlsx');
+    const response = await fetch('/src/mocks/CatalogueItemsTemplate-test.xlsx');
     const catalogueCategory = CatalogueCategoriesJSON.find(
       (val) => val.id === catalogueCategoryId
     );
@@ -22,7 +21,7 @@ export const browserHandlers = [
       headers: {
         'Content-Type':
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition': `attachment; filename="CatalogueItemTemplate-${catalogueCategory?.name}.xlsx"`,
+        'Content-Disposition': `attachment; filename="CatalogueItemsTemplate-${catalogueCategory?.name}.xlsx"`,
       },
     });
   }),
@@ -34,7 +33,7 @@ export const browserHandlers = [
     const data = await request.formData();
     const catalogueCategoryId = data.get('catalogue_category_id');
 
-    const response = await fetch('/src/mocks/CatalogueItemTemplate-test.xlsx');
+    const response = await fetch('/src/mocks/CatalogueItemsTemplate-test.xlsx');
     const catalogueCategory = CatalogueCategoriesJSON.find(
       (val) => val.id === catalogueCategoryId
     );
@@ -44,7 +43,7 @@ export const browserHandlers = [
       headers: {
         'Content-Type':
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition': `attachment; filename="CatalogueItemTemplate-${catalogueCategory?.name}-Validated.xlsx"`,
+        'Content-Disposition': `attachment; filename="CatalogueItemsTemplate-${catalogueCategory?.name}-Validated.xlsx"`,
         'IMSIngestAPI-Validation-Warnings': '0',
         'IMSIngestAPI-Validation-Errors': '0',
         'IMSIngestAPI-Validation-Valid': 'true',
@@ -55,9 +54,7 @@ export const browserHandlers = [
   http.post<PathParams, { system_id: string }, ErrorResponse | Blob>(
     '/spreadsheets/items/template',
     async () => {
-      const response = await fetch(
-        '/src/mocks/CatalogueItemTemplate-test.xlsx'
-      );
+      const response = await fetch('/src/mocks/ItemsTemplate.xlsx');
       const blob = await response.blob();
       return new HttpResponse(blob, {
         status: 200,
@@ -71,21 +68,15 @@ export const browserHandlers = [
   ),
   http.post<PathParams, { system_id: string }, ErrorResponse | Blob>(
     '/spreadsheets/items/validate',
-    async ({ request }) => {
-      const data = await request.formData();
-      const systemId = data.get('system_id');
-
-      const response = await fetch(
-        '/src/mocks/CatalogueItemTemplate-test.xlsx'
-      );
-      const system = SystemsJSON.find((val) => val.id === systemId);
+    async () => {
+      const response = await fetch('/src/mocks/ItemsTemplate.xlsx');
       const blob = await response.blob();
       return new HttpResponse(blob, {
         status: 200,
         headers: {
           'Content-Type':
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'Content-Disposition': `attachment; filename="ItemTemplate-${system?.name}-Validated.xlsx"`,
+          'Content-Disposition': `attachment; filename="ItemsTemplate-Validated.xlsx"`,
           'IMSIngestAPI-Validation-Warnings': '0',
           'IMSIngestAPI-Validation-Errors': '0',
           'IMSIngestAPI-Validation-Valid': 'true',

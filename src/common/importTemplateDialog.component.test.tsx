@@ -9,7 +9,6 @@ import { ingestApi } from '../api/api';
 import handleTransferState from '../handleTransferState';
 import CatalogueCategoriesJSON from '../mocks/CatalogueCategories.json';
 import { server } from '../mocks/server';
-import SystemsJSON from '../mocks/Systems.json';
 import {
   getCatalogueCategoryById,
   getSystemById,
@@ -25,9 +24,14 @@ import ImportTemplateDialog, {
   ImportTemplateDialogProps,
 } from './importTemplateDialog.component';
 
-const filePath = path.resolve(
+const catalogueItemsTemplateFilePath = path.resolve(
   __dirname,
-  '../mocks/CatalogueItemTemplate-test.xlsx'
+  '../mocks/CatalogueItemsTemplate-test.xlsx'
+);
+
+const itemsTemplateFilePath = path.resolve(
+  __dirname,
+  '../mocks/ItemsTemplate.xlsx'
 );
 
 vi.mock('../handleTransferState');
@@ -77,7 +81,7 @@ interface IngestEndpointHelperProps {
 }
 const ingestEndpointHelper = (props: IngestEndpointHelperProps) => {
   const { warnings, errors, valid, catalogueCategoryId } = props;
-  const fileBuffer = fs.readFileSync(filePath);
+  const fileBuffer = fs.readFileSync(catalogueItemsTemplateFilePath);
 
   const blob = new Blob([fileBuffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -92,7 +96,7 @@ const ingestEndpointHelper = (props: IngestEndpointHelperProps) => {
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': `attachment; filename="CatalogueItemTemplate-${catalogueCategory?.name}-Validated.xlsx"`,
+      'Content-Disposition': `attachment; filename="CatalogueItemsTemplate-${catalogueCategory?.name}-Validated.xlsx"`,
       'IMSIngestAPI-Validation-Warnings': String(warnings),
       'IMSIngestAPI-Validation-Errors': String(errors),
       'IMSIngestAPI-Validation-Valid': String(valid),
@@ -103,7 +107,7 @@ const ingestEndpointHelper = (props: IngestEndpointHelperProps) => {
 const catalogueItemsImportConfig: ImportSpreadsheetConfig = {
   endpointSegment: 'catalogue-items',
   parentIdMetaField: 'catalogue_category_id',
-  templateFileNamePrefix: 'CatalogueItemTemplate',
+  templateFileNamePrefix: 'CatalogueItemsTemplate',
   validationFileNamePrefix: 'CatalogueItemsValidation',
   downloadStepTitle: 'Download Catalogue Template',
   downloadStepDescription:
@@ -131,7 +135,7 @@ const catalogueItemsImportConfig: ImportSpreadsheetConfig = {
 const itemsImportConfig: ImportSpreadsheetConfig = {
   endpointSegment: 'items',
   parentIdMetaField: 'system_id',
-  templateFileNamePrefix: 'ItemTemplate',
+  templateFileNamePrefix: 'ItemsTemplate',
   validationFileNamePrefix: 'ItemsValidation',
   downloadStepTitle: 'Download Items Template',
   downloadStepDescription:
@@ -156,24 +160,21 @@ interface ItemIngestEndpointHelperProps {
   warnings: number;
   errors: number;
   valid: boolean;
-  systemId: string;
 }
 const itemIngestEndpointHelper = (props: ItemIngestEndpointHelperProps) => {
-  const { warnings, errors, valid, systemId } = props;
-  const fileBuffer = fs.readFileSync(filePath);
+  const { warnings, errors, valid } = props;
+  const fileBuffer = fs.readFileSync(itemsTemplateFilePath);
 
   const blob = new Blob([fileBuffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
-
-  const system = SystemsJSON.find((val) => val.id === systemId);
 
   return new HttpResponse(blob, {
     status: 200,
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': `attachment; filename="ItemTemplate-${system?.name}-Validated.xlsx"`,
+      'Content-Disposition': `attachment; filename="ItemsTemplate-Validated.xlsx"`,
       'IMSIngestAPI-Validation-Warnings': String(warnings),
       'IMSIngestAPI-Validation-Errors': String(errors),
       'IMSIngestAPI-Validation-Valid': String(valid),
@@ -1192,7 +1193,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 5,
             errors: 0,
             valid: true,
-            systemId: props.parentId,
           });
         })
       );
@@ -1272,7 +1272,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 0,
             errors: 5,
             valid: false,
-            systemId: props.parentId,
           });
         })
       );
@@ -1342,7 +1341,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 5,
             errors: 5,
             valid: false,
-            systemId: props.parentId,
           });
         })
       );
@@ -1548,7 +1546,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 5,
             errors: 0,
             valid: true,
-            systemId: props.parentId,
           });
         })
       );
@@ -1615,7 +1612,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 0,
             errors: 5,
             valid: false,
-            systemId: props.parentId,
           });
         })
       );
@@ -1674,7 +1670,6 @@ describe('Upload attachment dialog (Items)', () => {
             warnings: 5,
             errors: 5,
             valid: false,
-            systemId: props.parentId,
           });
         })
       );
