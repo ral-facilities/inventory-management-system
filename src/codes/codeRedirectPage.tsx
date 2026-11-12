@@ -28,7 +28,7 @@ const CodeRedirectPage = (): React.ReactElement => {
       setErrorMessage('Failed to parse redirect values')
       setIsErrorState(true)
     }
-  }, [searchParams]);
+  }, [searchParams, navigate]);
 
   return (
     <Box

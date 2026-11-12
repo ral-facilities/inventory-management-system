@@ -960,9 +960,11 @@ export async function buildRedirectUrl(redirectData: {
   switch (redirectData.type) {
     case 'system':
       return paths.system.replace(':system_id', redirectData.oid);
-    case 'item':
+    case 'item': {
       const itemData = await getItem(redirectData.oid);
-      const catalogueItemData = await getCatalogueItem(itemData.catalogue_item_id)
+      const catalogueItemData = await getCatalogueItem(
+        itemData.catalogue_item_id
+      );
       return paths.item
         .replace(
           ':catalogue_category_id',
@@ -970,5 +972,6 @@ export async function buildRedirectUrl(redirectData: {
         )
         .replace(':catalogue_item_id', itemData.catalogue_item_id)
         .replace(':item_id', itemData.id);
+    }
   }
 }
