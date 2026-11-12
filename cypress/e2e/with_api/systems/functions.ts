@@ -89,8 +89,7 @@ export const copyToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Systems more options' }).click();
-  cy.findByRole('menuitem', { name: 'Copy to' }).click();
+  cy.findByRole('button', { name: 'Copy to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage 2').click();
@@ -120,8 +119,7 @@ export const moveToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Systems more options' }).click();
-  cy.findByRole('menuitem', { name: 'Move to' }).click();
+  cy.findByRole('button', { name: 'Move to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage 2').click();

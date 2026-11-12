@@ -29,6 +29,7 @@ import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
+import { FOOTER_HEIGHT, MAIN_APP_BAR_HEIGHT } from './common/consts';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
 
@@ -87,12 +88,14 @@ export const setLocalStorageToken = (isAdminToken: boolean) => {
 
 /* Returns a calc function giving the page height excluding SciGateway related components
   (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
-  - all SciGateway related heights - 48px)*/
+  - all SciGateway related heights - 48px). The SciGateway footer is only shown on md
+  screens and up, so pass footerVisible = false to exclude its height on smaller screens */
 export const getSciGatewayPageHeightCalc = (
-  additionalSubtraction?: string
+  additionalSubtraction?: string,
+  footerVisible: boolean = true
 ): string => {
-  // Page height - unknown - app bar height - footer height - additional
-  return `calc(100vh - 8px - 64px - 24px${
+  // Page height - app bar height - footer height (if visible) - additional
+  return `calc(100vh - ${MAIN_APP_BAR_HEIGHT}${footerVisible ? ` - ${FOOTER_HEIGHT}` : ''}${
     additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
   })`;
 };
@@ -423,7 +426,8 @@ interface DateSortConfig<T> {
   selector: (item: T) => Date;
 }
 
-type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
+type SortConfig<T> =
+  StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
 
 export function sortDataList<T>(props: {
   data: T[];
@@ -435,9 +439,7 @@ export function sortDataList<T>(props: {
       return config.selector(a) - config.selector(b);
     }
     if (config.type === 'date') {
-      return (
-        config.selector(a).getTime() - config.selector(b).getTime()
-      );
+      return config.selector(a).getTime() - config.selector(b).getTime();
     }
     return config.selector(a).localeCompare(config.selector(b));
   });
@@ -925,6 +927,15 @@ export const criticalityCardStyle = (props: {
     border: `2px solid ${color}`,
     boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
   };
+};
+
+export const getCombinedFlagged = (
+  flags: (boolean | null)[]
+): boolean | null | undefined => {
+  if (flags.length === 0) return undefined;
+  if (flags.includes(true)) return true;
+  if (flags.includes(null)) return null;
+  return false;
 };
 
 export const criticalityHeaderStyle = (props: {

@@ -5,9 +5,11 @@ import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
+  Backdrop,
   Box,
   Button,
   Chip,
@@ -16,14 +18,14 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
-  Menu,
   MenuItem,
   Link as MuiLink,
   Tooltip,
   Typography,
+  useMediaQuery,
+  useTheme,
   type TableCellBaseProps,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
   MRT_Column,
@@ -37,7 +39,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
@@ -47,7 +49,8 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
-  MINIMUM_TABLE_HEIGHT,
+  FOOTER_HEIGHT,
+  MAIN_APP_BAR_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -56,6 +59,7 @@ import {
   usePreservedTableState,
 } from '../common/preservedTableState.component';
 import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
@@ -69,7 +73,9 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
+  getCombinedFlagged,
   getInitialColumnFilterFnState,
+  getSciGatewayPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -141,88 +147,196 @@ const AddSystemButton = (props: {
   );
 };
 
-const SystemsActionMenu = (props: {
+const SystemsTableButtons = (props: {
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
 }) => {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
-    null
-  );
   const [dialogType, setDialogType] = React.useState<
     'moveTo' | 'copyTo' | null
   >(null);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  const handleDialogOpen = (type: 'moveTo' | 'copyTo') => {
-    setDialogType(type);
-    handleMenuClose();
-  };
-
-  const handleDialogClose = () => {
-    setDialogType(null);
-  };
-
-  const ariaLabelText = props.parentSystemId
-    ? 'Subsystems more options'
-    : 'Systems more options';
-
   return (
-    <>
-      <Tooltip title={ariaLabelText}>
-        <span>
-          <IconButton aria-label={ariaLabelText} onClick={handleMenuOpen}>
-            <MoreHorizIcon />
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Menu
-        anchorEl={menuAnchorEl}
-        open={Boolean(menuAnchorEl)}
-        onClose={handleMenuClose}
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 1,
+          minWidth: 0,
+          maxWidth: '100%',
+          '& .MuiButton-root': { whiteSpace: 'nowrap', flexShrink: 0 },
+        }}
       >
-        <MenuItem onClick={() => handleDialogOpen('moveTo')}>
-          <ListItemIcon>
-            <DriveFileMoveOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Move to</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleDialogOpen('copyTo')}>
-          <ListItemIcon>
-            <FolderCopyOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Copy to</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => props.onChangeSelectedSystems({})}>
-          <ListItemIcon>
-            <ClearIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{props.selectedSystems.length} selected</ListItemText>
-        </MenuItem>
-      </Menu>
+        <Button
+          variant="outlined"
+          startIcon={<DriveFileMoveOutlinedIcon fontSize="small" />}
+          onClick={() => setDialogType('moveTo')}
+        >
+          Move to
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<FolderCopyOutlinedIcon fontSize="small" />}
+          onClick={() => setDialogType('copyTo')}
+        >
+          Copy to
+        </Button>
+      </Box>
 
       {dialogType && (
         <SystemDirectoryDialog
           open={Boolean(dialogType)}
-          onClose={handleDialogClose}
+          onClose={() => setDialogType(null)}
           selectedSystems={props.selectedSystems}
           onChangeSelectedSystems={props.onChangeSelectedSystems}
           parentSystemId={props.parentSystemId}
           type={dialogType}
         />
       )}
+    </Box>
+  );
+};
+
+const SystemsTableActionMenu = (props: {
+  systemId: string | null;
+  selectedSystems: System[];
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
+  filtersEnabled: boolean;
+  onClearFiltersClick: () => void;
+}) => {
+  const {
+    systemId,
+    selectedSystems,
+    onChangeSelectedSystems,
+    filtersEnabled,
+    onClearFiltersClick,
+  } = props;
+
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+  const [directoryDialogType, setDirectoryDialogType] = React.useState<
+    'moveTo' | 'copyTo' | null
+  >(null);
+
+  return (
+    <>
+      <TableActionMenu
+        ariaLabelPrefix={systemId === null ? 'systems' : 'subsystems'}
+        items={[
+          {
+            label: 'Clear Filters',
+            icon: <ClearIcon />,
+            onClick: onClearFiltersClick,
+            isDisabled: !filtersEnabled,
+          },
+          {
+            label: systemId === null ? 'Add System' : 'Add Subsystem',
+            icon: <AddIcon />,
+            onClick: () => setAddSystemDialogOpen(true),
+          },
+          ...(selectedSystems.length > 0
+            ? [
+                {
+                  label: 'Move to',
+                  icon: <DriveFileMoveOutlinedIcon />,
+                  onClick: () => setDirectoryDialogType('moveTo'),
+                },
+                {
+                  label: 'Copy to',
+                  icon: <FolderCopyOutlinedIcon />,
+                  onClick: () => setDirectoryDialogType('copyTo'),
+                },
+              ]
+            : []),
+        ]}
+      />
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={systemId}
+        requestType="post"
+      />
+      {directoryDialogType && (
+        <SystemDirectoryDialog
+          open={Boolean(directoryDialogType)}
+          onClose={() => setDirectoryDialogType(null)}
+          selectedSystems={selectedSystems}
+          onChangeSelectedSystems={onChangeSelectedSystems}
+          parentSystemId={systemId}
+          type={directoryDialogType}
+        />
+      )}
     </>
   );
 };
 
-const MIN_SUBSYSTEMS_WIDTH = '500px';
+const SUBSYSTEMS_PANEL_WIDTH = '500px';
+const SUBSYSTEMS_RAIL_WIDTH = '64px';
+export const SUBSYSTEMS_PANEL_URL_PARAM = 'subsystems';
+
+export const getSubsystemsCriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'At least one of these systems is critical.';
+  }
+  if (showFlagged === false) {
+    return 'None of these systems are critical.';
+  }
+  return 'Unable to determine if all of these systems are critical. Please wait until this is recalculated.';
+};
+
+const SubsystemsRail = (props: {
+  title: string;
+  count?: number;
+  showFlagged?: boolean | null;
+  onExpand: () => void;
+}) => {
+  const ariaLabelText = `Show ${props.title.toLowerCase()}`;
+
+  const { showFlagged, count, title, onExpand } = props;
+
+  return (
+    <Box
+      sx={(theme) => ({
+        flex: '0 0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 1,
+        borderRight: 1,
+        borderRightColor: theme.palette.divider,
+        width: SUBSYSTEMS_RAIL_WIDTH,
+        py: 1,
+      })}
+    >
+      <Tooltip title={ariaLabelText}>
+        <span>
+          <IconButton aria-label={ariaLabelText} onClick={onExpand}>
+            <KeyboardDoubleArrowRightIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
+      {showFlagged !== undefined && (
+        <CriticalityTooltipIcon
+          showFlagged={showFlagged}
+          label={getSubsystemsCriticalityLabel(showFlagged)}
+          iconSx={{ px: 0.5 }}
+        />
+      )}
+      <Typography
+        variant="subtitle2"
+        noWrap
+        sx={{
+          color: 'text.secondary',
+          writingMode: 'vertical-rl',
+          transform: 'rotate(180deg)',
+        }}
+      >
+        {count === undefined ? title : `${title} (${count})`}
+      </Typography>
+    </Box>
+  );
+};
 
 export const CriticalTooltipText = (
   <Typography style={{ whiteSpace: 'pre-line' }}>
@@ -249,6 +363,9 @@ function Systems() {
   >(undefined);
 
   const noResultsTxt = `No ${systemId === null ? 'systems' : 'subsystems'} found`;
+  const panelTitle = systemId === null ? 'Root systems' : 'Subsystems';
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const hiddenColumns = React.useMemo(
     () => [
@@ -275,6 +392,47 @@ function Systems() {
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemTypesLoading || subsystemsDataLoading;
+
+  const subsystemsFlagged = React.useMemo(
+    () =>
+      isCriticalMode && isSparesDefinitionDefined && !isLoading
+        ? getCombinedFlagged(
+            (subsystemsData ?? []).map((row) => row.is_flagged)
+          )
+        : undefined,
+    [isCriticalMode, isSparesDefinitionDefined, isLoading, subsystemsData]
+  );
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('xl'));
+
+  const isFooterVisible = useMediaQuery(theme.breakpoints.up('md'));
+
+  const subsystemsPanelParam = searchParams.get(SUBSYSTEMS_PANEL_URL_PARAM);
+  const isRoot = systemId === null;
+  const subsystemsCollapsed =
+    subsystemsPanelParam !== null
+      ? subsystemsPanelParam === 'hide'
+      : isRoot
+        ? false
+        : !isLoading && subsystemsData?.length === 0;
+
+  const onChangeSubsystemsCollapsed = React.useCallback(
+    (collapsed: boolean) =>
+      setSearchParams(
+        (prevSearchParams) => {
+          const newSearchParams = new URLSearchParams(prevSearchParams);
+          newSearchParams.set(
+            SUBSYSTEMS_PANEL_URL_PARAM,
+            collapsed ? 'hide' : 'show'
+          );
+          return newSearchParams;
+        },
+        { replace: false }
+      ),
+    [setSearchParams]
+  );
+
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
 
   React.useEffect(() => {
@@ -691,10 +849,21 @@ function Systems() {
             sx={{ display: 'flex', alignItems: 'center', margin: 0.5, my: 1 }}
           >
             <Typography variant="h6" sx={{ marginRight: 'auto' }}>
-              {systemId === null ? 'Root systems' : 'Subsystems'}
+              {panelTitle}
             </Typography>
 
             <AddSystemButton systemId={systemId} isIcon />
+
+            <Tooltip title={`Hide ${panelTitle.toLowerCase()}`}>
+              <span>
+                <IconButton
+                  aria-label={`Hide ${panelTitle.toLowerCase()}`}
+                  onClick={() => onChangeSubsystemsCollapsed(true)}
+                >
+                  <KeyboardDoubleArrowLeftIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
           <Divider role="presentation" />
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
@@ -702,13 +871,6 @@ function Systems() {
               <MRT_GlobalFilterTextField table={table} />
             </Box>
             <Box sx={{ marginLeft: 'auto' }}>
-              {selectedSystems.length > 0 && (
-                <SystemsActionMenu
-                  selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={table.setRowSelection}
-                  parentSystemId={systemId}
-                />
-              )}
               <Tooltip title="Clear Filters">
                 <span>
                   <IconButton
@@ -726,24 +888,32 @@ function Systems() {
               <MRT_ToggleFullScreenButton table={table} />
             </Box>
           </Box>
+          <Box
+            aria-hidden={selectedSystems.length === 0}
+            sx={{
+              mx: 1,
+              visibility: selectedSystems.length > 0 ? 'visible' : 'hidden',
+            }}
+          >
+            <SystemsTableButtons
+              selectedSystems={selectedSystems}
+              onChangeSelectedSystems={table.setRowSelection}
+              parentSystemId={systemId}
+            />
+          </Box>
         </>
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-        <AddSystemButton systemId={systemId} />
-      </Box>
+      <SystemsTableActionMenu
+        systemId={systemId}
+        selectedSystems={table
+          .getSelectedRowModel()
+          .rows.map((row) => row.original)}
+        onChangeSelectedSystems={table.setRowSelection}
+        filtersEnabled={preservedState.columnFilters.length > 0}
+        onClearFiltersClick={() => table.resetColumnFilters()}
+      />
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
@@ -804,65 +974,128 @@ function Systems() {
     setMenuDialogType(undefined);
   }, [systemId, subsystemsTable]);
 
+  const subsystemsTableContents = isLoading ? (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        minHeight: 200,
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  ) : (
+    <MaterialReactTable table={subsystemsTable} />
+  );
+
+  const subsystemsOverlaid = isSmallScreen && !subsystemsCollapsed;
+
+  const subsystemsRail = (
+    <SubsystemsRail
+      title={panelTitle}
+      count={isLoading ? undefined : subsystemsData?.length}
+      showFlagged={subsystemsFlagged}
+      onExpand={() => onChangeSubsystemsCollapsed(false)}
+    />
+  );
+
+  const subsystemsPanel = (
+    <Box
+      sx={{
+        textAlign: 'left',
+        width: SUBSYSTEMS_PANEL_WIDTH,
+        ...(subsystemsOverlaid
+          ? {
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              maxWidth: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              backgroundColor: 'background.paper',
+              boxShadow: 8,
+              zIndex: theme.zIndex.drawer - 1,
+              padding: 0,
+            }
+          : {
+              flex: '0 0 auto',
+              minWidth: 0,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              padding: 1,
+              paddingRight: 2,
+              paddingBottom: 0,
+            }),
+      }}
+    >
+      {subsystemsTableContents}
+    </Box>
+  );
+
+  const detailsPanel = (
+    <Box
+      sx={{
+        flex: '1 1 auto',
+        minWidth: 0,
+        minHeight: 0,
+        overflow: 'auto',
+        textAlign: 'left',
+        padding: 1,
+      }}
+    >
+      <SystemDetails id={systemId} />
+    </Box>
+  );
+
   return (
     <>
-      <Grid
-        container
-        direction="row"
-        sx={{
-          margin: 0,
+      <Box
+        sx={(theme) => ({
+          display: 'flex',
+          flexDirection: 'row',
           alignItems: 'stretch',
-          minHeight: MINIMUM_TABLE_HEIGHT,
-        }}
+          // Fill the remaining visible height so the table footer stays on screen
+          flex: '1 1 0',
+          minHeight: '300px',
+          overflow: 'hidden',
+
+          ...(!subsystemsCollapsed && subsystemsOverlaid
+            ? {
+                position: 'fixed',
+                zIndex: subsystemsTable.getState().isFullScreen
+                  ? theme.zIndex.drawer
+                  : theme.zIndex.drawer - 2,
+                // Main app bar
+                top: MAIN_APP_BAR_HEIGHT,
+                height: getSciGatewayPageHeightCalc(undefined, isFooterVisible),
+              }
+            : { position: 'relative' }),
+        })}
       >
-        <Grid
-          size={{
-            xs: 12,
-            md: 'grow',
-          }}
-          sx={{
-            minWidth: MIN_SUBSYSTEMS_WIDTH,
-            textAlign: 'left',
-            padding: 1,
-            paddingRight: 2,
-            paddingBottom: 0,
-            minHeight: MINIMUM_TABLE_HEIGHT,
-          }}
-        >
-          {isLoading ? (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                height: '100%',
-                minHeight: 200,
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          ) : (
-            <MaterialReactTable table={subsystemsTable} />
-          )}
-        </Grid>
-        <Grid
-          size={{
-            xs: 12,
-            lg: 10,
-          }}
-          sx={{
-            textAlign: 'left',
-            padding: 1,
-            maxWidth: {
-              xs: '100%',
-              lg: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
-            },
-          }}
-        >
-          <SystemDetails id={systemId} />
-        </Grid>
-      </Grid>
+        {(subsystemsCollapsed || subsystemsOverlaid) && subsystemsRail}
+        {subsystemsOverlaid && (
+          <Backdrop
+            aria-hidden
+            open={subsystemsOverlaid}
+            onClick={() => onChangeSubsystemsCollapsed(true)}
+            sx={{
+              zIndex: theme.zIndex.drawer - 2,
+              // Don't cover the main app bar or the footer (only shown on md and up)
+              top: MAIN_APP_BAR_HEIGHT,
+              bottom: { md: FOOTER_HEIGHT },
+            }}
+          />
+        )}
+        {!subsystemsCollapsed && subsystemsPanel}
+        {detailsPanel}
+      </Box>
 
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}

@@ -6,7 +6,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
     style="height: 100%;"
   >
     <div
-      class="MuiBox-root css-o2282t"
+      class="MuiBox-root css-nqz3p6"
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
@@ -1701,7 +1701,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
     style="height: 100%;"
   >
     <div
-      class="MuiBox-root css-o2282t"
+      class="MuiBox-root css-nqz3p6"
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
@@ -3395,7 +3395,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
     style="height: 100%;"
   >
     <div
-      class="MuiBox-root css-o2282t"
+      class="MuiBox-root css-nqz3p6"
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"

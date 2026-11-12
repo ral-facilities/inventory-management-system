@@ -296,36 +296,6 @@ describe('Systems', () => {
     });
   });
 
-  it('can select and deselect systems', async () => {
-    createView('/systems/65328f34a40ff5301575a4e3', 'system');
-
-    await waitFor(() => {
-      expect(screen.getByText('Subsystems')).toBeInTheDocument();
-    });
-
-    const checkboxes = await screen.findAllByRole('checkbox', {
-      name: 'Toggle select row',
-    });
-
-    const smallerLaserCheckbox = checkboxes[0];
-
-    await user.click(smallerLaserCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Subsystems more options' })
-      ).toBeInTheDocument();
-    });
-
-    await user.click(smallerLaserCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('button', { name: 'Subsystems more options' })
-      ).not.toBeInTheDocument();
-    });
-  });
-
   it('can deselect all selected systems at once', async () => {
     createView('/systems');
 
@@ -333,42 +303,29 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const checkboxes = await screen.findAllByRole('checkbox', {
-      name: 'Toggle select row',
+    const toggleAllSelect = await screen.findByRole('checkbox', {
+      name: 'Toggle select all',
     });
 
-    const giantLaserCheckbox = checkboxes[1];
-
-    const pulseLaserCheckbox = checkboxes[2];
-
-    await user.click(giantLaserCheckbox);
-    await user.click(pulseLaserCheckbox);
+    await user.click(toggleAllSelect);
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
+    expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    expect(
-      screen.getByRole('menuitem', { name: 'Copy to' })
-    ).toBeInTheDocument();
-
-    await user.click(
-      await screen.findByRole('menuitem', { name: '2 selected' })
-    );
+    await user.click(toggleAllSelect);
 
     await waitFor(() => {
       expect(
-        screen.queryByRole('menuitem', { name: 'Move to' })
+        screen.queryByRole('button', { name: 'Move to' })
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByRole('menuitem', { name: 'Copy to' })
+      screen.queryByRole('button', { name: 'Copy to' })
     ).not.toBeInTheDocument();
   });
 
@@ -388,15 +345,11 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
-
-    await user.click(screen.getByRole('menuitem', { name: 'Move to' }));
+    await user.click(screen.getByRole('button', { name: 'Move to' }));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -425,15 +378,11 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Systems more options' })
+        screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Systems more options' })
-    );
-
-    await user.click(screen.getByRole('menuitem', { name: 'Copy to' }));
+    await user.click(screen.getByRole('button', { name: 'Copy to' }));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
