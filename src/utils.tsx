@@ -29,6 +29,7 @@ import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { getItem } from './api/items.tsx';
+import { getSystem } from './api/systems.tsx'
 import { getCatalogueItem } from './api/catalogueItems.tsx';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
@@ -958,8 +959,10 @@ export async function buildRedirectUrl(redirectData: {
   type: 'item' | 'system';
 }): Promise<string> {
   switch (redirectData.type) {
-    case 'system':
-      return paths.system.replace(':system_id', redirectData.oid);
+    case 'system': {
+      const systemData = await getSystem(redirectData.oid);
+      return paths.system.replace(':system_id', systemData.id);
+    }
     case 'item': {
       const itemData = await getItem(redirectData.oid);
       const catalogueItemData = await getCatalogueItem(
