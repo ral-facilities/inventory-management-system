@@ -89,4 +89,14 @@ describe('Code redirect page component', () => {
     });
     expect(navigateMock).not.toHaveBeenCalled();
   });
+
+  it('links to the home page from the error state', async () => {
+    createView({});
+
+    expect(await screen.findByText('Redirect Failed')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Go Home' })).toHaveAttribute(
+      'href',
+      paths.root
+    );
+  });
 });
