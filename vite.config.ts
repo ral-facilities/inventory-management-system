@@ -146,6 +146,9 @@ export default defineConfig(({ mode }) => {
       globalSetup: './globalSetup.js',
       testTimeout: 10000,
       setupFiles: ['src/setupTests.ts'],
+      // Node 25+ enables a built-in (undefined without --localstorage-file)
+      // global localStorage that shadows jsdom's implementation
+      execArgv: ['--no-experimental-webstorage'],
       coverage: {
         reporter: [
           // Default
