@@ -33,7 +33,8 @@ import {
 } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
 
-import { RequestType, SystemsSchema } from '../form.schemas';
+import z from 'zod';
+import { RequestType, SystemsPostSchema, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { createFormControlWithRootErrorClearing } from '../utils';
 
@@ -90,8 +91,13 @@ const SystemDialog = (props: SystemDialogProps) => {
           },
     [isNotCreating, parentSystemTypeId, selectedSystem]
   );
+
   // This is within the React Component as this dialog is used in multiple places in the systems page
-  const formControl = createFormControlWithRootErrorClearing<SystemPost>();
+  const formControl = createFormControlWithRootErrorClearing<
+    z.input<typeof SystemsPostSchema>,
+    undefined,
+    SystemPost
+  >();
 
   const {
     handleSubmit,
@@ -101,7 +107,7 @@ const SystemDialog = (props: SystemDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<SystemPost>({
+  } = useForm<z.input<typeof SystemsPostSchema>, undefined, SystemPost>({
     formControl,
     resolver: zodResolver(SystemsSchema(requestType)),
     defaultValues: initialSystem,
