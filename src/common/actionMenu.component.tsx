@@ -105,8 +105,9 @@ function ActionMenu(props: ActionMenuProps) {
               editMenuItem.onClick();
               handleMenuClose();
             }}
+            sx={{ gap: 1 }}
           >
-            <EditIcon fontSize="small" sx={{ mr: 1 }} />
+            <EditIcon fontSize="small" />
             Edit
           </MenuItem>
 
@@ -116,8 +117,9 @@ function ActionMenu(props: ActionMenuProps) {
                 setOpenUploadDialog('images');
                 handleMenuClose();
               }}
+              sx={{ gap: 1 }}
             >
-              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              <UploadIcon fontSize="small" />
               Upload Images
             </MenuItem>
           )}
@@ -127,8 +129,9 @@ function ActionMenu(props: ActionMenuProps) {
                 setOpenUploadDialog('attachments');
                 handleMenuClose();
               }}
+              sx={{ gap: 1 }}
             >
-              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              <UploadIcon fontSize="small" />
               Upload Attachments
             </MenuItem>
           )}
@@ -139,8 +142,9 @@ function ActionMenu(props: ActionMenuProps) {
                 window.print();
                 handleMenuClose();
               }}
+              sx={{ gap: 1 }}
             >
-              <PrintIcon fontSize="small" sx={{ mr: 1 }} />
+              <PrintIcon fontSize="small" />
               Print
             </MenuItem>
           )}
@@ -153,8 +157,9 @@ function ActionMenu(props: ActionMenuProps) {
                   editMenuItem.onClick({ isAdminMode: true });
                   handleMenuClose();
                 }}
+                sx={{ gap: 1 }}
               >
-                <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                <EditIcon fontSize="small" />
                 Edit as Admin
               </MenuItem>
             </>
@@ -168,6 +173,7 @@ function ActionMenu(props: ActionMenuProps) {
                   item.onClick();
                   handleMenuClose();
                 }}
+                sx={{ gap: 1 }}
               >
                 {item.icon}
                 {item.label}

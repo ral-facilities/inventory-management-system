@@ -81,6 +81,8 @@ jobs:
 
   e2e-tests-api:
     name: End-to-End (with api) Tests
+    # TODO: Remove this workaround once an upstream MongoDB fix is available. Ubuntu 22.04 is used temporarily as
+    # MongoDB 8.0 fails to start on newer Linux kernels, causing E2E test failures.
     runs-on: ubuntu-latest
 
     steps:
@@ -127,6 +129,7 @@ jobs:
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           --env BULK__MAX_CATALOGUE_ITEMS=1000 \
+          --env BULK__MAX_ITEMS=1000 \
           --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:main
 

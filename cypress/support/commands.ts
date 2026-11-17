@@ -83,7 +83,8 @@ Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
       containerName = 'ims-api-mongodb';
       databaseName = 'ims';
     }
-    cy.exec(
+    cy.task(
+      'exec',
       `docker exec -i $(docker ps | grep ${containerName} | awk '{ print $1 }') mongosh ${databaseName} --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
     );
   });
@@ -157,12 +158,16 @@ Cypress.Commands.add('setMode', ({ admin = false, critical = false } = {}) => {
 
   // Toggle admin mode
   if (admin) {
-    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click();
+    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click({
+      force: true,
+    });
   }
 
   // Toggle critical mode
   if (critical) {
-    cy.findByRole('menuitem', { name: 'Switch critical mode on' }).click();
+    cy.findByRole('menuitem', { name: 'Switch critical mode on' }).click({
+      force: true,
+    });
   }
 });
 
