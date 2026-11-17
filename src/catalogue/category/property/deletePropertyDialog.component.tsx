@@ -1,5 +1,5 @@
-import WarningIcon from '@mui/icons-material/Warning';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -14,17 +14,20 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import z from 'zod';
 import { APIError, CatalogueCategory } from '../../../api/api.types';
-import handleIMS_APIError from '../../../handleIMS_APIError';
 import { useDeleteCatalogueCategoryProperty } from '../../../api/catalogueCategories';
+import { CatalogueCategorySchema } from '../../../form.schemas';
+import handleIMS_APIError from '../../../handleIMS_APIError';
 import { MigrationWarningMessage } from './propertyDialog.component';
 
 export interface DeletePropertyDialogProps {
   open: boolean;
   onClose: (props: { successfulDeletion: boolean }) => void;
   catalogueCategory?: CatalogueCategory;
-  selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
+  selectedProperty?: NonNullable<
+    z.input<typeof CatalogueCategorySchema>['properties']
+  >[number];
 }
 
 const DeletePropertyDialog = (props: DeletePropertyDialogProps) => {

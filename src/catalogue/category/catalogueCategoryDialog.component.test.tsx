@@ -9,6 +9,7 @@ import {
 } from '../../api/api.types';
 import { AddCatalogueCategoryProperty } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import handleTransferState from '../../handleTransferState';
 import { server } from '../../mocks/server';
 import {
   CREATED_MODIFIED_TIME_VALUES,
@@ -18,7 +19,6 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import handleTransferState from '../../handleTransferState';
 
 vi.mock('../../handleIMS_APIError');
 vi.mock('../../handleTransferState');
@@ -29,11 +29,14 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
-  interface TestAddCatalogueCategoryProperty
-    extends AddCatalogueCategoryProperty {
+  interface TestAddCatalogueCategoryProperty extends Omit<
+    AddCatalogueCategoryProperty,
+    'type'
+  > {
     unit?: string;
     skipSave?: boolean;
     skipSaveValidation?: boolean;
+    type: string;
   }
   const createView = () => {
     return renderComponentWithRouterProvider(

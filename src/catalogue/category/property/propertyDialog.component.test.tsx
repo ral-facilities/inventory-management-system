@@ -3,11 +3,11 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MockInstance } from 'vitest';
+import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
 import {
   AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
   AddPropertyMigration,
   EditPropertyMigration,
 } from '../../../app.types';
@@ -23,11 +23,12 @@ import PropertyDialog, {
 
 interface TestAddPropertyMigration extends Omit<
   AddPropertyMigration,
-  'default_value' | 'allowed_values'
+  'default_value' | 'allowed_values' | 'type'
 > {
   unit?: string;
   default_value?: string;
   allowed_values?: AllowedValues;
+  type: string;
 }
 
 interface TestEditPropertyMigration extends Omit<
@@ -39,7 +40,11 @@ interface TestEditPropertyMigration extends Omit<
 }
 
 const TestComponent = (props: PropertyDialogProps) => {
-  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+  const formMethods = useForm<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >({
     resolver: zodResolver(CatalogueCategorySchema),
   });
 
