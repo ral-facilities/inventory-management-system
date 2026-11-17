@@ -1,3 +1,108 @@
+import { HttpResponse } from 'msw';
+
+const itemBackendErrorMessage = {
+  IMSIngestAPIVersion: {
+    apiMessage:
+      "Unable to find the custom document property 'IMSIngestAPIVersion' in the workbook properties",
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  InvalidSpreadsheetFile: {
+    apiMessage: 'File given is not a valid spreadsheet',
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  FileTypeMismatch: {
+    apiMessage:
+      'File does not contain the correct extension or content type do not match',
+    uiMessage: 'File extension does not match content type.',
+  },
+
+  UnsupportedFileExtension: {
+    apiMessage: 'File extension is not supported',
+    uiMessage: 'File type not supported.',
+  },
+
+  MissingEntity: {
+    apiMessage: 'The specified system does not exist',
+    uiMessage:
+      'The selected system no longer exists or is invalid. Please navigate to a valid system and try again.',
+  },
+
+  InvalidItemData: {
+    apiMessage: 'Invalid item data',
+    uiMessage:
+      'The uploaded spreadsheet contains invalid item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.',
+  },
+
+  TooManyItems: {
+    apiMessage:
+      'Too many items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
+    uiMessage:
+      'Your spreadsheet contains too many items. The maximum allowed is 1000. Please reduce the number of rows and try again.',
+  },
+
+  MaximumAllowedItems: {
+    apiMessage:
+      'Too many items in spreadsheet. Found 1050 but only a maximum can be processed at once.',
+    uiMessage:
+      'Unable to determine maximum allowed items. Please contact the system administrator.',
+  },
+
+  TemplateVersionMismatch: {
+    apiMessage:
+      'Spreadsheet was created by IMS Ingest API v1 which is incompatible with the current version',
+    uiMessage:
+      'This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.',
+  },
+
+  MissingSheet: {
+    apiMessage: "Unable to find the 'Items Template' sheet in the workbook",
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  ColumnsModified: {
+    apiMessage:
+      'The columns within the template are either out of date or have been modified. Please generate a new template.',
+    uiMessage:
+      'The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.',
+  },
+  InvalidSpreadsheetError: {
+    apiMessage: 'Spreadsheet contents has errors',
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+};
+
+interface ItemIngestEndpointHelperProps {
+  warnings: number;
+  errors: number;
+  valid: boolean;
+}
+const itemIngestEndpointHelper = async (
+  props: ItemIngestEndpointHelperProps
+) => {
+  const { warnings, errors, valid } = props;
+
+  const response = await fetch('/src/mocks/ItemsTemplate-test.xlsx');
+  const blob = await response.blob();
+
+  return new HttpResponse(blob, {
+    status: 200,
+    headers: {
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename="ItemsTemplate-Validated.xlsx"`,
+      'IMSIngestAPI-Validation-Warnings': String(warnings),
+      'IMSIngestAPI-Validation-Errors': String(errors),
+      'IMSIngestAPI-Validation-Valid': String(valid),
+    },
+  });
+};
+
 describe('Systems', () => {
   beforeEach(() => {
     cy.visit('/systems');
@@ -17,8 +122,8 @@ describe('Systems', () => {
     cy.findByText('Root systems').should('be.visible');
     cy.findByText('Giant laser').should('be.visible');
 
-    cy.findAllByTestId('ErrorIcon').first().should('exist');
-    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findAllByTestId('ErrorIcon').eq(1).should('exist');
+    cy.findAllByTestId('ErrorIcon').eq(1).trigger('mouseover');
     cy.findByText('This system is critical.');
   });
 
@@ -52,12 +157,16 @@ describe('Systems', () => {
   });
 
   it('should be able to navigate through subsystems', () => {
+    cy.findByRole('button', { name: 'Hide root systems' }).click();
+
     cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
 
     cy.findByText('Please select a system').should('be.visible');
 
     // Navigate deeper
+
+    cy.findByRole('button', { name: 'Show root systems' }).click();
     cy.findByRole('link', { name: 'Giant laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e3');
     cy.findByText('No system selected').should('not.exist');
@@ -65,16 +174,23 @@ describe('Systems', () => {
 
     cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
+    cy.findByText('Juan Horton').should('be.visible');
     cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
 
     // Navigate deeper again
+    cy.findByRole('button', { name: 'Show subsystems' }).click();
     cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
 
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
+    cy.findByText('Daniel Morrison').should('be.visible');
     cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
   });
@@ -111,6 +227,8 @@ describe('Systems', () => {
   });
 
   it('should be able to use browser back to undo a pagination state change', () => {
+    // Full HD standard desktop resolution
+    cy.viewport(1920, 1080);
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByText('Smaller laser').should('be.visible');
@@ -218,6 +336,8 @@ describe('Systems', () => {
   });
 
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
+    // Full HD standard desktop resolution
+    cy.viewport(1920, 1080);
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -328,10 +448,8 @@ describe('Systems', () => {
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().scrollIntoView();
     cy.findAllByRole('link', { name: 'Cameras 8' })
@@ -347,10 +465,8 @@ describe('Systems', () => {
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     // Wait for progress bar to disappear before interacting with filters
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -368,10 +484,8 @@ describe('Systems', () => {
 
   it("should be able to navigate to a filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     // Wait for progress bar to disappear before interacting with filters
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -406,10 +520,13 @@ describe('Systems', () => {
     cy.findAllByText('Laser Tech').should('have.length', 2);
 
     // Check can go back to root
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
     cy.url().then((url) => {
       expect(url.endsWith('/systems'));
     });
+
+    cy.findByRole('button', { name: 'Hide root systems' }).click();
     cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
     cy.findByText('Please select a system').should('be.visible');
@@ -824,6 +941,8 @@ describe('Systems', () => {
     });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
     cy.findByRole('menuitem', { name: 'Edit' }).should('exist');
     cy.findByRole('menuitem', { name: 'Edit' }).click();
@@ -904,8 +1023,7 @@ describe('Systems', () => {
     cy.visit('/systems');
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(1).click();
 
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
       .should('exist')
@@ -925,8 +1043,7 @@ describe('Systems', () => {
     cy.visit('/systems');
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Move to' }).click();
+    cy.findByRole('button', { name: 'Move to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -965,8 +1082,7 @@ describe('Systems', () => {
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
     cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
 
-    cy.findByRole('button', { name: 'Systems more options' }).click();
-    cy.findByRole('menuitem', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1031,11 +1147,10 @@ describe('Systems', () => {
   describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
+      cy.findByText('Antony Yates').should('exist');
 
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
-        .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1044,8 +1159,8 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
+      cy.findByRole('table')
+
         .within(() => {
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
@@ -1103,10 +1218,9 @@ describe('Systems', () => {
       cy.setMode({ admin: true });
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
-        .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByText('Antony Yates').should('exist');
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1115,21 +1229,19 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
-        .within(() => {
-          cy.findAllByRole('checkbox', {
-            name: 'Toggle select row',
-          })
-            .eq(1)
-            .click({ force: true });
+      cy.findByRole('table').within(() => {
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(1)
+          .click({ force: true });
 
-          cy.findAllByRole('checkbox', {
-            name: 'Toggle select row',
-          })
-            .eq(2)
-            .click({ force: true });
-        });
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(2)
+          .click({ force: true });
+      });
 
       cy.findByRole('button', { name: 'Move to as Admin' }).click();
 
@@ -1176,10 +1288,10 @@ describe('Systems', () => {
 
     it('display errors message and clears error message when resolved', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
+      cy.findByRole('button', { name: 'Show/Hide filters' })
+
         .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1188,8 +1300,8 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
+      cy.findByRole('table')
+
         .within(() => {
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
@@ -1320,5 +1432,521 @@ describe('Systems', () => {
       const request = deleteRequests[0];
       expect(request.url.toString()).to.contain('qWAdynAI');
     });
+  });
+
+  it('downloads items template', () => {
+    cy.visit('/systems/656da8ef9cba7a76c6f81a5d');
+    cy.setMode({ admin: false });
+
+    cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+    cy.findByRole('dialog').should('be.visible');
+    cy.findByRole('button', { name: 'Download Template' }).click();
+    cy.readFile('./cypress/downloads/ItemsTemplate.xlsx').should('exist');
+  });
+
+  describe('item spreadsheets (admin mode)', () => {
+    beforeEach(() => {
+      cy.visit('/systems/656da8ef9cba7a76c6f81a5d');
+      cy.setMode({ admin: true });
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+    });
+
+    it('uploads a template', () => {
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation complete. No errors or warnings found. Please click Next to proceed.'
+      ).should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByText('Import 1 file').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/ingest',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByText('dialog').should('not.exist');
+    });
+
+    it('displays a warning message when there are warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 5,
+              errors: 0,
+              valid: true,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.'
+      ).should('exist');
+
+      cy.findByText('Next').click();
+      cy.findByText('Import 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/ingest',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    it('displays an error message when there are errors in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 0,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText(
+        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 5,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText(
+        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    Object.entries(itemBackendErrorMessage).forEach(
+      ([key, { apiMessage, uiMessage }]) => {
+        it(`displays ${key} error message`, () => {
+          cy.window().its('msw').should('not.equal', undefined);
+          cy.window().then((window) => {
+            const { worker, http } = window.msw;
+
+            worker.use(
+              http.post('/spreadsheets/items/validate', () => {
+                return HttpResponse.json(
+                  { detail: apiMessage },
+                  { status: 422 }
+                );
+              })
+            );
+          });
+
+          cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+          cy.findByText('Download Items Template').should('exist');
+
+          cy.findByText('Next').click();
+
+          cy.findByRole('dialog').should('be.visible');
+
+          cy.get('.uppy-Dashboard-input')
+            .eq(4)
+            .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+              force: true,
+            });
+
+          cy.startSnoopingBrowserMockedRequest();
+
+          cy.findByText('Validate 1 file').click();
+
+          cy.findAllByLabelText(uiMessage).should('have.length', 2);
+
+          cy.findByText('Upload 1 file').should('not.exist');
+        });
+      }
+    );
+  });
+
+  describe('item spreadsheets (normal mode)', () => {
+    beforeEach(() => {
+      cy.visit('/systems/656da8ef9cba7a76c6f81a5d');
+      cy.setMode({ admin: false });
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+    });
+
+    it('validates a template', () => {
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findByText(
+        'Validation complete. No errors or warnings found. Please click Next to proceed.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText('Next').click();
+
+      cy.findByText('Administrator Action Required');
+    });
+
+    it('displays a warning message when there are warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 5,
+              errors: 0,
+              valid: true,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.'
+      ).should('exist');
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    it('displays an error message when there are errors in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 0,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/items/validate', async () => {
+            return await itemIngestEndpointHelper({
+              warnings: 5,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByText('Download Items Template').should('exist');
+
+      cy.findByText('Next').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .eq(4)
+        .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+          force: true,
+        });
+
+      cy.findByText('Validate 1 file').click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText(
+        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile('./cypress/downloads/ItemsTemplate-Validated.xlsx').should(
+        'exist'
+      );
+    });
+
+    Object.entries(itemBackendErrorMessage).forEach(
+      ([key, { apiMessage, uiMessage }]) => {
+        it(`displays ${key} error message`, () => {
+          cy.window().its('msw').should('not.equal', undefined);
+          cy.window().then((window) => {
+            const { worker, http } = window.msw;
+
+            worker.use(
+              http.post('/spreadsheets/items/validate', () => {
+                return HttpResponse.json(
+                  { detail: apiMessage },
+                  { status: 422 }
+                );
+              })
+            );
+          });
+
+          cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+          cy.findByText('Download Items Template').should('exist');
+
+          cy.findByText('Next').click();
+
+          cy.findByRole('dialog').should('be.visible');
+
+          cy.get('.uppy-Dashboard-input')
+            .eq(4)
+            .selectFile(['cypress/fixtures/spreadsheets/ItemsTemplate.xlsx'], {
+              force: true,
+            });
+          cy.findByText('Validate 1 file').click();
+          cy.startSnoopingBrowserMockedRequest();
+
+          cy.findAllByLabelText(uiMessage).should('have.length', 2);
+
+          cy.findByText('Validate 1 file').should('not.exist');
+        });
+      }
+    );
   });
 });
