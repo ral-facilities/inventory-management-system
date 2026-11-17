@@ -6,11 +6,6 @@ import { MockInstance } from 'vitest';
 import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddPropertyMigration,
-  EditPropertyMigration,
-} from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
@@ -21,20 +16,18 @@ import PropertyDialog, {
   PropertyDialogProps,
 } from './propertyDialog.component';
 
-interface TestAddPropertyMigration extends Omit<
-  AddPropertyMigration,
-  'default_value' | 'allowed_values' | 'type'
-> {
+interface TestAddPropertyMigration {
+  name: string;
+  type: string;
   unit?: string;
+  unit_id?: string | null;
+  mandatory: string;
   default_value?: string;
   allowed_values?: AllowedValues;
-  type: string;
 }
 
-interface TestEditPropertyMigration extends Omit<
-  EditPropertyMigration,
-  'allowed_values'
-> {
+interface TestEditPropertyMigration {
+  name?: string;
   allowed_values?: AllowedValues;
   unit?: string;
 }
@@ -724,9 +717,10 @@ describe('PropertyDialog', () => {
   });
 
   describe('edit', () => {
-    const formattedProperties = transformToAddCatalogueCategoryWithPlacementIds(
-      getCatalogueCategoryById('12') as CatalogueCategory
-    ).properties as AddCatalogueCategoryPropertyWithPlacementIds[];
+    const formattedProperties =
+      transformToAddCatalogueCategoryWithPlacementIds(
+        getCatalogueCategoryById('12') as CatalogueCategory
+      ).properties ?? [];
 
     beforeEach(() => {
       props = {
