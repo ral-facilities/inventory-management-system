@@ -994,6 +994,8 @@ describe('Systems', () => {
     });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
     cy.findByRole('menuitem', { name: 'View History' }).should('exist');
     cy.findByRole('menuitem', { name: 'View History' }).click();
