@@ -219,6 +219,36 @@ describe('Catalogue Items Landing Page', () => {
     });
   });
 
+  it('navigates to history table', async () => {
+    const { router } = createView('/catalogue/5/items/6');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
+
+    const historyButton = screen.getByText('View History');
+    await user.click(historyButton);
+
+    await waitFor(
+      () => {
+        expect(router.state.location.pathname).toBe(
+          `/catalogue/5/items/6/history`
+        );
+      },
+      { timeout: 10000 }
+    );
+  });
+
   it('renders obsolete replace id link', async () => {
     createView('/catalogue/5/items/89');
 
@@ -318,7 +348,9 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    expect(within(screen.getByRole('dialog')).getByText('Add Item as Admin')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('dialog')).getByText('Add Item as Admin')
+    ).toBeInTheDocument();
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);

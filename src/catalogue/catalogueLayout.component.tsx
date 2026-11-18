@@ -124,7 +124,9 @@ function CatalogueLayout() {
             ? [...catalogueItemBreadcrumbTrail]
             : []),
           // Catalogue category history page
-          ...((catalogueCategory && lastSegmentOfCataloguePath === 'history'
+          ...((catalogueCategory &&
+          !catalogueItem &&
+          lastSegmentOfCataloguePath === 'history'
             ? [
                 ...(catalogueCategory.is_leaf
                   ? catalogueItemBreadcrumbTrail
@@ -171,6 +173,22 @@ function CatalogueLayout() {
                 [
                   `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}`,
                   item?.serial_number ?? 'No serial number',
+                ],
+              ]
+            : []) satisfies BreadcrumbsInfo['trail']),
+          // Catalogue item history page
+          ...((catalogueItem &&
+          !item &&
+          lastSegmentOfCataloguePath === 'history'
+            ? [
+                ...catalogueItemBreadcrumbTrail,
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
+                  catalogueItem.name,
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/history`,
+                  'History',
                 ],
               ]
             : []) satisfies BreadcrumbsInfo['trail']),
