@@ -109,7 +109,7 @@ const QRCodeLabel = React.forwardRef<SVGSVGElement, QRCodeLabelProps>(
               y={
                 layout === 'vertical'
                   ? PADDING + QR_SIZE + TEXT_GAP + LINE_HEIGHT * (index + 0.5)
-                  : PADDING + ((QR_SIZE - renderedLineHeight) / 2) + LINE_HEIGHT * (index + 0.5)
+                  : PADDING + ((QR_SIZE - renderedLineHeight) / 2) + LINE_HEIGHT * (index + 0.75)
               }
             >
               <tspan fill="#000000" fontWeight="bold">
