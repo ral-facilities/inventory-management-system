@@ -84,6 +84,12 @@ export const backendErrorMessage = {
     uiMessage:
       'The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.',
   },
+
+  InvalidSpreadsheetError: {
+    apiMessage: 'Spreadsheet contents has errors',
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
 };
 
 interface IngestEndpointHelperProps {
@@ -94,7 +100,7 @@ interface IngestEndpointHelperProps {
 const ingestEndpointHelper = async (props: IngestEndpointHelperProps) => {
   const { warnings, errors, valid } = props;
 
-  const response = await fetch('/src/mocks/CatalogueItemTemplate-test.xlsx');
+  const response = await fetch('/src/mocks/CatalogueItemsTemplate-test.xlsx');
   const blob = await response.blob();
 
   return new HttpResponse(blob, {
@@ -102,7 +108,7 @@ const ingestEndpointHelper = async (props: IngestEndpointHelperProps) => {
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': `attachment; filename="CatalogueItemTemplate-test-Validated.xlsx"`,
+      'Content-Disposition': `attachment; filename="CatalogueItemsTemplate-test-Validated.xlsx"`,
       'IMSIngestAPI-Validation-Warnings': String(warnings),
       'IMSIngestAPI-Validation-Errors': String(errors),
       'IMSIngestAPI-Validation-Valid': String(valid),
@@ -1315,7 +1321,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog').should('be.visible');
     cy.findByRole('button', { name: 'Download Template' }).click();
     cy.readFile(
-      './cypress/downloads/CatalogueItemTemplate-Cameras.xlsx'
+      './cypress/downloads/CatalogueItemsTemplate-Cameras.xlsx'
     ).should('exist');
   });
 
@@ -1344,7 +1350,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1408,7 +1414,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1441,7 +1447,7 @@ describe('Catalogue Items', () => {
       });
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1474,7 +1480,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1493,7 +1499,7 @@ describe('Catalogue Items', () => {
       });
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1526,7 +1532,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1538,7 +1544,7 @@ describe('Catalogue Items', () => {
       ).should('exist');
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1570,7 +1576,9 @@ describe('Catalogue Items', () => {
           cy.get('.uppy-Dashboard-input')
             .first()
             .selectFile(
-              ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+              [
+                'cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx',
+              ],
               { force: true }
             );
 
@@ -1611,7 +1619,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1665,7 +1673,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1686,7 +1694,7 @@ describe('Catalogue Items', () => {
       ).should('exist');
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1719,7 +1727,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
       cy.startSnoopingBrowserMockedRequest();
@@ -1740,7 +1748,7 @@ describe('Catalogue Items', () => {
       ).should('exist');
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1773,7 +1781,7 @@ describe('Catalogue Items', () => {
       cy.get('@fileInput')
         .first()
         .selectFile(
-          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          ['cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx'],
           { force: true }
         );
 
@@ -1786,7 +1794,7 @@ describe('Catalogue Items', () => {
       ).should('exist');
 
       cy.readFile(
-        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+        './cypress/downloads/CatalogueItemsTemplate-test-Validated.xlsx'
       ).should('exist');
     });
 
@@ -1818,7 +1826,9 @@ describe('Catalogue Items', () => {
           cy.get('.uppy-Dashboard-input')
             .first()
             .selectFile(
-              ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+              [
+                'cypress/fixtures/spreadsheets/CatalogueItemsTemplate-test.xlsx',
+              ],
               { force: true }
             );
           cy.findByText('Validate 1 file').click();
