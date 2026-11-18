@@ -165,6 +165,31 @@ describe('Items Landing Page', () => {
     });
   });
 
+  it('navigates to items history table', async () => {
+    const { router } = createView('/catalogue/4/items/1/items/KvT2Ox7n');
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
+
+    const historyButton = screen.getByText('View History');
+    await user.click(historyButton);
+
+    await waitFor(
+      () => {
+        expect(router.state.location.pathname).toBe(
+          `/catalogue/4/items/1/items/KvT2Ox7n/history`
+        );
+      },
+      { timeout: 10000 }
+    );
+  });
+
   it('navigates to manufacturer landing page', async () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
     await waitFor(() => {

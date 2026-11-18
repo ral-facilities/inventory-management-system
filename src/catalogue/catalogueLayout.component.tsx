@@ -192,6 +192,28 @@ function CatalogueLayout() {
                 ],
               ]
             : []) satisfies BreadcrumbsInfo['trail']),
+          // Item history page
+          ...((catalogueItem && item && lastSegmentOfCataloguePath === 'history'
+            ? [
+                ...catalogueItemBreadcrumbTrail,
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
+                  `${catalogueItem.name}`,
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items`,
+                  'Items',
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}`,
+                  item?.serial_number ?? 'No serial number',
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}/history`,
+                  'History',
+                ],
+              ]
+            : []) satisfies BreadcrumbsInfo['trail']),
           // Item systems history page
           ...((catalogueItem &&
           item &&

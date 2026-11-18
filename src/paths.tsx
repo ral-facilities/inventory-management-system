@@ -16,6 +16,8 @@ export const paths = {
     '/catalogue/:catalogue_category_id/items/:catalogue_item_id/history',
   items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
   item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
+  itemHistory:
+    '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id/history',
   itemSystemsHistory:
     '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id/systems-history',
   systems: '/systems',
