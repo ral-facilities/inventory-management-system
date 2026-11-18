@@ -15,7 +15,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
+import { QueryKey, useQueryClient } from '@tanstack/react-query';
 import Uppy, { Body, Meta } from '@uppy/core';
 import Informer from '@uppy/informer';
 import en_US from '@uppy/locales/lib/en_US';
@@ -26,16 +26,12 @@ import XHR from '@uppy/xhr-upload';
 import { AxiosError, AxiosResponse } from 'axios';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../api/api';
-import { usePostCatalogueItemsTemplate } from '../api/ingest';
+import { usePostSpreadsheetTemplate } from '../api/ingest';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
-import {
-  getErrorMessage,
-  handleBlobDownload,
-  parseSpreadsheetError,
-} from '../utils';
+import { getErrorMessage, handleBlobDownload } from '../utils';
 import { FLEX_CONTAINER_PROPS, FORM_WITH_STEPPER_DIALOG_PROPS } from './consts';
 import { getUploadingState, UppyDashboardLocaleStrings } from './uppy.utils';
 
@@ -111,13 +107,21 @@ export interface ValidationHeadersProps<M extends Meta, B extends Body> {
   parentName: string;
   data: Blob;
   onChangeSpreadsheetValid: (val: boolean) => void;
+  validationFileNamePrefix: string;
 }
 
 export const handleValidationHeaders = <M extends Meta, B extends Body>(
   props: ValidationHeadersProps<M, B>
 ) => {
-  const { headers, uppy, fileId, parentName, data, onChangeSpreadsheetValid } =
-    props;
+  const {
+    headers,
+    uppy,
+    fileId,
+    parentName,
+    data,
+    onChangeSpreadsheetValid,
+    validationFileNamePrefix,
+  } = props;
   const isValid = headers['imsingestapi-validation-valid'] === 'true';
   const errorCount = Number(headers['imsingestapi-validation-errors'] ?? 0);
   const warningCount = Number(headers['imsingestapi-validation-warnings'] ?? 0);
@@ -139,7 +143,7 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
         state: 'error',
       },
     ]);
-    const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
+    const filename = `${validationFileNamePrefix}Errors-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
     if (fileId) {
       uppy?.removeFile(fileId);
@@ -161,7 +165,7 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
         state: 'warning',
       },
     ]);
-    const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
+    const filename = `${validationFileNamePrefix}Warnings-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
     return;
   }
@@ -186,6 +190,8 @@ interface CreateSpreadsheetUppyProps<M extends Meta, B extends Body> {
   maxSpreadsheetSizeBytes: number;
   spreadsheetAllowedFileExtensions: string[];
   onChangeSpreadsheetValid: (val: boolean) => void;
+  validationFileNamePrefix: string;
+  parseImportError: (errorMessage: string) => string;
   handleValidationHeaders?: (props: ValidationHeadersProps<M, B>) => void;
 }
 const createSpreadsheetUppy = <M extends Meta, B extends Body>(
@@ -198,6 +204,8 @@ const createSpreadsheetUppy = <M extends Meta, B extends Body>(
     maxSpreadsheetSizeBytes,
     spreadsheetAllowedFileExtensions,
     onChangeSpreadsheetValid,
+    validationFileNamePrefix,
+    parseImportError,
   } = props;
   const uppy = new Uppy<M, B>({
     autoProceed: false,
@@ -231,28 +239,45 @@ const createSpreadsheetUppy = <M extends Meta, B extends Body>(
           data: xhr.response,
           uppy: uppy,
           onChangeSpreadsheetValid: onChangeSpreadsheetValid,
+          validationFileNamePrefix: validationFileNamePrefix,
         });
 
       return xhr.status === 204 ? '' : xhr.response;
     },
 
     async onAfterResponse(xhr) {
-      await uppyOnAfterResponse(xhr, parseSpreadsheetError);
+      await uppyOnAfterResponse(xhr, parseImportError);
     },
   });
 
   return uppy;
 };
+export interface ImportSpreadsheetConfig {
+  endpointSegment: string;
+  parentIdMetaField: string;
+  templateFileNamePrefix: string;
+  validationFileNamePrefix: string;
+  downloadStepTitle: string;
+  downloadStepDescription: string;
+  validateStepDescription: string;
+  importReadyDescription: string;
+  importPendingApprovalDescription: string;
+  getDownloadErrorMessage: (errorMessage: string) => string | undefined;
+  parseImportError: (errorMessage: string) => string;
+  getInvalidateQueryKey: (parentId: string) => QueryKey;
+}
+
 export interface ImportTemplateDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string;
   parentName: string;
   isAdminMode: boolean;
+  config: ImportSpreadsheetConfig;
 }
 
 const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
-  const { open, onClose, parentId, parentName, isAdminMode } = props;
+  const { open, onClose, parentId, parentName, isAdminMode, config } = props;
 
   const {
     settings: {
@@ -265,6 +290,13 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const theme = useTheme();
 
   const queryClient = useQueryClient();
+
+  const { mutateAsync: postSpreadsheetTemplate } = usePostSpreadsheetTemplate(
+    config.endpointSegment,
+    config.parentIdMetaField === 'system_id'
+      ? undefined
+      : { parentIdField: config.parentIdMetaField, parentId: parentId }
+  );
 
   const [isValidSpreadsheet, setIsValidSpreadsheet] =
     React.useState<boolean>(false);
@@ -279,11 +311,13 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() =>
     createSpreadsheetUppy({
-      endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/validate`,
+      endpoint: `${imsIngestApiUrl}/spreadsheets/${config.endpointSegment}/validate`,
       parentName: parentName,
       maxSpreadsheetSizeBytes: maxSpreadsheetSizeBytes,
       spreadsheetAllowedFileExtensions: spreadsheetAllowedFileExtensions,
       onChangeSpreadsheetValid: setIsValidSpreadsheet,
+      validationFileNamePrefix: config.validationFileNamePrefix,
+      parseImportError: config.parseImportError,
       handleValidationHeaders: handleValidationHeaders,
     })
   );
@@ -292,11 +326,13 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() =>
     createSpreadsheetUppy({
-      endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/ingest`,
+      endpoint: `${imsIngestApiUrl}/spreadsheets/${config.endpointSegment}/ingest`,
       parentName: parentName,
       maxSpreadsheetSizeBytes: maxSpreadsheetSizeBytes,
       spreadsheetAllowedFileExtensions: spreadsheetAllowedFileExtensions,
       onChangeSpreadsheetValid: setIsValidSpreadsheet,
+      validationFileNamePrefix: config.validationFileNamePrefix,
+      parseImportError: config.parseImportError,
     })
   );
 
@@ -348,7 +384,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
     validateUppy.clear();
     importUppy.clear();
-    queryClient.invalidateQueries({ queryKey: ['CatalogueItems', parentId] });
+    queryClient.invalidateQueries({
+      queryKey: config.getInvalidateQueryKey(parentId),
+    });
     setIsValidSpreadsheet(false);
     setActiveStep(0);
   }, [
@@ -365,15 +403,16 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     importUppy,
     queryClient,
     parentId,
+    config,
   ]);
 
   React.useEffect(() => {
-    validateUppy.setMeta({ catalogue_category_id: parentId });
-  }, [parentId, validateUppy]);
+    validateUppy.setMeta({ [config.parentIdMetaField]: parentId });
+  }, [parentId, validateUppy, config.parentIdMetaField]);
 
   React.useEffect(() => {
-    importUppy.setMeta({ catalogue_category_id: parentId });
-  }, [parentId, importUppy]);
+    importUppy.setMeta({ [config.parentIdMetaField]: parentId });
+  }, [parentId, importUppy, config.parentIdMetaField]);
 
   React.useEffect(() => {
     if (isValidSpreadsheet) {
@@ -387,29 +426,20 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     }
   }, [parentId, importUppy, isValidSpreadsheet, validateUppy]);
 
-  const { mutateAsync: postCatalogueItemsTemplate } =
-    usePostCatalogueItemsTemplate();
-
   const handleDownloadTemplate = React.useCallback(async () => {
-    postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
+    postSpreadsheetTemplate()
       .then((response) =>
         handleBlobDownload(
           response.data,
           response.headers,
-          `CatalogueItemTemplate-${parentName}.xlsx`
+          `${config.templateFileNamePrefix}-${parentName}.xlsx`
         )
       )
       .catch(async (error: AxiosError) => {
         const errorMessage = await getErrorMessage(error);
-        let parsedErrorMessage =
+        const parsedErrorMessage =
+          config.getDownloadErrorMessage(errorMessage) ??
           'There was an unexpected error. Please try again or contact the system administrator.';
-        if (
-          errorMessage ===
-            'cannot generate a catalogue items template for a non-leaf catalogue category' ||
-          errorMessage === 'the specified catalogue category does not exist'
-        ) {
-          parsedErrorMessage = `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
-        }
         handleTransferState([
           {
             name: 'Download template',
@@ -418,7 +448,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
           },
         ]);
       });
-  }, [postCatalogueItemsTemplate, parentId, parentName]);
+  }, [postSpreadsheetTemplate, config, parentName]);
 
   // Stepper
   const STEPS = [
@@ -462,12 +492,11 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
             <DownloadIcon color="primary" sx={{ fontSize: 64, mb: 2 }} />
 
             <Typography variant="h6" gutterBottom>
-              Download Catalogue Template
+              {config.downloadStepTitle}
             </Typography>
 
             <Typography color="text.secondary" sx={{ mb: 3, maxWidth: 500 }}>
-              Download the spreadsheet template, populate it with catalogue item
-              data, then proceed to validation.
+              {config.downloadStepDescription}
             </Typography>
 
             <Button
@@ -494,9 +523,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
             }}
           >
             <Typography color="text.secondary" sx={{ mb: 3 }}>
-              Upload your completed spreadsheet to validate catalogue items. Any
-              errors or warnings will be highlighted in a downloadable
-              spreadsheet.
+              {config.validateStepDescription}
             </Typography>
             <ValidationUppyBox style={FLEX_CONTAINER_PROPS}>
               <Dashboard
@@ -534,8 +561,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
                 }}
               >
                 <Typography color="text.secondary" sx={{ mb: 3 }}>
-                  Validation completed successfully. The spreadsheet is ready to
-                  be imported into the catalogue.
+                  {config.importReadyDescription}
                 </Typography>
                 <ImportUppyBox style={FLEX_CONTAINER_PROPS}>
                   <Dashboard
@@ -583,9 +609,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
                 </Typography>
 
                 <Typography color="text.secondary" sx={{ maxWidth: 550 }}>
-                  Your spreadsheet has been validated successfully. Please
-                  contact an administrator to import the spreadsheet so the
-                  catalogue items can be made available.
+                  {config.importPendingApprovalDescription}
                 </Typography>
               </Paper>
             )}

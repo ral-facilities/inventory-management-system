@@ -98,10 +98,10 @@ export const modifyItem = (
   }
 
   if (values.diameter) {
-    cy.findByLabelText('Diameter (mm)').clear();
-    cy.findByLabelText('Diameter (mm)').type(values.diameter);
+    cy.findAllByLabelText('Diameter (mm)').first().clear();
+    cy.findAllByLabelText('Diameter (mm)').first().type(values.diameter);
   } else {
-    cy.findByLabelText('Diameter (mm)').clear();
+    cy.findAllByLabelText('Diameter (mm)').first().clear();
   }
 
   if (values.wavelengthRange) {
