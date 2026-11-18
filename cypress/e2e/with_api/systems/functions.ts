@@ -46,7 +46,12 @@ export const modifySystem = (
     cy.findByLabelText('Type *').click();
     cy.findByRole('option', { name: values.type }).click();
   }
-  cy.findByRole('button', { name: 'Save' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
+
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
+
   if (!ignoreChecks) {
     cy.findByRole('link', { name: values.name }).click();
 
@@ -64,7 +69,11 @@ export const duplicateSystem = (name: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Duplicate`).click();
 
-  cy.findByRole('button', { name: 'Save' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
+
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
 
   cy.findAllByText(`${name}_copy_1`).should('exist');
 };
@@ -97,6 +106,11 @@ export const copyToSystems = (values: {
 
   cy.findByRole('button', { name: 'Copy here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Copy here' }).click();
+
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
+
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByText('Storage 2').click();
@@ -127,6 +141,11 @@ export const moveToSystems = (values: {
 
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
+
+  cy.findByLabelText('Comment *').clear();
+  cy.findByLabelText('Comment *').type('A test comment');
+  cy.findByRole('button', { name: 'Submit' }).click();
+
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByText('Storage 2').click();

@@ -557,7 +557,12 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -570,6 +575,7 @@ describe('Systems', () => {
             name: 'System name',
             importance: 'medium',
             type_id: '2',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -589,7 +595,11 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -605,6 +615,7 @@ describe('Systems', () => {
             owner: 'System owner',
             importance: 'high',
             type_id: '2',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -618,7 +629,11 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -632,6 +647,7 @@ describe('Systems', () => {
             importance: 'medium',
             type_id: '2',
             parent_id: '65328f34a40ff5301575a4e3',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -641,9 +657,9 @@ describe('Systems', () => {
       cy.visit('/systems');
 
       cy.findByRole('button', { name: 'Add System' }).click();
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
       cy.findByText('Please enter a name.').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText('Please enter a name.').should('not.exist');
@@ -657,11 +673,16 @@ describe('Systems', () => {
 
       cy.findByLabelText('Type *').click();
       cy.findByRole('option', { name: 'Operational' }).click();
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
@@ -677,11 +698,16 @@ describe('Systems', () => {
 
       cy.findByLabelText('Type *').click();
       cy.findByRole('option', { name: 'Operational' }).click();
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         'The specified system type does not exist. Please select a valid system type.'
       ).should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
@@ -710,7 +736,12 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -725,6 +756,7 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'medium',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -741,7 +773,12 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -752,6 +789,7 @@ describe('Systems', () => {
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -763,11 +801,16 @@ describe('Systems', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         "There have been no changes made. Please change a field's value or press Cancel to exit."
       ).should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByLabelText('Description').type('1');
       cy.findByText(
         "There have been no changes made. Please change a field's value or press Cancel to exit."
@@ -781,9 +824,9 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear();
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
       cy.findByText('Please enter a name.').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
@@ -802,11 +845,16 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type(
         'Error editing type whilst having children'
       );
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
       ).should('exist');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
@@ -825,11 +873,16 @@ describe('Systems', () => {
 
       cy.findByLabelText('Name *').clear();
       cy.findByLabelText('Name *').type('Error type not found');
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         'The specified system type does not exist. Please select a valid system type.'
       ).should('exist');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
@@ -847,11 +900,16 @@ describe('Systems', () => {
 
       cy.findByLabelText('Name *').clear();
       cy.findByLabelText('Name *').type('Error 409');
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByText(
         'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
@@ -888,7 +946,12 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
+
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -904,6 +967,7 @@ describe('Systems', () => {
             owner: 'System owner',
             importance: 'medium',
             type_id: '2',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -923,7 +987,11 @@ describe('Systems', () => {
 
       cy.startSnoopingBrowserMockedRequest();
 
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findByLabelText('Comment *').clear();
+      cy.findByLabelText('Comment *').type('A test comment');
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -941,6 +1009,7 @@ describe('Systems', () => {
             importance: 'low',
             type_id: '2',
             parent_id: '65328f34a40ff5301575a4e3',
+            modified_comment: 'A test comment',
           })
         );
       });
@@ -969,7 +1038,11 @@ describe('Systems', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -980,6 +1053,7 @@ describe('Systems', () => {
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
           name: 'System name',
+          modified_comment: 'A test comment',
         })
       );
     });
@@ -1069,6 +1143,10 @@ describe('Systems', () => {
         cy.findByRole('button', { name: 'Move here' }).click();
       });
 
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
+
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1080,13 +1158,19 @@ describe('Systems', () => {
         '/656da8ef9cba7a76c6f81a5d'
       );
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ parent_id: '65328f34a40ff5301575a4e3' })
+        JSON.stringify({
+          parent_id: '65328f34a40ff5301575a4e3',
+          modified_comment: 'A test comment',
+        })
       );
       expect(patchRequests[1].url.toString()).to.contain(
         '/656ef565ed0773f82e44bc6d'
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
-        JSON.stringify({ parent_id: '65328f34a40ff5301575a4e3' })
+        JSON.stringify({
+          parent_id: '65328f34a40ff5301575a4e3',
+          modified_comment: 'A test comment',
+        })
       );
     });
   });
@@ -1108,6 +1192,10 @@ describe('Systems', () => {
         cy.findByRole('button', { name: 'Copy here' }).click();
       });
 
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
+    cy.findByRole('button', { name: 'Submit' }).click();
+
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1127,7 +1215,7 @@ describe('Systems', () => {
           code: 'pulse-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          modified_comment: 'system owner updated',
+          modified_comment: 'A test comment',
           modified_by: 'Alex Chen',
           type_id: '2',
           is_flagged: true,
@@ -1151,7 +1239,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
-          modified_comment: 'system location updated',
+          modified_comment: 'A test comment',
           modified_by: 'Sarah Jenkins',
           is_flagged: false,
           type: {
