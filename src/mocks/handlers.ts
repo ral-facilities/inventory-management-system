@@ -1468,6 +1468,15 @@ export const handlers = [
     }
   ),
 
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/spreadsheets/items/ingest',
+    async () => {
+      return new HttpResponse(undefined, {
+        status: 204,
+      });
+    }
+  ),
+
   // ------------------------------------ HISTORY ------------------------------------------------
 
   http.get<PathParams, DefaultBodyType, HistoryEntry[]>(
