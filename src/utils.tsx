@@ -29,9 +29,13 @@ import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { getItem } from './api/items.tsx';
-import { getSystem } from './api/systems.tsx'
+import { getSystem } from './api/systems.tsx';
 import { getCatalogueItem } from './api/catalogueItems.tsx';
-import { MicroFrontendToken, SparesFilterStateType } from './app.types';
+import {
+  CanvasImageMimeType,
+  MicroFrontendToken,
+  SparesFilterStateType,
+} from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
 import paths from './paths.tsx';
@@ -611,6 +615,25 @@ export function downloadFileByLink(url: string, filename: string): void {
   document.body.removeChild(link);
 }
 
+export function getCanvasImageBlob(
+  canvas: HTMLCanvasElement,
+  mimeType: CanvasImageMimeType = 'image/png'
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    try {
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error(`Unable to encode the canvas as ${mimeType}`));
+        }
+      }, mimeType);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 export function handleBlobDownload(
   data: Blob,
   headers: AxiosResponse['headers'],
@@ -635,6 +658,34 @@ export function handleBlobDownload(
 export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
   baseBackgroundColor: theme.palette.background.default,
 });
+
+export function getSvgImageBlob(
+  svg: SVGSVGElement,
+  scale: number = 1,
+  mimeType: CanvasImageMimeType = 'image/png'
+): Promise<Blob> {
+  const width = Number(svg.getAttribute('width')) * scale;
+  const height = Number(svg.getAttribute('height')) * scale;
+  const source = new XMLSerializer().serializeToString(svg);
+
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d');
+      if (!context) {
+        reject(new Error('Unable to draw the SVG, canvas is not supported'));
+        return;
+      }
+      context.drawImage(image, 0, 0, width, height);
+      getCanvasImageBlob(canvas, mimeType).then(resolve, reject);
+    };
+    image.onerror = () => reject(new Error('Unable to load the SVG as an image'));
+    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(source)}`;
+  });
+}
 
 export function parseBaseError(message: string): string {
   if (
