@@ -16,7 +16,7 @@ import React from 'react';
 import { CatalogueItem, Item, System, SystemType } from '../api/api.types.tsx';
 import handleTransferState from '../handleTransferState';
 import paths from '../paths.tsx';
-import { downloadBlobByLink, getSvgImageBlob } from '../utils.tsx';
+import { getSvgImageBlob, handleBlobDownload } from '../utils.tsx';
 import QRCodeLabel from './qrCodeLabel.component.tsx';
 
 interface CodeGenerateDialogCommonProps {
@@ -132,7 +132,7 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
       return;
     }
     getSvgImageBlob(svg, 4)
-      .then((blob) => downloadBlobByLink(blob, filename))
+      .then((blob) => handleBlobDownload(blob, {}, filename))
       .catch(() =>
         handleTransferState([
           {
