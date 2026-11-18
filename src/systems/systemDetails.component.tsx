@@ -1,3 +1,4 @@
+import HistoryIcon from '@mui/icons-material/History';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {
   Box,
@@ -9,6 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import { useGetSystemType } from '../api/systemTypes';
@@ -21,6 +23,8 @@ import { SystemItemsTable } from './systemItemsTable.component';
 
 const SystemDetailsActionMenu = (props: { system: System }) => {
   const { system } = props;
+
+  const navigate = useNavigate();
 
   const [editSystemDialogOpen, setEditSystemDialogOpen] =
     React.useState<boolean>(false);
@@ -44,6 +48,14 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
           />
         ),
       }}
+      otherItems={[
+        {
+          label: 'View History',
+          icon: <HistoryIcon fontSize="small" />,
+          onClick: () => navigate(`/systems/${system.id}/history`),
+          dialog: null,
+        },
+      ]}
     />
   );
 };

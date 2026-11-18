@@ -1,0 +1,93 @@
+[
+  {
+    "id": "1",
+    "entity_id": "657f8c3b2a1b4e5d8f9b3c4e5",
+    "operation_type": "insert",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "System created",
+    "entity_modified_by": "Alex Chen",
+    "updated_fields": {
+      "parent_id": null,
+      "name": "Storage",
+      "description": "Storage system for various items.",
+      "location": "Warehouse 42\nSector 7\nGalactic Core",
+      "owner": "Prof Peter Jackson",
+      "importance": "medium",
+      "code": "storage",
+      "created_time": "2024-01-01T12:00:00.000+00:00",
+      "type_id": "1",
+      "is_flagged": false
+    }
+  },
+  {
+    "id": "2",
+    "entity_id": "657f8c3b2a1b4e5d8f9b3c4e5",
+    "operation_type": "update",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "Change system description",
+    "entity_modified_by": "Alex Chen",
+    "updated_fields": {
+      "description": "An update to the description"
+    }
+  },
+  {
+    "id": "3",
+    "entity_id": "657f8c3b2a1b4e5d8f9b3c4e5",
+    "operation_type": "update",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "Change system details",
+    "entity_modified_by": "Alex Chen",
+    "updated_fields": {
+      "location": "Some new location",
+      "owner": "Dr Richard Goodwin",
+      "importance": "high"
+    }
+  },
+
+  {
+    "id": "4",
+    "entity_id": "65328f34a40ff5301575a4e3",
+    "operation_type": "insert",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "Creation of system",
+    "entity_modified_by": "Sarah Jenkins",
+    "updated_fields": {
+      "name": "Giant laser",
+      "location": "80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307",
+      "owner": "Juan Horton",
+      "importance": "high",
+      "description": "Take Democrat early money some.\nTree meet fly her likely.",
+      "parent_id": null,
+      "code": "giant-laser",
+      "created_time": "2024-01-01T12:00:00.000+00:00",
+      "type_id": "2",
+      "is_flagged": true
+    }
+  },
+  {
+    "id": "5",
+    "entity_id": "65328f34a40ff5301575a4e3",
+    "operation_type": "update",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "Change system description",
+    "entity_modified_by": "Alex Chen",
+    "updated_fields": {
+      "description": "An update to the description"
+    }
+  },
+  {
+    "id": "6",
+    "entity_id": "65328f34a40ff5301575a4e4",
+    "operation_type": "insert",
+    "entity_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "entity_modified_comment": "system details updated",
+    "entity_modified_by": "Marcus Vance",
+    "updated_fields": {
+      "owner": "Daniel Morrison",
+      "importance": "low",
+      "description": "Pretty speech spend mouth control skill. Fire together return message catch food wish.",
+      "modified_by": "Marcus Vance",
+      "is_flagged": true
+    }
+  }
+]

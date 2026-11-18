@@ -83,6 +83,10 @@ function SystemsLayout() {
           ...((system && lastSegmentOfSystemPath === 'items-history'
             ? [...breadcrumbs.trail, [system.id, 'Items history']]
             : []) satisfies BreadcrumbsInfo['trail']),
+          // System history page
+          ...((system && lastSegmentOfSystemPath === 'history'
+            ? [...breadcrumbs.trail, [system.id, 'History']]
+            : []) satisfies BreadcrumbsInfo['trail']),
         ],
       });
     } else {
