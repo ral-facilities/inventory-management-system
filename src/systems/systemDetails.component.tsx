@@ -19,7 +19,7 @@ import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
 import { QrCode } from '@mui/icons-material';
-import { SystemCodeGenerateDialog } from '../codes/codeGenerateDialog.tsx';
+import { SystemCodeGenerateDialog } from '../codes/codeGenerateDialog.component.tsx';
 
 const SystemDetailsActionMenu = (props: { system: System, type?: SystemType }) => {
   const { system, type } = props;

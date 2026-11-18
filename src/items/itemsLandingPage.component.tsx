@@ -26,7 +26,7 @@ import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
 import { QrCode } from '@mui/icons-material';
-import { ItemCodeGenerateDialog } from '../codes/codeGenerateDialog.tsx';
+import { ItemCodeGenerateDialog } from '../codes/codeGenerateDialog.component.tsx';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;

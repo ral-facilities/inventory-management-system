@@ -49,6 +49,8 @@ export interface AllowedValuesList {
   };
 }
 
+export type CanvasImageMimeType = 'image/png' | 'image/jpeg' | 'image/webp';
+
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 export type AllowedValues = AllowedValuesList;
