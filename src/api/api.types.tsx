@@ -102,6 +102,7 @@ export interface SystemPost {
   type_id: string;
   importance: SystemImportanceType;
   parent_id?: string | null;
+  modified_comment: string | null;
 }
 
 export type SystemPatch = Partial<SystemPost>;

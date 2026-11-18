@@ -155,6 +155,7 @@ export interface MoveToSystem {
   selectedSystems: System[];
   // Null if root
   targetSystem: System | null;
+  modifiedComment: string | null;
 }
 
 export interface CopyToSystem {
@@ -164,6 +165,7 @@ export interface CopyToSystem {
   // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
   existingSystemCodes: string[];
+  modifiedComment: string | null;
 }
 
 export interface SystemTableType extends System {
@@ -226,8 +228,7 @@ export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
 }
 
 export type MoveItemsToSystem =
-  | MoveItemsMultipleUsageStatus
-  | MoveItemsSingleUsageStatus;
+  MoveItemsMultipleUsageStatus | MoveItemsSingleUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;

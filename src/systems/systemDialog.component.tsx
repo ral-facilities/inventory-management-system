@@ -35,6 +35,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
+import HistoryCommentDialog from '../history/historyCommentDialog.component';
 
 export interface SystemDialogProps {
   open: boolean;
@@ -67,6 +68,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     return null;
   }, [parentSystem, isLoadingParentSystem]);
 
+  const [historyCommentDialog, setHistoryCommentDialog] =
+    React.useState<boolean>(false);
+
   const { data: systemsTypes } = useGetSystemTypes();
 
   const initialSystem: SystemPost = React.useMemo(
@@ -79,6 +83,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             owner: selectedSystem.owner ?? '',
             importance: selectedSystem.importance,
             type_id: selectedSystem.type_id,
+            modified_comment: selectedSystem.modified_comment,
           }
         : {
             name: '',
@@ -87,6 +92,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             owner: '',
             importance: SystemImportanceType.MEDIUM,
             type_id: parentSystemTypeId ?? '',
+            modified_comment: null,
           },
     [isNotCreating, parentSystemTypeId, selectedSystem]
   );
@@ -192,6 +198,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           if (isImportanceUpdated)
             editSystemData.importance = systemData.importance;
           if (isTypeUpdated) editSystemData.type_id = systemData.type_id;
+          editSystemData.modified_comment = systemData.modified_comment;
 
           patchSystem({
             id: selectedSystem.id,
@@ -251,7 +258,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     [selectedSystem, setError, patchSystem, handleClose]
   );
 
-  const onSubmit = (data: SystemPost) => {
+  const onSubmit = (data: SystemPost, allowSubmit: boolean) => {
+    if (!allowSubmit) {
+      setHistoryCommentDialog(true);
+      return;
+    }
     if (requestType === 'patch') {
       handleEditSystem(data);
     } else {
@@ -407,7 +418,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit((data) => onSubmit(data, false))}
             disabled={
               isAddPending ||
               isEditPending ||
@@ -419,7 +430,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               ) : null
             }
           >
-            Save
+            Continue
           </Button>
         </Box>
         {errors.root?.formError && (
@@ -428,6 +439,19 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           </FormHelperText>
         )}
       </DialogActions>
+      <HistoryCommentDialog
+        open={historyCommentDialog}
+        onSubmit={(event) => {
+          setHistoryCommentDialog(false);
+          handleSubmit((data) => onSubmit(data, true))(event);
+        }}
+        onChange={register('modified_comment')}
+        onCancel={() => {
+          setHistoryCommentDialog(false);
+        }}
+        action={requestType === 'post' || duplicate ? 'adding' : 'editing'}
+        entityTypeName={'System'}
+      />
     </Dialog>
   );
 });
