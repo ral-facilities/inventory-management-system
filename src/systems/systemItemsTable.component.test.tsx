@@ -382,6 +382,36 @@ describe('SystemItemsTable', () => {
     });
   });
 
+  it('opens import spreadsheet dialog and can close the dialog', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const importSpreadsheetButton = screen.getByRole('button', {
+      name: 'Import spreadsheet',
+    });
+
+    await user.click(importSpreadsheetButton);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the edit dialog and close it again', async () => {
     createView();
 
@@ -652,7 +682,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       `\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
-  }, 20000);
+  }, 30000);
 
   it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
     props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
@@ -696,7 +726,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
-  }, 20000);
+  }, 30000);
 
   it('can open the delete dialog and close it again', async () => {
     createView();

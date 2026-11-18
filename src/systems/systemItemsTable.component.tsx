@@ -3,9 +3,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
-  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -39,8 +39,10 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
@@ -64,40 +66,100 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
   roundUpTenth,
 } from '../utils';
+import { useItemsImportConfig } from './itemsImportConfig';
 import SystemItemsDialog from './systemItemsDialog.component';
 
-const MoveItemsButton = (props: {
-  selectedItems: Item[];
-  system: System;
-  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+const SystemItemsTableActionMenu = (props: {
   isAdminMode: boolean;
+  system: System | undefined;
+  selectedItems: Item[];
+  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  filtersEnabled: boolean;
+  onClearFiltersClick: () => void;
 }) => {
-  const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
-    React.useState<boolean>(false);
+  const {
+    isAdminMode,
+    system,
+    selectedItems,
+    onChangeSelectedItems,
+    filtersEnabled,
+    onClearFiltersClick,
+  } = props;
 
+  const [openDialog, setOpenDialog] = React.useState<
+    'move' | 'moveAdmin' | 'import' | null
+  >(null);
+
+  const itemsImportConfig = useItemsImportConfig();
   return (
     <>
-      <Button
-        startIcon={<DriveFileMoveOutlinedIcon />}
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        disabled={props.selectedItems.length === 0}
-        onClick={() => setMoveItemsDialogOpen(true)}
-      >
-        {`Move to ${props.isAdminMode ? 'as Admin' : ''}`}
-      </Button>
-      <SystemItemsDialog
-        open={moveItemsDialogOpen}
-        onClose={() => setMoveItemsDialogOpen(false)}
-        selectedItems={props.selectedItems}
-        onChangeSelectedItems={props.onChangeSelectedItems}
-        parentSystemId={props.system.id}
-        isAdminMode={props.isAdminMode}
+      <TableActionMenu
+        ariaLabelPrefix="system items"
+        items={[
+          {
+            label: 'Clear Filters',
+            icon: <ClearIcon />,
+            onClick: onClearFiltersClick,
+            isDisabled: !filtersEnabled,
+          },
+          ...(system
+            ? [
+                {
+                  label: 'Import spreadsheet',
+                  icon: <UploadIcon />,
+                  onClick: () => {
+                    setOpenDialog('import');
+                  },
+                },
+                {
+                  label: 'Move to',
+                  icon: <DriveFileMoveOutlinedIcon />,
+                  onClick: () => {
+                    setOpenDialog('move');
+                  },
+                  isDisabled: selectedItems.length === 0,
+                },
+                ...(isAdminMode
+                  ? [
+                      {
+                        label: 'Move to as Admin',
+                        icon: <DriveFileMoveOutlinedIcon />,
+                        onClick: () => {
+                          setOpenDialog('moveAdmin');
+                        },
+                        isDisabled: selectedItems.length === 0,
+                      },
+                    ]
+                  : []),
+              ]
+            : []),
+        ]}
       />
+      {system && (
+        <>
+          {openDialog !== null && (
+            <SystemItemsDialog
+              open={openDialog === 'move' || openDialog === 'moveAdmin'}
+              onClose={() => setOpenDialog(null)}
+              selectedItems={selectedItems}
+              onChangeSelectedItems={onChangeSelectedItems}
+              parentSystemId={system.id}
+              isAdminMode={openDialog === 'moveAdmin'}
+            />
+          )}
+          <ImportTemplateDialog
+            open={openDialog === 'import'}
+            onClose={() => setOpenDialog(null)}
+            parentId={system.id}
+            parentName={system.name}
+            isAdminMode={isAdminMode}
+            config={itemsImportConfig}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -647,19 +709,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         }),
       };
     },
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
-      return {
-        sx: {
-          height: table.getState().isFullScreen
-            ? '100%'
-            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
-        },
-      };
-    },
+    muiTableContainerProps: { sx: { minHeight: '300px', maxHeight: '600px' } },
+
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -709,37 +760,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-        {system && (
-          <>
-            <MoveItemsButton
-              selectedItems={selectedItems}
-              system={system}
-              onChangeSelectedItems={setRowSelection}
-              isAdminMode={false}
-            />
-            {isAdminMode && (
-              <MoveItemsButton
-                selectedItems={selectedItems}
-                system={system}
-                onChangeSelectedItems={setRowSelection}
-                isAdminMode={true}
-              />
-            )}
-          </>
-        )}
-      </Box>
+      <SystemItemsTableActionMenu
+        isAdminMode={isAdminMode}
+        system={system}
+        selectedItems={selectedItems}
+        onChangeSelectedItems={setRowSelection}
+        filtersEnabled={preservedState.columnFilters.length > 0}
+        onClearFiltersClick={() => table.resetColumnFilters()}
+      />
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
