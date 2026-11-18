@@ -28,10 +28,14 @@ import {
 import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
+import { getItem } from './api/items.tsx';
+import { getSystem } from './api/systems.tsx'
+import { getCatalogueItem } from './api/catalogueItems.tsx';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { FOOTER_HEIGHT, MAIN_APP_BAR_HEIGHT } from './common/consts';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
+import paths from './paths.tsx';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -1014,5 +1018,30 @@ export function roundUpTenth(x?: number | null) {
   } else {
     // Negative: round down
     return Math.floor(x * 10) / 10;
+  }
+}
+
+export async function buildRedirectUrl(redirectData: {
+  oid: string;
+  type: 'item' | 'system';
+}): Promise<string> {
+  switch (redirectData.type) {
+    case 'system': {
+      const systemData = await getSystem(redirectData.oid);
+      return paths.system.replace(':system_id', systemData.id);
+    }
+    case 'item': {
+      const itemData = await getItem(redirectData.oid);
+      const catalogueItemData = await getCatalogueItem(
+        itemData.catalogue_item_id
+      );
+      return paths.item
+        .replace(
+          ':catalogue_category_id',
+          catalogueItemData.catalogue_category_id
+        )
+        .replace(':catalogue_item_id', itemData.catalogue_item_id)
+        .replace(':item_id', itemData.id);
+    }
   }
 }

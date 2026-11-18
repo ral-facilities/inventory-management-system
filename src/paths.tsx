@@ -17,6 +17,7 @@ export const paths = {
   system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
+  codeRedirect: '/code-redirect',
 };
 
 export type URLPathKeyType = keyof typeof paths;
