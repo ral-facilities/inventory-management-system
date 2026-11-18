@@ -59,9 +59,6 @@ describe('Code generate dialog component', () => {
     vi.unstubAllGlobals();
   });
 
-  const getLabel = (): HTMLElement =>
-    screen.getByRole('img', { name: /QR code/ });
-
   it('shows the options which are enabled by default', () => {
     createItemView();
 
@@ -80,10 +77,10 @@ describe('Code generate dialog component', () => {
   it('renders the QR code with the label lines that are switched on', () => {
     createItemView();
 
-    expect(getLabel()).toHaveTextContent(
+    expect(screen.getByRole('img', { name: 'QR code' })).toHaveTextContent(
       `Serial Number: ${item.serial_number}`
     );
-    expect(getLabel()).not.toHaveTextContent('Name:');
+    expect(screen.getByRole('img', { name: 'QR code' })).not.toHaveTextContent('Name:');
   });
 
   it('updates the label as lines are switched on and off', async () => {
@@ -92,35 +89,30 @@ describe('Code generate dialog component', () => {
 
     await user.click(screen.getByRole('checkbox', { name: 'Show Name' }));
 
-    expect(getLabel()).toHaveTextContent(`Name: ${catalogueItem.name}`);
+    expect(screen.getByRole('img', { name: 'QR code' })).toHaveTextContent(`Name: ${catalogueItem.name}`);
 
     await user.click(
       screen.getByRole('checkbox', { name: 'Show Serial Number' })
     );
 
-    expect(getLabel()).not.toHaveTextContent('Serial Number:');
+    expect(screen.getByRole('img', { name: 'QR code' })).not.toHaveTextContent('Serial Number:');
   });
 
   it('shows the icon in the middle of the QR code while it is switched on', async () => {
     const user = userEvent.setup();
     createItemView();
 
-    // The icon is an <image> inside the QR code, which has no accessible role to query by
-    const getIcon = () =>
-      // eslint-disable-next-line testing-library/no-node-access
-      getLabel().querySelector('image');
-
-    expect(getIcon()).toHaveAttribute(
+    expect(screen.getByRole('img', { name: 'QR code' }).querySelector('image')).toHaveAttribute(
       'href',
       expect.stringMatching(/^data:image\/png/)
     );
 
     await user.click(screen.getByRole('checkbox', { name: 'Show Icon' }));
 
-    expect(getIcon()).not.toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'QR code' }).querySelector('image')).not.toBeInTheDocument();
   });
 
-  it('truncates a label line too long to fit on the label', () => {
+  it('truncates a label line too long to fit on a vertical label', () => {
     renderComponentWithRouterProvider(
       <SystemCodeGenerateDialog
         open={true}
@@ -132,8 +124,28 @@ describe('Code generate dialog component', () => {
       />
     );
 
-    expect(getLabel()).toHaveTextContent(/^Name: The very long name.*…$/);
-    expect(getLabel().textContent!.length).toBeLessThanOrEqual(38);
+    expect(screen.getByRole('img', { name: 'QR code' })).toHaveTextContent(/^Name: The very long name.*…$/);
+    expect(screen.getByRole('img', { name: 'QR code' }).textContent!.length).toBeLessThanOrEqual(38);
+  });
+
+  it('does not truncate a long label line on a horizontal label', async () => {
+    const user = userEvent.setup();
+    renderComponentWithRouterProvider(
+      <SystemCodeGenerateDialog
+        open={true}
+        onClose={mockClose}
+        system={{
+          ...system,
+          name: 'The very long name of a system will fit on a horizontal printed label',
+        }}
+      />
+    );
+
+    await user.click(screen.getByRole('radio', { name: 'horizontal' }));
+
+    expect(screen.getByRole('img', { name: 'QR code' })).toHaveTextContent(
+      'The very long name of a system will fit on a horizontal printed label'
+    );
   });
 
   it('downloads the label as an image named after the entity', async () => {
@@ -192,7 +204,7 @@ describe('Code generate dialog component', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Show Type' }));
     await user.click(screen.getByRole('checkbox', { name: 'Show Owner' }));
 
-    expect(getLabel()).toHaveTextContent(
+    expect(screen.getByRole('img', { name: 'QR code' })).toHaveTextContent(
       `Name: ${system.name}Type: StorageOwner: ${system.owner}`
     );
   });
