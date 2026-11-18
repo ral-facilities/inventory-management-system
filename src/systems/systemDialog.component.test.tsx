@@ -118,10 +118,13 @@ describe('Systems Dialog', () => {
 
       await modifyValues({ name: 'test', type: 'Storage' });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+      await user.click(continueButton);
 
-      expect(saveButton).toBeDisabled();
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(continueButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
@@ -164,12 +167,16 @@ describe('Systems Dialog', () => {
       };
       await modifyValues({ ...values, type: 'Operational' });
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         parent_id: 'parent-id',
         type_id: '2',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -184,20 +191,25 @@ describe('Systems Dialog', () => {
 
       await modifyValues({ ...values, type: 'Scrapped' });
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         importance: SystemImportanceType.MEDIUM,
         type_id: '3',
+        modified_comment: 'A test comment',
       });
+
       expect(mockOnClose).toHaveBeenCalled();
     });
 
     it('displays error message when name field is not filled in', async () => {
       createView();
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -213,7 +225,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -233,7 +248,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -253,7 +271,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();
 
@@ -299,10 +320,13 @@ describe('Systems Dialog', () => {
 
       await modifyValues({ name: 'test' });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+      await user.click(continueButton);
 
-      expect(saveButton).toBeDisabled();
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(continueButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
@@ -327,11 +351,14 @@ describe('Systems Dialog', () => {
       };
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         `/v1/systems/${MOCK_SELECTED_SYSTEM['id']}`,
-        values
+        { ...values, modified_comment: 'A test comment' }
       );
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -348,11 +375,19 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         `/v1/systems/${MOCK_SELECTED_SYSTEM['id']}`,
-        { description: null, location: null, owner: null }
+        {
+          description: null,
+          location: null,
+          owner: null,
+          modified_comment: 'A test comment',
+        }
       );
       expect(mockOnClose).toHaveBeenCalled();
     });
@@ -365,11 +400,14 @@ describe('Systems Dialog', () => {
       };
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         `/v1/systems/${MOCK_SELECTED_SYSTEM['id']}`,
-        values
+        { ...values, modified_comment: 'A test comment' }
       );
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -378,7 +416,9 @@ describe('Systems Dialog', () => {
     it('displays error message when no fields have been changed that disappears when the form is modified', async () => {
       createView();
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -401,7 +441,7 @@ describe('Systems Dialog', () => {
 
       await modifyValues({ name: '' });
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -416,7 +456,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -435,7 +478,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();
 
@@ -451,7 +497,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -470,7 +519,10 @@ describe('Systems Dialog', () => {
 
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(
         screen.getByText(
@@ -541,12 +593,16 @@ describe('Systems Dialog', () => {
       };
       await modifyValues(values);
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...MOCK_SELECTED_SYSTEM_POST_DATA,
         ...values,
         parent_id: 'parent-id',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();

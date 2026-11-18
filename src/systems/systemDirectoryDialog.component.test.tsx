@@ -219,16 +219,21 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         '/v1/systems/65328f34a40ff5301575a4e7',
         {
           parent_id: null,
+          modified_comment: 'A test comment',
         }
       );
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         '/v1/systems/65328f34a40ff5301575a4e8',
         {
           parent_id: null,
+          modified_comment: 'A test comment',
         }
       );
 
@@ -251,16 +256,21 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         '/v1/systems/65328f34a40ff5301575a4e7',
         {
           parent_id: '65328f34a40ff5301575a4e3',
+          modified_comment: 'A test comment',
         }
       );
       expect(axiosPatchSpy).toHaveBeenCalledWith(
         '/v1/systems/65328f34a40ff5301575a4e8',
         {
           parent_id: '65328f34a40ff5301575a4e3',
+          modified_comment: 'A test comment',
         }
       );
 
@@ -328,9 +338,13 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...(SystemsJSON[1] as System),
         name: 'Giant laser_copy_1',
+        modified_comment: 'A test comment',
       });
     });
 
@@ -357,10 +371,14 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...(SystemsJSON[1] as System),
         name: 'Giant laser',
         parent_id: SystemsJSON[1].id,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -373,13 +391,18 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[0],
         parent_id: null,
+        modified_comment: 'A test comment',
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[1],
         parent_id: null,
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -401,13 +424,18 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[0],
         parent_id: '65328f34a40ff5301575a4e3',
+        modified_comment: 'A test comment',
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[1],
         parent_id: '65328f34a40ff5301575a4e3',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -436,10 +464,14 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[0],
         name: 'smaller laser_copy_1',
         parent_id: '65328f34a40ff5301575a4e3',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -462,10 +494,14 @@ describe('SystemDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[0],
         name: 'Smaller laser_copy_1',
         parent_id: '65328f34a40ff5301575a4e3',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
