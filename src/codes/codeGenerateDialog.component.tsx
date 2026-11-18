@@ -12,7 +12,7 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { CatalogueItem, Item, System, SystemType } from '../api/api.types.tsx';
 import handleTransferState from '../handleTransferState';
 import paths from '../paths.tsx';
@@ -35,16 +35,11 @@ export interface CodeGenerateDialogProps extends CodeGenerateDialogCommonProps {
   }[];
 }
 
-const LayoutPicker = () => {
-  const TextSkeleton = () => (
-    <Skeleton
-      variant="text"
-      width={30}
-      height={5}
-      animation={false}
-      sx={{ bgcolor: 'currentColor' }}
-    />
-  );
+const LayoutPicker = (props: {
+  layout: 'vertical' | 'horizontal',
+  setLayout: (layout: 'vertical' | 'horizontal') => void
+}) => {
+  const { layout, setLayout } = props;
 
   const boxStyles = {
     p: 2,
@@ -59,10 +54,24 @@ const LayoutPicker = () => {
       color: 'primary.main',
     },
   };
+  const TextSkeleton = () => (
+    <Skeleton
+      variant="text"
+      width={30}
+      height={5}
+      animation={false}
+      sx={{ bgcolor: 'currentColor' }}
+    />
+  );
+
+  const handleChange = (_: ChangeEvent, value: string) => {
+    setLayout(value === 'horizontal' ? 'horizontal' : 'vertical');
+  }
 
   return (
     <RadioGroup
-      defaultValue="vertical"
+      value={layout}
+      onChange={handleChange}
       name="code-label-layout-direction"
       sx={{
         display: 'grid',
@@ -74,6 +83,8 @@ const LayoutPicker = () => {
     >
       <Box
         component="label"
+        role="radio"
+        aria-label="vertical"
         sx={boxStyles}
       >
         <Radio value="vertical" sx={{ display: 'none' }} />
@@ -94,6 +105,8 @@ const LayoutPicker = () => {
       </Box>
       <Box
         component="label"
+        role="radio"
+        aria-label="horizontal"
         sx={boxStyles}
       >
         <Radio value="horizontal" sx={{ display: 'none' }} />
@@ -121,6 +134,7 @@ const LayoutPicker = () => {
 export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
   const { open, onClose, type, oid, options } = props;
   const [isIconRendered, setIsIconRendered] = React.useState<boolean>(true);
+  const [layout, setLayout] = React.useState<'vertical'|'horizontal'>('vertical');
 
   const labelRef = React.useRef<SVGSVGElement | null>(null);
 
@@ -166,6 +180,7 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
               lines={options}
               ref={labelRef}
               showIcon={isIconRendered}
+              layout={layout}
               value={`${paths.codeRedirect}?type=${type}&oid=${oid}`}
             />
           </Box>
@@ -173,7 +188,7 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
         <Divider flexItem orientation="vertical" />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Layout</Typography>
-          <LayoutPicker />
+          <LayoutPicker layout={layout} setLayout={setLayout} />
           <Typography variant="h6">Options</Typography>
           <Stack>
             <FormControlLabel

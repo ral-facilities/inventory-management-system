@@ -4,20 +4,15 @@ import React from 'react';
 // regardless of where the plugin is hosted
 import iconSrc from '../../public/logo192.png?inline';
 
-const WIDTH = 320;
 const PADDING = 16;
 const QR_SIZE = 160;
-/** Quiet zone around the symbol itself, in QR modules, in addition to the label padding. */
 const QR_MARGIN_MODULES = 2;
-/** Kept small enough that error correction can still recover the modules hidden behind it. */
 const ICON_SIZE = 35;
 const TEXT_GAP = 12;
 const LINE_HEIGHT = 20;
 const FONT_SIZE = 14;
-/** SVG text can't be measured before it is rendered, so lines are capped by character count,
- * which at this font size keeps them within the label width. */
+const CHAR_WIDTH_RATIO = 0.6;
 const MAX_LINE_CHARS = 38;
-/** A font every viewer will have, as the downloaded image can't rely on the app's fonts. */
 const FONT_FAMILY = 'Arial, Helvetica, sans-serif';
 
 export interface QRCodeLabelProps {
@@ -28,6 +23,7 @@ export interface QRCodeLabelProps {
     rendered: boolean;
   }[];
   showIcon: boolean;
+  layout: 'vertical' | 'horizontal';
 }
 
 const truncate = (text: string, maxLength: number): string =>
@@ -41,30 +37,45 @@ const truncate = (text: string, maxLength: number): string =>
  */
 const QRCodeLabel = React.forwardRef<SVGSVGElement, QRCodeLabelProps>(
   function QRCodeLabel(props, ref) {
-    const { value, lines, showIcon } = props;
+    const { value, lines, showIcon, layout } = props;
 
     const renderedLines = lines.filter((line) => line.rendered);
+    const renderedLineHeight = renderedLines.length * LINE_HEIGHT;
+    const width =
+      layout === 'vertical'
+        ? 320
+        : PADDING * 2 +
+          QR_SIZE +
+          Math.ceil(Math.max(
+            0,
+            ...renderedLines.map(
+              (line) => `${line.label}: ${line.value}`.length
+            )
+          ) * FONT_SIZE * CHAR_WIDTH_RATIO);
     const height =
-      PADDING * 2 +
-      QR_SIZE +
-      (renderedLines.length === 0
-        ? 0
-        : TEXT_GAP + renderedLines.length * LINE_HEIGHT);
+      layout === 'vertical'
+        ? PADDING * 2 +
+          QR_SIZE +
+          (renderedLines.length === 0
+            ? 0
+            : TEXT_GAP + renderedLineHeight)
+        : PADDING * 2 +
+          QR_SIZE;
 
     return (
       <svg
         aria-label="QR code"
         fontFamily={FONT_FAMILY}
         fontSize={FONT_SIZE}
+        width={width}
         height={height}
         ref={ref}
         role="img"
         style={{ maxWidth: '100%', height: 'auto' }}
-        viewBox={`0 0 ${WIDTH} ${height}`}
-        width={WIDTH}
+        viewBox={`0 0 ${width} ${height}`}
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect fill="#FFFFFF" height={height} width={WIDTH} />
+        <rect fill="#FFFFFF" height={height} width={width} />
         <QRCodeSVG
           aria-hidden
           // Higher error correction level needed when icon is covering some modules
@@ -82,7 +93,7 @@ const QRCodeLabel = React.forwardRef<SVGSVGElement, QRCodeLabelProps>(
           }
           size={QR_SIZE}
           value={value}
-          x={(WIDTH - QR_SIZE) / 2}
+          x={layout === 'vertical' ? (width - QR_SIZE) / 2 : PADDING}
           y={PADDING}
         />
         {renderedLines.map((line, index) => {
@@ -91,14 +102,20 @@ const QRCodeLabel = React.forwardRef<SVGSVGElement, QRCodeLabelProps>(
             <text
               fill="#212121"
               key={line.label}
-              textAnchor="middle"
-              x={WIDTH / 2}
-              y={PADDING + QR_SIZE + TEXT_GAP + LINE_HEIGHT * (index + 0.5)}
+              textAnchor={layout === 'vertical' ? 'middle' : 'start'}
+              x={
+                layout === 'vertical' ? width / 2 : PADDING + QR_SIZE + TEXT_GAP
+              }
+              y={
+                layout === 'vertical'
+                  ? PADDING + QR_SIZE + TEXT_GAP + LINE_HEIGHT * (index + 0.5)
+                  : PADDING + ((QR_SIZE - renderedLineHeight) / 2) + LINE_HEIGHT * (index + 0.5)
+              }
             >
               <tspan fill="#000000" fontWeight="bold">
                 {key}
               </tspan>{' '}
-              {truncate(line.value, MAX_LINE_CHARS - key.length - 1)}
+              {layout === 'vertical' ? truncate(line.value, MAX_LINE_CHARS - key.length - 1) : line.value}
             </text>
           );
         })}
