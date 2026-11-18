@@ -904,11 +904,11 @@ exports[`Image Gallery > renders correctly 1`] = `
 <body>
   <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1m1h09u-MuiPaper-root css-ajotvz-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1m1h09u-MuiPaper-root css-704ub5-MuiGrid2-root"
       style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     >
       <div
-        class="MuiStack-root css-ppkp0z-MuiStack-root"
+        class="MuiStack-root css-1w2qiex-MuiStack-root"
       >
         <div
           class="MuiBox-root css-1tbggly"
@@ -7449,11 +7449,11 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
 <body>
   <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1m1h09u-MuiPaper-root css-ajotvz-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1m1h09u-MuiPaper-root css-704ub5-MuiGrid2-root"
       style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     >
       <div
-        class="MuiStack-root css-ppkp0z-MuiStack-root"
+        class="MuiStack-root css-1w2qiex-MuiStack-root"
       >
         <div
           class="MuiBox-root css-1tbggly"

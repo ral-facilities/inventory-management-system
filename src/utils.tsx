@@ -29,6 +29,7 @@ import React from 'react';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
+import { FOOTER_HEIGHT, MAIN_APP_BAR_HEIGHT } from './common/consts';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
 
@@ -87,12 +88,14 @@ export const setLocalStorageToken = (isAdminToken: boolean) => {
 
 /* Returns a calc function giving the page height excluding SciGateway related components
   (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
-  - all SciGateway related heights - 48px)*/
+  - all SciGateway related heights - 48px). The SciGateway footer is only shown on md
+  screens and up, so pass footerVisible = false to exclude its height on smaller screens */
 export const getSciGatewayPageHeightCalc = (
-  additionalSubtraction?: string
+  additionalSubtraction?: string,
+  footerVisible: boolean = true
 ): string => {
-  // Page height - unknown - app bar height - footer height - additional
-  return `calc(100vh - 8px - 64px - 24px${
+  // Page height - app bar height - footer height (if visible) - additional
+  return `calc(100vh - ${MAIN_APP_BAR_HEIGHT}${footerVisible ? ` - ${FOOTER_HEIGHT}` : ''}${
     additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
   })`;
 };
@@ -423,7 +426,8 @@ interface DateSortConfig<T> {
   selector: (item: T) => Date;
 }
 
-type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
+type SortConfig<T> =
+  StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
 
 export function sortDataList<T>(props: {
   data: T[];
@@ -435,9 +439,7 @@ export function sortDataList<T>(props: {
       return config.selector(a) - config.selector(b);
     }
     if (config.type === 'date') {
-      return (
-        config.selector(a).getTime() - config.selector(b).getTime()
-      );
+      return config.selector(a).getTime() - config.selector(b).getTime();
     }
     return config.selector(a).localeCompare(config.selector(b));
   });
@@ -672,17 +674,39 @@ export function parseAttachmentError(message: string): string {
 
   return parseBaseError(message);
 }
+export const CORRUPT_SPREADSHEET_MESSAGE = `This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.`;
 
-export function parseSpreadsheetError(message: string): string {
+function parseSpreadsheetBaseError(message: string): string {
   if (
     message.includes('imsingestapiversion') ||
+    message.includes('not a valid spreadsheet') ||
+    message.includes('spreadsheet contents has errors')
+  ) {
+    return CORRUPT_SPREADSHEET_MESSAGE;
+  }
+
+  if (
+    message.includes(
+      'validation failed due to an issue unrelated to the spreadsheet contents'
+    )
+  ) {
+    return 'There was an unexpected error. Please refresh the page and try again or contact the system administrator.';
+  }
+
+  if (message.includes('spreadsheet was created by ims ingest api v')) {
+    return `This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.`;
+  }
+
+  return parseBaseError(message);
+}
+export function parseCatalogueItemSpreadsheetError(message: string): string {
+  if (
     message.includes('unable to find the custom document property') ||
     message.includes(
       "unable to find the 'catalogueitems template' sheet in the workbook"
-    ) ||
-    message.includes('not a valid spreadsheet')
+    )
   ) {
-    return `This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.`;
+    return CORRUPT_SPREADSHEET_MESSAGE;
   }
 
   if (
@@ -724,11 +748,45 @@ export function parseSpreadsheetError(message: string): string {
     return `This spreadsheet was created for a different catalogue category. Please download a new template for the correct catalogue category and copy your data into it before trying again.`;
   }
 
-  if (message.includes('spreadsheet was created by ims ingest api v')) {
-    return `This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.`;
+  return parseSpreadsheetBaseError(message);
+}
+
+export function parseItemSpreadsheetError(message: string): string {
+  if (
+    message.includes(
+      "unable to find the 'items template' sheet in the workbook"
+    )
+  ) {
+    return CORRUPT_SPREADSHEET_MESSAGE;
   }
 
-  return parseBaseError(message);
+  if (
+    message.includes(
+      'the columns within the template are either out of date or have been modified.'
+    )
+  ) {
+    return `The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('invalid item data')) {
+    return `The uploaded spreadsheet contains invalid item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.`;
+  }
+
+  if (message.includes('too many items in spreadsheet')) {
+    const match = message.match(/maximum of (\d+)/);
+    const max = match?.[1];
+
+    if (!max)
+      return 'Unable to determine maximum allowed items. Please contact the system administrator.';
+
+    return `Your spreadsheet contains too many items. The maximum allowed is ${max}. Please reduce the number of rows and try again.`;
+  }
+
+  if (message.includes('system does not exist')) {
+    return `The selected system no longer exists or is invalid. Please navigate to a valid system and try again.`;
+  }
+
+  return parseSpreadsheetBaseError(message);
 }
 
 export async function getErrorMessage(error: AxiosError): Promise<string> {
@@ -925,6 +983,15 @@ export const criticalityCardStyle = (props: {
     border: `2px solid ${color}`,
     boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
   };
+};
+
+export const getCombinedFlagged = (
+  flags: (boolean | null)[]
+): boolean | null | undefined => {
+  if (flags.length === 0) return undefined;
+  if (flags.includes(true)) return true;
+  if (flags.includes(null)) return null;
+  return false;
 };
 
 export const criticalityHeaderStyle = (props: {

@@ -70,10 +70,12 @@ export const duplicateSystem = (name: string, index: number) => {
 };
 
 export const deleteSystem = (name: string, index: number) => {
+  cy.findAllByLabelText('Row Actions').eq(index).scrollIntoView();
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Delete`).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
   cy.findByText(name).should('not.exist');
 };
 
@@ -87,8 +89,7 @@ export const copyToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Systems more options' }).click();
-  cy.findByRole('menuitem', { name: 'Copy to' }).click();
+  cy.findByRole('button', { name: 'Copy to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage 2').click();
@@ -118,8 +119,7 @@ export const moveToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Systems more options' }).click();
-  cy.findByRole('menuitem', { name: 'Move to' }).click();
+  cy.findByRole('button', { name: 'Move to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage 2').click();
@@ -136,7 +136,10 @@ export const moveToSystems = (values: {
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
   }
-  cy.go('back');
+  cy.findByRole('button', { name: 'navigate to systems home' }).click();
+  cy.findByText('Root systems').should('exist');
+  cy.findByText('Total Systems', { exact: false }).should('exist');
+  cy.get('body').type('{esc}');
 };
 
 export const moveItemToSystem = (values: {
@@ -175,6 +178,9 @@ export const moveItemToSystem = (values: {
     cy.findByText(values.checkedItemsNames[i]).should('exist');
   }
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
+  cy.findByText('Root systems').should('exist');
+  cy.findByText('Total Systems', { exact: false }).should('exist');
+  cy.get('body').type('{esc}');
 };
 
 export const addSystems = (ignoreChecks?: boolean) => {

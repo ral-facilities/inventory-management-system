@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.22.1
+          node-version: 26.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -62,7 +62,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.22.1
+          node-version: 26.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -127,6 +127,7 @@ jobs:
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           --env BULK__MAX_CATALOGUE_ITEMS=1000 \
+          --env BULK__MAX_ITEMS=1000 \
           --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:main
 
@@ -198,7 +199,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.22.1
+          node-version: 26.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -247,7 +248,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.22.1
+          node-version: 26.13.1
           cache: 'yarn'
 
       - name: Install dependencies
