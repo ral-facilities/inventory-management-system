@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import HistoryTable from './historyTable.component';
+import { URLPathKeyType } from '../paths';
 
 describe('History Table', () => {
   let user: UserEvent;
@@ -13,10 +14,13 @@ describe('History Table', () => {
     vi.clearAllMocks();
   });
 
-  const createView = (path: string) => {
+  const createView = (
+    path: string,
+    urlPathKey: URLPathKeyType = 'manufacturerHistory'
+  ) => {
     return renderComponentWithRouterProvider(
       <HistoryTable />,
-      'manufacturerHistory',
+      urlPathKey,
       path
     );
   };
@@ -81,5 +85,15 @@ describe('History Table', () => {
       expect(screen.getByText('93606')).toBeInTheDocument();
     });
     expect(screen.getByText('telephone')).toBeInTheDocument();
+  });
+
+  it('correctly displays properties', async () => {
+    createView('/catalogue/4/history', 'catalogueCategoryHistory');
+
+    await waitFor(() => {
+      expect(screen.getByText('Updated property constraints'));
+    });
+
+    expect(screen.getByText('Property 1 (name)')).toBeInTheDocument();
   });
 });

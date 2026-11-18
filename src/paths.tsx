@@ -9,6 +9,7 @@ export const paths = {
   homepage: '/ims',
   catalogue: '/catalogue',
   catalogueCategories: '/catalogue/:catalogue_category_id',
+  catalogueCategoryHistory: '/catalogue/:catalogue_category_id/history',
   catalogueItems: '/catalogue/:catalogue_category_id/items',
   catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
   items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',

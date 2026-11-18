@@ -144,6 +144,31 @@ describe('CardView', () => {
     });
   });
 
+  it('navigates to catalogue category history table', async () => {
+    const { router } = createView('/catalogue');
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
+    });
+    await user.click(actionsButtons[0]);
+
+    const historyButton = screen.getByRole('menuitem', {
+      name: 'view Beam Characterization catalogue category history button',
+    });
+    await user.click(historyButton);
+
+    await waitFor(
+      () => {
+        expect(router.state.location.pathname).toBe(`/catalogue/1/history`);
+      },
+      { timeout: 10000 }
+    );
+  });
+
   it('opens the delete catalogue category dialog', async () => {
     createView('/catalogue');
 

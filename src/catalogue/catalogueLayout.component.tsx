@@ -123,6 +123,15 @@ function CatalogueLayout() {
           catalogueCategory?.is_leaf
             ? [...catalogueItemBreadcrumbTrail]
             : []),
+          // Catalogue category history page
+          ...((catalogueCategory && lastSegmentOfCataloguePath === 'history'
+            ? [
+                ...(catalogueCategory.is_leaf
+                  ? catalogueItemBreadcrumbTrail
+                  : breadcrumbs.trail),
+                [`${catalogueCategory.id}/history`, 'History'],
+              ]
+            : []) satisfies BreadcrumbsInfo['trail']),
           // Catalogue item landing page
           ...((catalogueItem && lastSegmentOfCataloguePath === catalogueItem.id
             ? [

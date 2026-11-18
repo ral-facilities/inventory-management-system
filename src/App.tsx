@@ -152,6 +152,11 @@ const routeObject: RouteObject[] = [
                     loader: catalogueLayoutLoader(queryClient),
                   },
                   {
+                    path: paths.catalogueCategoryHistory,
+                    Component: HistoryTable,
+                    loader: catalogueLayoutLoader(queryClient),
+                  },
+                  {
                     path: paths.catalogueItems,
                     Component: Outlet,
                     children: [

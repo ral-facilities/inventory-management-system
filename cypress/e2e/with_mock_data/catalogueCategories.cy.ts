@@ -313,6 +313,22 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('navigate to catalogue category history page', () => {
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(0)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'view Beam Characterization catalogue category history button',
+    }).click();
+
+    cy.url().should('include', '/catalogue/1/history');
+
+    cy.findByText('Renamed the category').should('be.visible');
+  });
+
   it('adds a catalogue category where isLeaf is true', () => {
     cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');

@@ -39,7 +39,21 @@ import { HistoryEntry } from '../api/api.types.tsx';
 import { useLocation } from 'react-router';
 import { isValid, parseISO } from 'date-fns';
 
-const getOperationTypeName = (operation: string) => {
+const getCollectionName = (path: string[]): string => {
+  if (path.includes('manufacturers')) return 'manufacturers';
+  if (path.includes('systems')) return 'systems';
+  if (path.includes('catalogue') && !path.includes('items')) {
+    return 'catalogue_categories';
+  }
+  if (path.includes('catalogue') && path.includes('items')) {
+    const itemCount = path.filter((segment) => segment === 'items').length;
+    return itemCount > 1 ? 'items' : 'catalogue_items';
+  }
+
+  return ''; // Will just cause no data to be returned
+};
+
+const getOperationTypeName = (operation: string): string => {
   switch (operation) {
     case 'insert':
       return 'Create';
@@ -75,6 +89,19 @@ const transformUpdatedFieldValue = (value: unknown): string => {
   return String(value);
 };
 
+// Properties are stored positionally (e.g. `properties.0.name` or the whole
+// `properties.0` object), so the numeric index is shown as `Property <n>`
+// and the field label is shown as `Property <n> (field)`
+const formatFieldName = (field: string): string => {
+  const parts = field.split('.');
+  if (parts[0] === 'properties' && /^\d+$/.test(parts[1] ?? '')) {
+    const propertyLabel = `Property ${Number(parts[1]) + 1}`;
+    const remainder = parts.slice(2).join('.');
+    return remainder ? `${propertyLabel} (${remainder})` : propertyLabel;
+  }
+  return field;
+};
+
 // Recursively unravel nested fields into one leaf per changed value,
 // modifies nested field name to `field.nested` (e.g. `address.address_line`)
 const flattenUpdatedField = (
@@ -89,7 +116,22 @@ const flattenUpdatedField = (
   ) {
     return [];
   }
-  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+  if (Array.isArray(value)) {
+    // Arrays of objects (e.g. the whole `properties` array on creation) are
+    // unravelled per element so each object becomes its own set of rows
+    // (`properties.0.name`, ...).
+    // Arrays of primitives (e.g. allowed_values) stay as a single comma-separated leaf.
+    const hasObjectItems = value.some(
+      (item) => item !== null && typeof item === 'object'
+    );
+    if (hasObjectItems) {
+      return value.flatMap((item, index) =>
+        flattenUpdatedField(`${field}.${index}`, item)
+      );
+    }
+    return [{ updated_field: field, updated_value: value }];
+  }
+  if (value !== null && typeof value === 'object') {
     return Object.entries(value).flatMap(([childField, childValue]) =>
       flattenUpdatedField(`${field}.${childField}`, childValue)
     );
@@ -100,8 +142,8 @@ const flattenUpdatedField = (
 function HistoryTable() {
   const location = useLocation();
   const historyPath = location.pathname.split('/');
-  const collection = historyPath[historyPath.length - 3];
   const entity_id = historyPath[historyPath.length - 2];
+  const collection = getCollectionName(historyPath);
 
   const { data: historyData, isLoading: historyDataLoading } =
     useGetHistoryEntries(collection, entity_id);
@@ -169,7 +211,7 @@ function HistoryTable() {
       {
         header: 'Field',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.updated_field,
+        accessorFn: (row) => formatFieldName(row.updated_field),
         id: 'updated_field',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
@@ -178,7 +220,8 @@ function HistoryTable() {
         // click-to-expand count when the entry changed multiple fields.
         AggregatedCell: ({ row }) => {
           const subRows = row.subRows ?? [];
-          if (subRows.length === 1) return subRows[0].original.updated_field;
+          if (subRows.length === 1)
+            return formatFieldName(subRows[0].original.updated_field);
           return (
             <Link
               component="button"
@@ -189,7 +232,7 @@ function HistoryTable() {
             </Link>
           );
         },
-        Cell: ({ row }) => row.original.updated_field,
+        Cell: ({ row }) => formatFieldName(row.original.updated_field),
         size: 350,
       },
       {

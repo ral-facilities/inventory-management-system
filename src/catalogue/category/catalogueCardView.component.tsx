@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import HistoryIcon from '@mui/icons-material/History';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
@@ -564,6 +565,20 @@ function CatalogueCardView() {
             <DeleteIcon />
           </ListItemIcon>
           Delete
+        </MenuItem>,
+        <MenuItem
+          key={4}
+          onClick={() => {
+            navigate(`/catalogue/${row.original.id}/history`);
+            closeMenu();
+          }}
+          aria-label={`view ${row.original.name} catalogue category history button`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <HistoryIcon />
+          </ListItemIcon>
+          View History
         </MenuItem>,
       ];
     },
