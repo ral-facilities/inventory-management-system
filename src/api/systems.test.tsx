@@ -177,6 +177,7 @@ describe('System api functions', () => {
       owner: 'Owner',
       type_id: '1',
       importance: SystemImportanceType.MEDIUM,
+      modified_comment: 'A test comment',
     };
 
     it('sends a post request to add a system and returns a successful response', async () => {
@@ -249,6 +250,7 @@ describe('System api functions', () => {
         // Prevent test interference if modifying the selected systems
         selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
+        modifiedComment: 'A test comment',
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -275,6 +277,7 @@ describe('System api functions', () => {
       moveToSystem.selectedSystems.map((system) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
           parent_id: null,
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -307,6 +310,7 @@ describe('System api functions', () => {
       moveToSystem.selectedSystems.map((system) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
           parent_id: 'new_system_id',
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -342,6 +346,7 @@ describe('System api functions', () => {
       moveToSystem.selectedSystems.map((system) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
           parent_id: 'new_system_id',
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -384,6 +389,7 @@ describe('System api functions', () => {
         selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
         existingSystemCodes: [],
+        modifiedComment: 'A test comment',
       };
 
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -411,6 +417,7 @@ describe('System api functions', () => {
         expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
           ...system,
           parent_id: null,
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -427,6 +434,7 @@ describe('System api functions', () => {
         ...(SystemsJSON[0] as System),
         name: 'New system name',
         id: 'new_system_id',
+        modified_comment: 'A test comment',
       };
 
       const { result } = renderHook(() => useCopyToSystem(), {
@@ -444,6 +452,7 @@ describe('System api functions', () => {
         expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
           ...system,
           parent_id: 'new_system_id',
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -484,6 +493,7 @@ describe('System api functions', () => {
           ...system,
           parent_id: null,
           name: index === 0 ? 'System1_copy_1' : 'System2_copy_3',
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(
@@ -521,6 +531,7 @@ describe('System api functions', () => {
         expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
           ...system,
           parent_id: 'new_system_id',
+          modified_comment: 'A test comment',
         })
       );
       expect(result.current.data).toEqual(

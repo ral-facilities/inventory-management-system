@@ -16,8 +16,8 @@ export interface HistoryCommentProps {
   onSubmit: (event: React.SyntheticEvent) => void;
   onChange: UseFormRegisterReturn | ((modifiedComment: string) => void);
   onCancel: () => void;
-  action: 'editing' | 'adding' | 'moving';
-  entityTypeName: 'Item' | 'Items';
+  action: 'editing' | 'adding' | 'moving' | 'copying';
+  entityTypeName: string;
 }
 
 const HistoryCommentDialog = (props: HistoryCommentProps) => {

@@ -384,7 +384,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               tabindex="0"
               type="button"
             >
-              Save
+              Continue
             </button>
           </div>
         </div>

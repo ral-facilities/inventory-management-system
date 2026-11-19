@@ -202,6 +202,7 @@ export const useMoveToSystem = (): UseMutationResult<
         async (system: System) => {
           return patchSystem(system.id, {
             parent_id: moveToSystem.targetSystem?.id || null,
+            modified_comment: moveToSystem.modifiedComment,
           })
             .then(() => {
               const targetSystemName =
@@ -280,6 +281,8 @@ export const useCopyToSystem = (): UseMutationResult<
             system.code,
             copyToSystem.existingSystemCodes
           );
+
+          systemAdd.modified_comment = copyToSystem.modifiedComment;
 
           return postSystem(systemAdd)
             .then((result: System) => {

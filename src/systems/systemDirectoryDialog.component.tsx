@@ -23,6 +23,7 @@ import { FLEX_CONTAINER_PROPS, TABLE_DIALOG_PROPS } from '../common/consts';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
+import HistoryCommentDialog from '../history/historyCommentDialog.component';
 
 export interface SystemDirectoryDialogProps {
   open: boolean;
@@ -45,6 +46,13 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   React.useEffect(() => {
     setParentSystemId(props.parentSystemId);
   }, [props.parentSystemId]);
+
+  const [historyCommentDialog, setHistoryCommentDialog] =
+    React.useState<boolean>(false);
+
+  const [modifiedComment, setModifiedComment] = React.useState<string | null>(
+    null
+  );
 
   const { data: parentSystemBreadcrumbs } =
     useGetSystemsBreadcrumbs(parentSystemId);
@@ -75,6 +83,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
         targetSystem: targetSystem || null,
+        modifiedComment: modifiedComment,
       }).then((response) => {
         handleTransferState(response);
         onChangeSelectedSystems({});
@@ -83,6 +92,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     }
   }, [
     handleClose,
+    modifiedComment,
     moveToSystem,
     onChangeSelectedSystems,
     parentSystemId,
@@ -104,6 +114,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         // which happens when at root
         targetSystem: targetSystem || null,
         existingSystemCodes: existingSystemCodes,
+        modifiedComment: modifiedComment,
       }).then((response) => {
         handleTransferState(response);
         onChangeSelectedSystems({});
@@ -113,6 +124,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   }, [
     copyToSystem,
     handleClose,
+    modifiedComment,
     onChangeSelectedSystems,
     parentSystemId,
     selectedSystems,
@@ -192,11 +204,28 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               systemsData !== undefined
             )
           }
-          onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
+          onClick={() => setHistoryCommentDialog(true)}
         >
           {type === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>
       </DialogActions>
+      <HistoryCommentDialog
+        open={historyCommentDialog}
+        onSubmit={(_) => {
+          setHistoryCommentDialog(false);
+          if (type === 'moveTo') {
+            handleMoveTo();
+          } else {
+            handleCopyTo();
+          }
+        }}
+        onCancel={() => {
+          setHistoryCommentDialog(false);
+        }}
+        onChange={setModifiedComment}
+        action={type === 'moveTo' ? 'moving' : 'copying'}
+        entityTypeName={selectedSystems.length > 1 ? 'Systems' : 'System'}
+      />
     </Dialog>
   );
 };

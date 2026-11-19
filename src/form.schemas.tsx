@@ -279,6 +279,7 @@ export const SystemsSchema = (requestType: RequestType) =>
     type_id: MandatoryStringSchema({
       errorMessage: 'Please select a type.',
     }),
+    modified_comment: NullableStringSchema(),
   });
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
