@@ -83,7 +83,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             owner: selectedSystem.owner ?? '',
             importance: selectedSystem.importance,
             type_id: selectedSystem.type_id,
-            modified_comment: selectedSystem.modified_comment,
+            modified_comment: null,
           }
         : {
             name: '',
