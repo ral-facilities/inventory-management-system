@@ -646,8 +646,8 @@ describe('Systems', () => {
             name: 'System name',
             importance: 'medium',
             type_id: '2',
-            parent_id: '65328f34a40ff5301575a4e3',
             modified_comment: 'A test comment',
+            parent_id: '65328f34a40ff5301575a4e3',
           })
         );
       });
@@ -1008,8 +1008,8 @@ describe('Systems', () => {
             owner: 'Daniel Morrison',
             importance: 'low',
             type_id: '2',
-            parent_id: '65328f34a40ff5301575a4e3',
             modified_comment: 'A test comment',
+            parent_id: '65328f34a40ff5301575a4e3',
           })
         );
       });
