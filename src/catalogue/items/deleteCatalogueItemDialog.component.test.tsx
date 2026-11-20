@@ -10,7 +10,7 @@ import { CatalogueItem } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
@@ -54,7 +54,7 @@ describe('delete Catalogue Category dialogue', () => {
       number_of_spares_required: null,
       criticality: null,
       is_flagged: null,
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
     };
     props = {
       open: true,

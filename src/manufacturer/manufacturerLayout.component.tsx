@@ -1,11 +1,15 @@
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  type LoaderFunctionArgs,
+} from 'react-router';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
-import paths from '../paths';
 
 export const ManufacturerErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Manufacturers" />;
@@ -42,15 +46,17 @@ function ManufacturerLayout() {
     BreadcrumbsInfo | undefined
   >(undefined);
 
+  const location = useLocation();
+
   React.useEffect(() => {
     if (manufacturerData) {
       setManufacturerBreadcrumbs({
         full_trail: true,
         trail: [
-          [
-            `${paths.manufacturer}/${manufacturerData.id}`,
-            manufacturerData.name,
-          ],
+          [manufacturerData.id, manufacturerData.name],
+          ...((location.pathname.includes('history')
+            ? [[`${manufacturerData.id}/history`, 'History']]
+            : []) satisfies BreadcrumbsInfo['trail']),
         ],
       });
     } else {
@@ -59,7 +65,7 @@ function ManufacturerLayout() {
         trail: [],
       });
     }
-  }, [manufacturerData]);
+  }, [location.pathname, manufacturerData]);
 
   return (
     <BaseLayoutHeader

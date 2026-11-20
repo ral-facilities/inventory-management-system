@@ -226,6 +226,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
                 )?.usage_status_id;
 
           return patchItem(item.id, {
+            modified_comment: moveItemsToSystem.modifiedComment,
             system_id: moveItemsToSystem.targetSystem?.id || '',
             ...(usage_status_id && {
               usage_status_id: usage_status_id,

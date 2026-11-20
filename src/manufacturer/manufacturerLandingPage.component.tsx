@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
   Button,
@@ -9,7 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -36,6 +37,15 @@ function ManufacturerLandingPage() {
       >
         {manufacturerData && (
           <Grid container sx={{ py: 2 }} size={12}>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<HistoryIcon />}
+              component={Link}
+              to={`/manufacturers/${manufacturerData.id}/history`}
+            >
+              History
+            </Button>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -231,7 +241,7 @@ function ManufacturerLandingPage() {
                 textAlign: 'center',
               }}
             >
-              Last modified:
+              Last Modified:
             </Typography>
           </Grid>
           <Grid size={12}>
@@ -244,6 +254,34 @@ function ManufacturerLandingPage() {
               }}
             >
               {formatDateTimeStrings(manufacturerData.modified_time, true)}
+            </Typography>
+          </Grid>
+
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              Modified by:
+            </Typography>
+          </Grid>
+          <Grid size={12}>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mx: '8px',
+              }}
+            >
+              {manufacturerData.modified_by}
             </Typography>
           </Grid>
 

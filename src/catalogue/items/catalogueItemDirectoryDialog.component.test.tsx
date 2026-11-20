@@ -59,6 +59,8 @@ describe('catalogue item directory Dialog', () => {
         ],
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
       },
       selectedItems: [
         {
@@ -95,6 +97,8 @@ describe('catalogue item directory Dialog', () => {
           notes: null,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
           number_of_spares: 0,
           number_of_spares_required: null,
           criticality: null,
@@ -134,6 +138,8 @@ describe('catalogue item directory Dialog', () => {
           notes: null,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
           number_of_spares: 0,
           number_of_spares_required: null,
           criticality: null,
@@ -365,6 +371,8 @@ describe('catalogue item directory Dialog', () => {
         is_flagged: null,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         properties: [
           { id: '9', value: 1000 },
           { id: '10', value: '±0.5%' },
@@ -392,6 +400,8 @@ describe('catalogue item directory Dialog', () => {
         is_flagged: null,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         properties: [
           { id: '9', value: 2000 },
           { id: '10', value: null },
@@ -436,6 +446,8 @@ describe('catalogue item directory Dialog', () => {
         is_flagged: null,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         properties: [
           { id: '7', value: 1000 },
           { id: '8', value: '±0.5%' },
@@ -463,6 +475,8 @@ describe('catalogue item directory Dialog', () => {
         is_flagged: null,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         properties: [
           { id: '7', value: 2000 },
           { id: '8', value: null },

@@ -317,13 +317,19 @@ describe('SystemItemsDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
+      // comments dialog
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '656da8ef9cba7a76c6f81a5d',
         usage_status_id: '1',
+        modified_comment: 'A test comment',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '656da8ef9cba7a76c6f81a5d',
         usage_status_id: '1',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -358,11 +364,17 @@ describe('SystemItemsDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
+      // comments dialog
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '656da8ef9cba7a76c6f81a5d',
+        modified_comment: 'A test comment',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '656da8ef9cba7a76c6f81a5d',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -421,15 +433,21 @@ describe('SystemItemsDialog', () => {
       expect((await screen.findAllByRole('combobox'))[2]).toHaveValue('In Use');
       expect(screen.getAllByRole('combobox')[3]).toHaveValue('In Use');
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      // comments dialog
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
+        modified_comment: 'A test comment',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -446,9 +464,9 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
       expect(
         screen.getByText(
           'Move items from current location or root to another system'
@@ -482,7 +500,9 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+      expect(
+        screen.getByRole('button', { name: 'Continue' })
+      ).not.toBeDisabled();
     }, 10000);
   });
 });

@@ -75,6 +75,8 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import HistoryTable from './history/historyTable.component';
+import ItemSystemHistory from './history/itemSystemHistoryTable.component';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -185,6 +187,18 @@ const routeObject: RouteObject[] = [
                                     Component: ItemsLandingPage,
                                     loader: catalogueLayoutLoader(queryClient),
                                   },
+                                  {
+                                    path: paths.itemSystemsHistory,
+                                    Component: Outlet,
+                                    children: [
+                                      {
+                                        index: true,
+                                        Component: ItemSystemHistory,
+                                        loader:
+                                          catalogueLayoutLoader(queryClient),
+                                      },
+                                    ],
+                                  },
                                 ],
                               },
                             ],
@@ -209,8 +223,25 @@ const routeObject: RouteObject[] = [
               { index: true, Component: Systems },
               {
                 path: paths.system,
-                Component: Systems,
-                loader: systemsLayoutLoader(queryClient),
+                Component: Outlet,
+                children: [
+                  {
+                    index: true,
+                    Component: Systems,
+                    loader: systemsLayoutLoader(queryClient),
+                  },
+                  {
+                    path: paths.systemItemsHistory,
+                    Component: Outlet,
+                    children: [
+                      {
+                        index: true,
+                        Component: ItemSystemHistory,
+                        loader: systemsLayoutLoader(queryClient),
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 path: '*',
@@ -227,6 +258,11 @@ const routeObject: RouteObject[] = [
               {
                 path: paths.manufacturer,
                 Component: ManufacturerLandingPage,
+                loader: manufacturerLayoutLoader(queryClient),
+              },
+              {
+                path: paths.manufacturerHistory,
+                Component: HistoryTable,
                 loader: manufacturerLayoutLoader(queryClient),
               },
               {
