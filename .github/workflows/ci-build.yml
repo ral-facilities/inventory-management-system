@@ -81,8 +81,6 @@ jobs:
 
   e2e-tests-api:
     name: End-to-End (with api) Tests
-    # TODO: Remove this workaround once an upstream MongoDB fix is available. Ubuntu 22.04 is used temporarily as
-    # MongoDB 8.0 fails to start on newer Linux kernels, causing E2E test failures.
     runs-on: ubuntu-latest
 
     steps:
