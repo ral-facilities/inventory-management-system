@@ -64,7 +64,7 @@ export const useGetSystems = (
   });
 };
 
-export const getSystem = async (id: string): Promise<System> => {
+const getSystem = async (id: string): Promise<System> => {
   return imsApi.get(`/v1/systems/${id}`).then((response) => {
     return response.data;
   });
