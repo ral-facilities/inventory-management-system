@@ -75,6 +75,10 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import {
+  CodeRedirectErrorComponent,
+  codeRedirectLoader,
+} from './codes/codeRedirectLoader.tsx';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -112,6 +116,11 @@ const routeObject: RouteObject[] = [
           { Component: HomePage, index: true },
           { path: '*', Component: HomePageErrorComponent },
         ],
+      },
+      {
+        path: paths.codeRedirect,
+        loader: codeRedirectLoader(queryClient),
+        ErrorBoundary: CodeRedirectErrorComponent,
       },
       {
         Component: APIConfigProviderLayout,
