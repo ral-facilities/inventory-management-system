@@ -102,14 +102,19 @@ describe('Code generate dialog component', () => {
     const user = userEvent.setup();
     createItemView();
 
-    expect(screen.getByRole('img', { name: 'QR code' }).querySelector('image')).toHaveAttribute(
-      'href',
-      expect.stringMatching(/^data:image\/png/)
-    );
+    // The icon is an SVG <image> element, which testing library exposes no role for, so it can only
+    // be reached through the QR code element and a node query selector
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByRole('img', { name: 'QR code' }).querySelector('image')
+    ).toHaveAttribute('href', expect.stringMatching(/^data:image\/png/));
 
     await user.click(screen.getByRole('checkbox', { name: 'Show Icon' }));
 
-    expect(screen.getByRole('img', { name: 'QR code' }).querySelector('image')).not.toBeInTheDocument();
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByRole('img', { name: 'QR code' }).querySelector('image')
+    ).not.toBeInTheDocument();
   });
 
   it('truncates a label line too long to fit on a vertical label', () => {

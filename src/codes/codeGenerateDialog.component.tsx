@@ -35,6 +35,16 @@ export interface CodeGenerateDialogProps extends CodeGenerateDialogCommonProps {
   }[];
 }
 
+const TextSkeleton = () => (
+  <Skeleton
+    variant="text"
+    width={30}
+    height={5}
+    animation={false}
+    sx={{ bgcolor: 'currentColor' }}
+  />
+);
+
 const LayoutPicker = (props: {
   layout: 'vertical' | 'horizontal',
   setLayout: (layout: 'vertical' | 'horizontal') => void
@@ -54,16 +64,6 @@ const LayoutPicker = (props: {
       color: 'primary.main',
     },
   };
-  const TextSkeleton = () => (
-    <Skeleton
-      variant="text"
-      width={30}
-      height={5}
-      animation={false}
-      sx={{ bgcolor: 'currentColor' }}
-    />
-  );
-
   const handleChange = (_: ChangeEvent, value: string) => {
     setLayout(value === 'horizontal' ? 'horizontal' : 'vertical');
   }
