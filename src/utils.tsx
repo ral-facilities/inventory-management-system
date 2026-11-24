@@ -33,7 +33,6 @@ import {
   MicroFrontendToken,
   SparesFilterStateType,
 } from './app.types';
-import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { FOOTER_HEIGHT, MAIN_APP_BAR_HEIGHT } from './common/consts';
 import { TokenUpdatedType } from './state/actions/actions.types';
 import store from './state/store';
