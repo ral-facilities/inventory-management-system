@@ -181,7 +181,9 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
               ref={labelRef}
               showIcon={isIconRendered}
               layout={layout}
-              value={`${window.location.protocol}//${window.location.host}${paths.codeRedirect}?type=${type}&oid=${oid}`}
+              value={
+                `${window.location.protocol}//${window.location.host}${paths.codeRedirect}?type=${type}&oid=${oid}`
+              }
             />
           </Box>
         </Stack>
