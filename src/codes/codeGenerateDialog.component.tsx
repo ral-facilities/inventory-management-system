@@ -11,6 +11,8 @@ import {
   Stack,
   Switch,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 import { CatalogueItem, Item, System, SystemType } from '../api/api.types.tsx';
@@ -136,6 +138,9 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
   const [isIconRendered, setIsIconRendered] = React.useState<boolean>(true);
   const [layout, setLayout] = React.useState<'vertical'|'horizontal'>('vertical');
 
+  const theme = useTheme();
+  const isWideScreen = useMediaQuery(theme.breakpoints.up('md'));
+
   const labelRef = React.useRef<SVGSVGElement | null>(null);
 
   const filename = `qr-code-${type}-${oid}.png`;
@@ -161,7 +166,13 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true}>
       <DialogTitle>Generate QR Code</DialogTitle>
-      <DialogContent sx={{ display: 'flex', flexDirection: 'row', gap: 3 }}>
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: isWideScreen ? 'row' : 'column',
+          gap: 3,
+        }}
+      >
         <Stack
           alignItems="center"
           spacing={1}
@@ -187,7 +198,10 @@ export const CodeGenerateDialog = (props: CodeGenerateDialogProps) => {
             />
           </Box>
         </Stack>
-        <Divider flexItem orientation="vertical" />
+        <Divider
+          flexItem
+          orientation={isWideScreen ? 'vertical' : 'horizontal'}
+        />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Layout</Typography>
           <LayoutPicker layout={layout} setLayout={setLayout} />
