@@ -25,6 +25,8 @@ import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
+import { QrCode } from '@mui/icons-material';
+import { ItemCodeGenerateDialog } from '../codes/codeGenerateDialog.component.tsx';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -36,6 +38,7 @@ const ItemsActionMenu = (props: {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+  const [codeGenDialogOpen, setCodeGenDialogOpen] = React.useState<boolean>(false);
 
   return (
     <ActionMenu
@@ -67,6 +70,21 @@ const ItemsActionMenu = (props: {
           </>
         ),
       }}
+      otherItems={[
+        {
+          label: 'Generate QR Code',
+          icon: <QrCode fontSize="small" />,
+          onClick: () => setCodeGenDialogOpen(true),
+          dialog: (
+            <ItemCodeGenerateDialog
+              open={codeGenDialogOpen}
+              onClose={() => setCodeGenDialogOpen(false)}
+              item={item}
+              catalogueItem={catalogueItem}
+            />
+          ),
+        },
+      ]}
     />
   );
 };

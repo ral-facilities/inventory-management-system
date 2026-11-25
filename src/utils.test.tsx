@@ -9,6 +9,8 @@ import {
   renderComponentWithRouterProvider,
 } from './testUtils';
 import {
+  getCanvasImageBlob,
+  getSvgImageBlob,
   OverflowTip,
   checkForDuplicates,
   generateUniqueId,
@@ -461,4 +463,105 @@ it('should toggle localstorage token', () => {
 
   setLocalStorageToken(true);
   expect(localStorage.getItem('scigateway:token')).toBe(ADMIN_ROLE_TOKEN);
+});
+
+describe('getCanvasImageBlob', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('resolves with the blob the canvas was encoded as', async () => {
+    const blob = new Blob(['image'], { type: 'image/png' });
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(
+      (callback) => callback(blob)
+    );
+
+    await expect(
+      getCanvasImageBlob(document.createElement('canvas'))
+    ).resolves.toBe(blob);
+  });
+
+  it('rejects when the canvas cannot be encoded', async () => {
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(
+      (callback) => callback(null)
+    );
+
+    await expect(
+      getCanvasImageBlob(document.createElement('canvas'))
+    ).rejects.toThrow('Unable to encode the canvas as image/png');
+  });
+
+  it('rejects when encoding throws, as it does for a tainted canvas', async () => {
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(() => {
+      throw new Error('tainted');
+    });
+
+    await expect(
+      getCanvasImageBlob(document.createElement('canvas'))
+    ).rejects.toThrow('tainted');
+  });
+});
+
+describe('getSvgImageBlob', () => {
+  /** jsdom never decodes images, so fake one which loads (or fails) as soon as src is set */
+  const stubImage = (outcome: 'load' | 'error') => {
+    const sources: string[] = [];
+    vi.stubGlobal(
+      'Image',
+      class {
+        onload: (() => void) | null = null;
+        onerror: (() => void) | null = null;
+        set src(src: string) {
+          sources.push(src);
+          (outcome === 'load' ? this.onload : this.onerror)?.();
+        }
+      }
+    );
+    return sources;
+  };
+
+  const createSvg = (): SVGSVGElement => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '100');
+    svg.setAttribute('height', '50');
+    return svg;
+  };
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it('draws the SVG onto a canvas at the given scale and encodes it', async () => {
+    const sources = stubImage('load');
+    const blob = new Blob(['image'], { type: 'image/png' });
+    const drawImage = vi.fn();
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+      drawImage,
+    } as unknown as CanvasRenderingContext2D);
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(
+      (callback) => callback(blob)
+    );
+
+    await expect(getSvgImageBlob(createSvg(), 4)).resolves.toBe(blob);
+    expect(sources[0]).toMatch(/^data:image\/svg\+xml;charset=utf-8,/);
+    expect(drawImage).toHaveBeenCalledWith(expect.anything(), 0, 0, 400, 200);
+  });
+
+  it('rejects when the SVG cannot be loaded as an image', async () => {
+    stubImage('error');
+
+    await expect(getSvgImageBlob(createSvg())).rejects.toThrow(
+      'Unable to load the SVG as an image'
+    );
+  });
+
+  it('rejects when there is no canvas support', async () => {
+    stubImage('load');
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null);
+
+    await expect(getSvgImageBlob(createSvg())).rejects.toThrow(
+      'canvas is not supported'
+    );
+  });
 });

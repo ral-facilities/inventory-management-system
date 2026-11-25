@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { System } from '../api/api.types';
+import { System, SystemType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import { useGetSystemType } from '../api/systemTypes';
 import ActionMenu from '../common/actionMenu.component';
@@ -18,11 +18,15 @@ import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
+import { QrCode } from '@mui/icons-material';
+import { SystemCodeGenerateDialog } from '../codes/codeGenerateDialog.component.tsx';
 
-const SystemDetailsActionMenu = (props: { system: System }) => {
-  const { system } = props;
+const SystemDetailsActionMenu = (props: { system: System, type?: SystemType }) => {
+  const { system, type } = props;
 
   const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    React.useState<boolean>(false);
+  const [codeGenDialogOpen, setCodeGenDialogOpen] =
     React.useState<boolean>(false);
 
   return (
@@ -44,6 +48,21 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
           />
         ),
       }}
+      otherItems={[
+        {
+          label: 'Generate QR Code',
+          icon: <QrCode fontSize="small" />,
+          onClick: () => setCodeGenDialogOpen(true),
+          dialog: (
+            <SystemCodeGenerateDialog
+              open={codeGenDialogOpen}
+              onClose={() => setCodeGenDialogOpen(false)}
+              system={system}
+              type={type}
+            />
+          ),
+        },
+      ]}
     />
   );
 };
@@ -91,7 +110,9 @@ function SystemDetails(props: SystemDetailsProps) {
             {system === undefined ? 'No system selected' : 'Details'}
           </OverflowTip>
         </Grid>
-        {system !== undefined && <SystemDetailsActionMenu system={system} />}
+        {system !== undefined && (
+          <SystemDetailsActionMenu system={system} type={systemTypeData} />
+        )}
       </Grid>
       <Divider role="presentation" />
       {system === undefined ? (
