@@ -13,6 +13,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import z from 'zod';
 import { UsageStatusPost } from '../../api/api.types';
 import { usePostUsageStatus } from '../../api/usageStatuses';
 import { UsageStatusSchema } from '../../form.schemas';
@@ -33,7 +34,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<UsageStatusPost>({
+  } = useForm<z.input<typeof UsageStatusSchema>, undefined, UsageStatusPost>({
     resolver: zodResolver(UsageStatusSchema),
   });
 

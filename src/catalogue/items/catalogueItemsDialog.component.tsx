@@ -23,6 +23,7 @@ import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIError,
   CatalogueCategory,
@@ -39,14 +40,10 @@ import {
   usePostCatalogueItem,
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
-import {
-  CatalogueItemDetailsStep,
-  CatalogueItemDetailsStepPost,
-  PropertiesStep,
-  PropertyValue,
-} from '../../app.types';
+import { CatalogueItemDetailsStepPost } from '../../app.types';
 import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
+  CatalogueItemDetailsStepPostSchema,
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
   RequestType,
@@ -62,7 +59,7 @@ const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
 function toCatalogueItemDetailsStep(
   item: CatalogueItem | undefined
-): CatalogueItemDetailsStep {
+): z.input<typeof CatalogueItemDetailsStepPostSchema> {
   if (!item) {
     return {
       manufacturer_id: '',
@@ -100,7 +97,7 @@ function toCatalogueItemDetailsStep(
 export function convertToPropertyValueList(
   catalogueCategory?: CatalogueCategory,
   properties?: Property[]
-): PropertyValue[] {
+): z.input<typeof PropertiesStepSchema>['properties'] {
   const catalogueCategoryProperties = catalogueCategory?.properties || [];
   return catalogueCategoryProperties.map((property) => {
     // Find the matching property for this property by id
@@ -110,7 +107,9 @@ export function convertToPropertyValueList(
 
     const valueType = `${property.type}_${property.mandatory}${property.allowed_values && property.type === 'string' ? '_av' : ''}`;
     return {
-      valueType: valueType,
+      valueType: valueType as z.input<
+        typeof PropertiesStepSchema
+      >['properties'][number]['valueType'],
       value: {
         av_placement_id: property.id,
         value:
@@ -123,7 +122,7 @@ export function convertToPropertyValueList(
 }
 
 export function convertToPropertyPost(
-  propertyValues: PropertyValue[]
+  propertyValues: z.output<typeof PropertiesStepSchema>['properties']
 ): PropertyPost[] {
   return propertyValues.map((propertyValue) => {
     return {
@@ -133,40 +132,19 @@ export function convertToPropertyPost(
   });
 }
 
-function convertToCatalogueItemDetailsStepPost(
-  item: CatalogueItemDetailsStep
-): CatalogueItemDetailsStepPost {
-  return {
-    manufacturer_id: item.manufacturer_id,
-    name: item.name,
-    description: item.description ?? null,
-    cost_gbp: Number(item.cost_gbp), // Convert string to number
-    cost_to_rework_gbp:
-      typeof item.cost_to_rework_gbp === 'number'
-        ? Number(item.cost_to_rework_gbp)
-        : null,
-    days_to_replace: Number(item.days_to_replace),
-    days_to_rework:
-      typeof item.days_to_rework === 'number'
-        ? Number(item.days_to_rework)
-        : null,
-    expected_lifetime_days:
-      typeof item.expected_lifetime_days === 'number'
-        ? Number(item.expected_lifetime_days)
-        : null,
-    item_model_number: item.item_model_number ?? null,
-    notes: item.notes ?? null,
-  };
-}
+const formControlPropertiesStep = createFormControlWithRootErrorClearing<
+  z.input<typeof PropertiesStepSchema>,
+  undefined,
+  z.output<typeof PropertiesStepSchema>
+>();
 
-const formControlPropertiesStep =
-  createFormControlWithRootErrorClearing<PropertiesStep>();
-
-const formControlDetailsStep =
-  createFormControlWithRootErrorClearing<CatalogueItemDetailsStep>({
-    customCallback: () =>
-      formControlPropertiesStep.clearErrors('root.formError'),
-  });
+const formControlDetailsStep = createFormControlWithRootErrorClearing<
+  z.input<typeof CatalogueItemDetailsStepPostSchema>,
+  undefined,
+  CatalogueItemDetailsStepPost
+>({
+  customCallback: () => formControlPropertiesStep.clearErrors('root.formError'),
+});
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -192,13 +170,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [parentInfo]
   );
 
-  const catalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
-    {
-      formControl: formControlDetailsStep,
-      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
-      defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
-    }
-  );
+  const catalogueItemDetailsStepFormMethods = useForm<
+    z.input<typeof CatalogueItemDetailsStepPostSchema>,
+    undefined,
+    CatalogueItemDetailsStepPost
+  >({
+    formControl: formControlDetailsStep,
+    resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+    defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
+  });
 
   const {
     handleSubmit: handleSubmitDetailsStep,
@@ -209,7 +189,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     reset: resetDetailsStep,
   } = catalogueItemDetailsStepFormMethods;
 
-  const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const catalogueItemPropertiesStepFormMethods = useForm({
     formControl: formControlPropertiesStep,
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
@@ -430,8 +410,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      let DetailsStepData: CatalogueItemDetailsStep | undefined;
-      let PropertiesStepData: PropertiesStep | undefined;
+      let DetailsStepData: CatalogueItemDetailsStepPost | undefined;
+      let PropertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Wrap the handleSubmit call for Step 1 in a promise
       await handleSubmitDetailsStep((validData) => {
@@ -446,7 +426,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (!PropertiesStepData) return;
 
       const data: CatalogueItemPost = {
-        ...convertToCatalogueItemDetailsStepPost(DetailsStepData),
+        ...DetailsStepData,
         properties: convertToPropertyPost(PropertiesStepData.properties),
         catalogue_category_id: parentId ?? '',
         is_obsolete: false,
@@ -638,7 +618,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        options().find((manufacturer) => manufacturer.id === value) ?? null
+                        options().find(
+                          (manufacturer) => manufacturer.id === value
+                        ) ?? null
                       }
                       onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);

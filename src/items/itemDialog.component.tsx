@@ -25,6 +25,7 @@ import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -43,11 +44,7 @@ import {
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import {
-  ItemDetailsStep,
-  ItemDetailsStepPost,
-  PropertiesStep,
-} from '../app.types';
+import { ItemDetailsStepPost } from '../app.types';
 import {
   convertToPropertyPost,
   convertToPropertyValueList,
@@ -63,6 +60,7 @@ import {
   DATE_TODAY,
   INVALID_DATE_FORMAT_MESSAGE,
   ItemDetailsStepSchema,
+  ItemDetailsStepSchemaPost,
   PropertiesStepSchema,
   RequestType,
 } from '../form.schemas';
@@ -79,13 +77,13 @@ function toItemDetailsStep(
   item: Item | undefined,
   catalogueItem: CatalogueItem | undefined,
   serialNumberPrefillEnabled: boolean
-): ItemDetailsStep {
+): z.input<typeof ItemDetailsStepSchemaPost> {
   if (!item) {
     return {
       purchase_order_number: '',
       is_defective: 'false',
       usage_status_id: '',
-      warranty_end_date: null,
+      warranty_end_date: '',
       asset_number: '',
       serial_number: {
         serial_number:
@@ -93,7 +91,7 @@ function toItemDetailsStep(
         starting_value: '',
         quantity: '',
       },
-      delivered_date: null,
+      delivered_date: '',
       notes: '',
     };
   }
@@ -102,34 +100,30 @@ function toItemDetailsStep(
     purchase_order_number: item.purchase_order_number ?? '',
     is_defective: String(item.is_defective),
     usage_status_id: item.usage_status_id,
-    warranty_end_date: item.warranty_end_date,
+    warranty_end_date: item.warranty_end_date ?? '',
     asset_number: item.asset_number ?? '',
     serial_number: {
       serial_number: item.serial_number ?? '',
       starting_value: '',
       quantity: '',
     },
-    delivered_date: item.delivered_date,
+    delivered_date: item.delivered_date ?? '',
     notes: item.notes ?? '',
   };
 }
 
-function convertToItemDetailsStepPost(
-  item: ItemDetailsStep
+export function convertToItemDetailsStepPost(
+  item: z.output<typeof ItemDetailsStepSchemaPost>
 ): ItemDetailsStepPost {
   return {
-    purchase_order_number: item.purchase_order_number ?? null,
-    is_defective: item.is_defective ? true : false,
-    usage_status_id: item.usage_status_id,
+    ...item,
+    serial_number: item.serial_number?.serial_number ?? null,
     warranty_end_date: item.warranty_end_date
-      ? new Date(item.warranty_end_date).toISOString()
+      ? item.warranty_end_date.toISOString()
       : null,
-    asset_number: item.asset_number ?? null,
-    serial_number: item.serial_number.serial_number ?? null,
     delivered_date: item.delivered_date
-      ? new Date(item.delivered_date).toISOString()
+      ? item.delivered_date.toISOString()
       : null,
-    notes: item.notes ?? null,
   };
 }
 
@@ -151,14 +145,19 @@ const dateErrorMessageHandler = (props: {
   }
 };
 
-const formControlPropertiesStep =
-  createFormControlWithRootErrorClearing<PropertiesStep>();
+const formControlPropertiesStep = createFormControlWithRootErrorClearing<
+  z.input<typeof PropertiesStepSchema>,
+  undefined,
+  z.output<typeof PropertiesStepSchema>
+>();
 
-const formControlDetailsStep =
-  createFormControlWithRootErrorClearing<ItemDetailsStep>({
-    customCallback: () =>
-      formControlPropertiesStep.clearErrors('root.formError'),
-  });
+const formControlDetailsStep = createFormControlWithRootErrorClearing<
+  z.input<typeof ItemDetailsStepSchemaPost>,
+  undefined,
+  z.output<typeof ItemDetailsStepSchemaPost>
+>({
+  customCallback: () => formControlPropertiesStep.clearErrors('root.formError'),
+});
 
 export interface ItemDialogProps {
   open: boolean;
@@ -250,7 +249,19 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: parentSystemBreadcrumbs } =
     useGetSystemsBreadcrumbs(parentSystemId);
 
-  const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
+  // The form state for this step contains additional frontend-only structure
+  // (e.g. nested state used to support adding multiple items) that does not
+  // match the backend payload shape.
+  //
+  // Because of this mismatch, forcing the form generics to align with the
+  // backend type would cause type conflicts. Instead, we allow the resolver
+  // to infer the correct form state type and perform the final transformation
+  // to the backend model explicitly at submit time.
+  const ItemDetailsStepFormMethods = useForm<
+    z.input<typeof ItemDetailsStepSchemaPost>,
+    undefined,
+    z.output<typeof ItemDetailsStepSchemaPost>
+  >({
     formControl: formControlDetailsStep,
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
@@ -273,7 +284,7 @@ function ItemDialog(props: ItemDialogProps) {
     setError: setErrorDetailsStep,
   } = ItemDetailsStepFormMethods;
 
-  const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const itemPropertiesStepFormMethods = useForm({
     formControl: formControlPropertiesStep,
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
@@ -351,14 +362,6 @@ function ItemDialog(props: ItemDialogProps) {
     isAdminMode,
     selectedItem?.usage_status_id,
   ]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    const subscription = watchDetailsStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchDetailsStep]);
 
   React.useEffect(() => {
     if (parentSystemId !== selectedItem?.system_id) {
@@ -527,12 +530,13 @@ function ItemDialog(props: ItemDialogProps) {
       event: React.SyntheticEvent
     ): Promise<{
       hasErrors: boolean;
-      detailsStepData: ItemDetailsStep | undefined;
-      propertiesStepData: PropertiesStep | undefined;
+      detailsStepData: z.output<typeof ItemDetailsStepSchemaPost> | undefined;
+      propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
     }> => {
       let hasErrors: boolean = false;
-      let detailsStepData: ItemDetailsStep | undefined;
-      let propertiesStepData: PropertiesStep | undefined;
+      let detailsStepData:
+        z.output<typeof ItemDetailsStepSchemaPost> | undefined;
+      let propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Handle the submission for Step 1
       await handleSubmitDetailsStep((validData) => {
@@ -633,15 +637,10 @@ function ItemDialog(props: ItemDialogProps) {
           system_id: parentSystemId ?? '',
         };
 
-        const startingValue = !isNaN(
-          Number(detailsStepData.serial_number.starting_value)
-        )
-          ? Number(detailsStepData.serial_number.starting_value)
-          : undefined;
+        const startingValue =
+          detailsStepData.serial_number.starting_value ?? undefined;
 
-        const quantity = !isNaN(Number(detailsStepData.serial_number.quantity))
-          ? Number(detailsStepData.serial_number.quantity)
-          : undefined;
+        const quantity = detailsStepData.serial_number.quantity ?? undefined;
 
         if (requestType === 'post' || duplicate) {
           handleAddItem(data, quantity, startingValue);
