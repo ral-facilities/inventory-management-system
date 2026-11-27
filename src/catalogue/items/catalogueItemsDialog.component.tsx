@@ -22,7 +22,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, Resolver, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import z from 'zod';
 import {
   APIError,
@@ -40,11 +40,7 @@ import {
   usePostCatalogueItem,
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
-import {
-  CatalogueItemDetailsStepPost,
-  PropertiesStep,
-  PropertyValue,
-} from '../../app.types';
+import { CatalogueItemDetailsStepPost } from '../../app.types';
 import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
   CatalogueItemDetailsStepPostSchema,
@@ -101,7 +97,7 @@ function toCatalogueItemDetailsStep(
 export function convertToPropertyValueList(
   catalogueCategory?: CatalogueCategory,
   properties?: Property[]
-): PropertyValue[] {
+): z.input<typeof PropertiesStepSchema>['properties'] {
   const catalogueCategoryProperties = catalogueCategory?.properties || [];
   return catalogueCategoryProperties.map((property) => {
     // Find the matching property for this property by id
@@ -111,7 +107,9 @@ export function convertToPropertyValueList(
 
     const valueType = `${property.type}_${property.mandatory}${property.allowed_values && property.type === 'string' ? '_av' : ''}`;
     return {
-      valueType: valueType,
+      valueType: valueType as z.input<
+        typeof PropertiesStepSchema
+      >['properties'][number]['valueType'],
       value: {
         av_placement_id: property.id,
         value:
@@ -124,7 +122,7 @@ export function convertToPropertyValueList(
 }
 
 export function convertToPropertyPost(
-  propertyValues: PropertyValue[]
+  propertyValues: z.output<typeof PropertiesStepSchema>['properties']
 ): PropertyPost[] {
   return propertyValues.map((propertyValue) => {
     return {
@@ -134,8 +132,11 @@ export function convertToPropertyPost(
   });
 }
 
-const formControlPropertiesStep =
-  createFormControlWithRootErrorClearing<PropertiesStep>();
+const formControlPropertiesStep = createFormControlWithRootErrorClearing<
+  z.input<typeof PropertiesStepSchema>,
+  undefined,
+  z.output<typeof PropertiesStepSchema>
+>();
 
 const formControlDetailsStep = createFormControlWithRootErrorClearing<
   z.input<typeof CatalogueItemDetailsStepPostSchema>,
@@ -188,19 +189,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     reset: resetDetailsStep,
   } = catalogueItemDetailsStepFormMethods;
 
-  const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const catalogueItemPropertiesStepFormMethods = useForm({
     formControl: formControlPropertiesStep,
-    // Zod correctly validates and discriminates the `properties` union at runtime,
-    // but TypeScript is unable to fully infer the resulting shape of complex
-    // `z.discriminatedUnion` schemas (specifically the nested `value.value` field).
-    // This causes the inferred resolver type from `zodResolver` to conflict with
-    //  the form's declared `PropertiesStep` type, even though the runtime behaviour
-    //  is correct.
-    //  We therefore explicitly assert the resolver to `Resolver<PropertiesStep>`
-    //  to bridge the gap between Zod's runtime guarantees and React Hook Form's
-    resolver: zodResolver(
-      PropertiesStepSchema
-    ) as unknown as Resolver<PropertiesStep>,
+    resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
         parentInfo,
@@ -420,7 +411,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
       let DetailsStepData: CatalogueItemDetailsStepPost | undefined;
-      let PropertiesStepData: PropertiesStep | undefined;
+      let PropertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Wrap the handleSubmit call for Step 1 in a promise
       await handleSubmitDetailsStep((validData) => {
@@ -627,7 +618,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        options().find((manufacturer) => manufacturer.id === value) ?? null
+                        options().find(
+                          (manufacturer) => manufacturer.id === value
+                        ) ?? null
                       }
                       onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);
