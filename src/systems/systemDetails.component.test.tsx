@@ -114,4 +114,29 @@ describe('SystemDetails', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   }, 10000);
+
+  it('can navigate to the system history page', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(mockSystemDetails.location ?? '')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'systems page actions menu' })
+    );
+
+    await user.click(screen.getByText('View History'));
+
+    await waitFor(
+      () => {
+        expect(router.state.location.pathname).toBe(
+          `/systems/${props.id}/history`
+        );
+      },
+      { timeout: 10000 }
+    );
+  });
 });

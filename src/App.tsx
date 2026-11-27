@@ -241,6 +241,17 @@ const routeObject: RouteObject[] = [
                       },
                     ],
                   },
+                  {
+                    path: paths.systemHistory,
+                    Component: Outlet,
+                    children: [
+                      {
+                        index: true,
+                        Component: HistoryTable,
+                        loader: systemsLayoutLoader(queryClient),
+                      },
+                    ],
+                  },
                 ],
               },
               {
