@@ -8,7 +8,6 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { CatalogueCategory } from '../../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
 import handleIMS_APIError from '../../../handleIMS_APIError';
 import { server } from '../../../mocks/server';
 import {
@@ -35,9 +34,9 @@ describe('delete property dialog', () => {
 
   const catalogueCategory = getCatalogueCategoryById('12') as CatalogueCategory;
 
-  const formattedProperties = transformToAddCatalogueCategoryWithPlacementIds(
-    catalogueCategory
-  ).properties as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const formattedProperties =
+    transformToAddCatalogueCategoryWithPlacementIds(catalogueCategory)
+      .properties ?? [];
 
   beforeEach(() => {
     props = {

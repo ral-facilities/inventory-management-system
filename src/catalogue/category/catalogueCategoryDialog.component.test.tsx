@@ -2,13 +2,15 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
+import z from 'zod';
 import { imsApi } from '../../api/api';
 import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../api/api.types';
-import { AddCatalogueCategoryProperty } from '../../app.types';
+import { CatalogueCategoryPropertyPatchSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import handleTransferState from '../../handleTransferState';
 import { server } from '../../mocks/server';
 import {
   CREATED_MODIFIED_TIME_VALUES,
@@ -18,7 +20,6 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import handleTransferState from '../../handleTransferState';
 
 vi.mock('../../handleIMS_APIError');
 vi.mock('../../handleTransferState');
@@ -29,9 +30,15 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
-  interface TestAddCatalogueCategoryProperty
-    extends AddCatalogueCategoryProperty {
+  interface TestAddCatalogueCategoryProperty {
+    name: string;
+    type: string;
     unit?: string;
+    unit_id?: string | null;
+    mandatory: string;
+    allowed_values?: z.input<
+      typeof CatalogueCategoryPropertyPatchSchema
+    >['allowed_values'];
     skipSave?: boolean;
     skipSaveValidation?: boolean;
   }

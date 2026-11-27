@@ -3,14 +3,9 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MockInstance } from 'vitest';
+import z from 'zod';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-  AddPropertyMigration,
-  EditPropertyMigration,
-} from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
@@ -21,25 +16,28 @@ import PropertyDialog, {
   PropertyDialogProps,
 } from './propertyDialog.component';
 
-interface TestAddPropertyMigration extends Omit<
-  AddPropertyMigration,
-  'default_value' | 'allowed_values'
-> {
+interface TestAddPropertyMigration {
+  name: string;
+  type: string;
   unit?: string;
+  unit_id?: string | null;
+  mandatory: string;
   default_value?: string;
   allowed_values?: AllowedValues;
 }
 
-interface TestEditPropertyMigration extends Omit<
-  EditPropertyMigration,
-  'allowed_values'
-> {
+interface TestEditPropertyMigration {
+  name?: string;
   allowed_values?: AllowedValues;
   unit?: string;
 }
 
 const TestComponent = (props: PropertyDialogProps) => {
-  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+  const formMethods = useForm<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >({
     resolver: zodResolver(CatalogueCategorySchema),
   });
 
@@ -719,9 +717,10 @@ describe('PropertyDialog', () => {
   });
 
   describe('edit', () => {
-    const formattedProperties = transformToAddCatalogueCategoryWithPlacementIds(
-      getCatalogueCategoryById('12') as CatalogueCategory
-    ).properties as AddCatalogueCategoryPropertyWithPlacementIds[];
+    const formattedProperties =
+      transformToAddCatalogueCategoryWithPlacementIds(
+        getCatalogueCategoryById('12') as CatalogueCategory
+      ).properties ?? [];
 
     beforeEach(() => {
       props = {
