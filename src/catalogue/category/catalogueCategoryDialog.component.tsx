@@ -20,25 +20,20 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Controller, FieldPath, FormProvider, useForm } from 'react-hook-form';
+import z from 'zod';
 import {
-  APIError,
   AllowedValues,
+  APIError,
   CatalogueCategory,
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
   CatalogueCategoryProperty,
-  CatalogueCategoryPropertyType,
 } from '../../api/api.types';
 import {
   usePatchCatalogueCategory,
   usePostCatalogueCategory,
 } from '../../api/catalogueCategories';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-  AllowedValues as AllowedValuesPlaceholder,
-} from '../../app.types';
 import {
   FLEX_CONTAINER_PROPS,
   FORM_DIALOG_PROPS,
@@ -47,6 +42,7 @@ import {
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import handleTransferState from '../../handleTransferState';
+import { createFormControlWithRootErrorClearing } from '../../utils';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
@@ -56,27 +52,28 @@ export const convertListToNumbers = (values: string[]): number[] => {
 
 //-------------------------------------Transform form type to API type----------------------------------
 function transformToCatalogueCategoryPost(
-  input: AddCatalogueCategoryWithPlacementIds
+  output: z.output<typeof CatalogueCategorySchema>
 ): CatalogueCategoryPost {
   return {
-    name: input.name,
-    is_leaf: String(input.is_leaf) === 'true',
-    ...(input.parent_id && { parent_id: input.parent_id }),
-    ...(input.properties &&
-      input.properties.length !== 0 && {
-        properties: input.properties.map(transformProperty),
+    name: output.name,
+    is_leaf: output.is_leaf,
+    ...(output.properties &&
+      output.properties.length !== 0 && {
+        properties: output.properties.map(transformProperty),
       }),
   };
 }
 
 function transformProperty(
-  property: AddCatalogueCategoryPropertyWithPlacementIds
+  property: NonNullable<
+    z.output<typeof CatalogueCategorySchema>['properties']
+  >[number]
 ): CatalogueCategoryPostProperty {
   return {
     name: property.name,
-    type: property.type as CatalogueCategoryPropertyType, // Assuming 'type' field is already correct
+    type: property.type,
     ...(property.unit_id && { unit_id: property.unit_id }),
-    mandatory: String(property.mandatory) === 'true',
+    mandatory: property.mandatory,
     ...(property.allowed_values && {
       allowed_values: transformAllowedValues(property.allowed_values),
     }),
@@ -84,9 +81,11 @@ function transformProperty(
 }
 
 export function transformAllowedValues(
-  allowedValues: AllowedValuesPlaceholder
+  allowedValues: NonNullable<
+    z.output<typeof CatalogueCategorySchema>['properties']
+  >[number]['allowed_values']
 ): AllowedValues | undefined {
-  if (allowedValues.type === 'list') {
+  if (allowedValues?.type === 'list') {
     return {
       type: 'list',
       values: allowedValues.values.values.map((value) =>
@@ -103,18 +102,17 @@ export function transformAllowedValues(
 
 export function transformToAddCatalogueCategoryWithPlacementIds(
   input: CatalogueCategory
-): AddCatalogueCategoryWithPlacementIds {
+): z.input<typeof CatalogueCategorySchema> {
   return {
     name: input.name,
     is_leaf: input.is_leaf ? 'true' : 'false',
-    parent_id: input.parent_id || null,
     properties: input.properties.map(transformPostPropertyToAddProperty),
   };
 }
 
 function transformPostPropertyToAddProperty(
   property: CatalogueCategoryProperty
-): AddCatalogueCategoryPropertyWithPlacementIds {
+): NonNullable<z.input<typeof CatalogueCategorySchema>['properties']>[number] {
   const allowedValuesWithId =
     property.allowed_values?.type === 'list'
       ? property.allowed_values.values.map((value) => ({
@@ -123,28 +121,64 @@ function transformPostPropertyToAddProperty(
         }))
       : undefined;
 
-  const modifiedCatalogueItemProperty: AddCatalogueCategoryPropertyWithPlacementIds =
-    {
-      name: property.name,
-      type: property.type,
-      unit: property.unit ?? undefined,
-      unit_id: property.unit_id ?? undefined,
-      mandatory: property.mandatory ? 'true' : 'false',
-      cip_placement_id: crypto.randomUUID(),
-      allowed_values:
-        allowedValuesWithId && allowedValuesWithId.length > 0
-          ? {
-              type: 'list',
-              values: {
-                valueType: property.type as 'string' | 'number',
-                values: allowedValuesWithId,
-              },
-            }
-          : undefined,
-    };
+  const modifiedCatalogueItemProperty: NonNullable<
+    z.input<typeof CatalogueCategorySchema>['properties']
+  >[number] = {
+    name: property.name,
+    type: property.type,
+    unit_id: property.unit_id ?? undefined,
+    mandatory: property.mandatory ? 'true' : 'false',
+    cip_placement_id: crypto.randomUUID(),
+    allowed_values:
+      allowedValuesWithId && allowedValuesWithId.length > 0
+        ? {
+            type: 'list',
+            values: {
+              valueType: property.type as 'string' | 'number',
+              values: allowedValuesWithId,
+            },
+          }
+        : undefined,
+  };
 
   return modifiedCatalogueItemProperty;
 }
+
+// Using `any` instead of `FieldPath` to avoid circular dependencies
+function getProperty<T extends Record<string, unknown>>(
+  obj: T,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key: any
+) {
+  if (key === undefined) return undefined;
+
+  const keys = key.toString().split('.');
+  let current: unknown = obj;
+
+  for (const part of keys) {
+    if (current && typeof current === 'object' && part in current) {
+      current = (current as Record<string, unknown>)[part];
+    } else {
+      return undefined;
+    }
+  }
+
+  return current;
+}
+
+const formControl = createFormControlWithRootErrorClearing<
+  z.input<typeof CatalogueCategorySchema>,
+  undefined,
+  z.output<typeof CatalogueCategorySchema>
+>({
+  customCallback: ({ name, errors }) => {
+    if (errors && !!getProperty(errors, name)) {
+      formControl.clearErrors(
+        name as FieldPath<z.input<typeof CatalogueCategorySchema>>
+      );
+    }
+  },
+});
 
 export interface CatalogueCategoryDialogProps {
   open: boolean;
@@ -167,11 +201,10 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     resetSelectedCatalogueCategory,
   } = props;
 
-  const initialCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
+  const initialCatalogueCategory: z.input<typeof CatalogueCategorySchema> =
     React.useMemo(() => {
-      const emptyCatalogueCategory: AddCatalogueCategoryWithPlacementIds = {
+      const emptyCatalogueCategory: z.input<typeof CatalogueCategorySchema> = {
         name: '',
-        parent_id: null,
         is_leaf: 'false',
         properties: undefined,
       };
@@ -193,7 +226,12 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       return emptyCatalogueCategory;
     }, [requestType, duplicate, selectedCatalogueCategory]);
 
-  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+  const formMethods = useForm<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >({
+    formControl,
     resolver: zodResolver(CatalogueCategorySchema),
     defaultValues: initialCatalogueCategory,
   });
@@ -294,19 +332,25 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     [selectedCatalogueCategory, patchCatalogueCategory, setError]
   );
 
-  const onSubmit = (data: AddCatalogueCategoryWithPlacementIds) => {
-    const transformedData = transformToCatalogueCategoryPost({
-      ...data,
-      ...(requestType === 'post' && parentId && { parent_id: parentId }),
-    });
-    if (requestType === 'patch') {
-      handleEditCatalogueCategory(transformedData);
-    } else {
-      handleAddCatalogueCategory({
-        ...transformedData,
-      });
-    }
-  };
+  const onSubmit = React.useCallback(
+    (data: z.output<typeof CatalogueCategorySchema>) => {
+      const transformedData = transformToCatalogueCategoryPost(data);
+      if (requestType === 'patch') {
+        handleEditCatalogueCategory(transformedData);
+      } else {
+        handleAddCatalogueCategory({
+          ...transformedData,
+          ...(parentId && { parent_id: parentId }),
+        });
+      }
+    },
+    [
+      handleAddCatalogueCategory,
+      handleEditCatalogueCategory,
+      parentId,
+      requestType,
+    ]
+  );
 
   return (
     <Dialog

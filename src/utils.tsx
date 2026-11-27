@@ -26,6 +26,12 @@ import {
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
+import {
+  createFormControl,
+  Path,
+  type FieldValues,
+  type UseFormReturn,
+} from 'react-hook-form';
 import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
@@ -852,6 +858,36 @@ export const deselectRowById = <TData extends MRT_RowData>(
 };
 
 export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
+
+export function createFormControlWithRootErrorClearing<
+  TFieldValues extends FieldValues,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TContext = any,
+  TTransformedValues = TFieldValues,
+>(options?: {
+  name?: Path<TFieldValues> | readonly Path<TFieldValues>[];
+  customCallback?: Parameters<
+    UseFormReturn<TFieldValues, TContext, TTransformedValues>['subscribe']
+  >[0]['callback'];
+}) {
+  const { formControl } = createFormControl<
+    TFieldValues,
+    TContext,
+    TTransformedValues
+  >();
+  formControl.subscribe({
+    name: options?.name,
+    formState: { values: true },
+    callback: (data) => {
+      if (options?.customCallback) {
+        options.customCallback(data);
+      } else {
+        formControl.clearErrors('root.formError');
+      }
+    },
+  });
+  return formControl;
+}
 
 export const useSparesFilterState = (
   urlParamName?: string

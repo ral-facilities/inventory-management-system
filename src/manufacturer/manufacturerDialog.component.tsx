@@ -12,11 +12,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
-
-import React from 'react';
-
 import { AxiosError } from 'axios';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIError,
   Manufacturer,
@@ -27,8 +26,13 @@ import {
   usePatchManufacturer,
   usePostManufacturer,
 } from '../api/manufacturers';
-import { ManufacturerSchema, RequestType } from '../form.schemas';
+import {
+  ManufacturerPostSchema,
+  ManufacturerSchema,
+  RequestType,
+} from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { createFormControlWithRootErrorClearing } from '../utils';
 
 export interface ManufacturerDialogProps {
   open: boolean;
@@ -36,6 +40,12 @@ export interface ManufacturerDialogProps {
   selectedManufacturer?: Manufacturer;
   type: RequestType;
 }
+
+const formControl = createFormControlWithRootErrorClearing<
+  z.input<typeof ManufacturerPostSchema>,
+  undefined,
+  ManufacturerPost
+>();
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
@@ -81,11 +91,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
     setError,
     clearErrors,
     reset,
-  } = useForm<ManufacturerPost>({
+  } = useForm<
+    z.input<typeof ManufacturerPostSchema>,
+    undefined,
+    ManufacturerPost
+  >({
+    formControl,
     resolver: zodResolver(ManufacturerSchema(type)),
     defaultValues: initialManufacturer,
   });
@@ -94,14 +108,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   React.useEffect(() => {
     reset(initialManufacturer);
   }, [initialManufacturer, reset]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    if (errors.root?.formError) {
-      const subscription = watch(() => clearErrors('root.formError'));
-      return () => subscription.unsubscribe();
-    }
-  }, [clearErrors, errors, selectedManufacturer, watch]);
 
   const handleClose = React.useCallback(() => {
     reset();

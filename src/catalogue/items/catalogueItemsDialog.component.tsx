@@ -23,6 +23,7 @@ import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIError,
   CatalogueCategory,
@@ -39,27 +40,26 @@ import {
   usePostCatalogueItem,
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
-import {
-  CatalogueItemDetailsStep,
-  CatalogueItemDetailsStepPost,
-  PropertiesStep,
-  PropertyValue,
-} from '../../app.types';
+import { CatalogueItemDetailsStepPost } from '../../app.types';
 import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
+  CatalogueItemDetailsStepPostSchema,
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
   RequestType,
 } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
-import { sortDataList } from '../../utils';
+import {
+  createFormControlWithRootErrorClearing,
+  sortDataList,
+} from '../../utils';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
 function toCatalogueItemDetailsStep(
   item: CatalogueItem | undefined
-): CatalogueItemDetailsStep {
+): z.input<typeof CatalogueItemDetailsStepPostSchema> {
   if (!item) {
     return {
       manufacturer_id: '',
@@ -97,7 +97,7 @@ function toCatalogueItemDetailsStep(
 export function convertToPropertyValueList(
   catalogueCategory?: CatalogueCategory,
   properties?: Property[]
-): PropertyValue[] {
+): z.input<typeof PropertiesStepSchema>['properties'] {
   const catalogueCategoryProperties = catalogueCategory?.properties || [];
   return catalogueCategoryProperties.map((property) => {
     // Find the matching property for this property by id
@@ -107,7 +107,9 @@ export function convertToPropertyValueList(
 
     const valueType = `${property.type}_${property.mandatory}${property.allowed_values && property.type === 'string' ? '_av' : ''}`;
     return {
-      valueType: valueType,
+      valueType: valueType as z.input<
+        typeof PropertiesStepSchema
+      >['properties'][number]['valueType'],
       value: {
         av_placement_id: property.id,
         value:
@@ -120,7 +122,7 @@ export function convertToPropertyValueList(
 }
 
 export function convertToPropertyPost(
-  propertyValues: PropertyValue[]
+  propertyValues: z.output<typeof PropertiesStepSchema>['properties']
 ): PropertyPost[] {
   return propertyValues.map((propertyValue) => {
     return {
@@ -130,31 +132,19 @@ export function convertToPropertyPost(
   });
 }
 
-function convertToCatalogueItemDetailsStepPost(
-  item: CatalogueItemDetailsStep
-): CatalogueItemDetailsStepPost {
-  return {
-    manufacturer_id: item.manufacturer_id,
-    name: item.name,
-    description: item.description ?? null,
-    cost_gbp: Number(item.cost_gbp), // Convert string to number
-    cost_to_rework_gbp:
-      typeof item.cost_to_rework_gbp === 'number'
-        ? Number(item.cost_to_rework_gbp)
-        : null,
-    days_to_replace: Number(item.days_to_replace),
-    days_to_rework:
-      typeof item.days_to_rework === 'number'
-        ? Number(item.days_to_rework)
-        : null,
-    expected_lifetime_days:
-      typeof item.expected_lifetime_days === 'number'
-        ? Number(item.expected_lifetime_days)
-        : null,
-    item_model_number: item.item_model_number ?? null,
-    notes: item.notes ?? null,
-  };
-}
+const formControlPropertiesStep = createFormControlWithRootErrorClearing<
+  z.input<typeof PropertiesStepSchema>,
+  undefined,
+  z.output<typeof PropertiesStepSchema>
+>();
+
+const formControlDetailsStep = createFormControlWithRootErrorClearing<
+  z.input<typeof CatalogueItemDetailsStepPostSchema>,
+  undefined,
+  CatalogueItemDetailsStepPost
+>({
+  customCallback: () => formControlPropertiesStep.clearErrors('root.formError'),
+});
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -180,12 +170,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [parentInfo]
   );
 
-  const CatalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
-    {
-      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
-      defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
-    }
-  );
+  const catalogueItemDetailsStepFormMethods = useForm<
+    z.input<typeof CatalogueItemDetailsStepPostSchema>,
+    undefined,
+    CatalogueItemDetailsStepPost
+  >({
+    formControl: formControlDetailsStep,
+    resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+    defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
+  });
 
   const {
     handleSubmit: handleSubmitDetailsStep,
@@ -194,10 +187,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     control: controlDetailsStep,
     clearErrors: clearErrorsDetailsStep,
     reset: resetDetailsStep,
-    watch: watchDetailsStep,
-  } = CatalogueItemDetailsStepFormMethods;
+  } = catalogueItemDetailsStepFormMethods;
 
-  const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const catalogueItemPropertiesStepFormMethods = useForm({
+    formControl: formControlPropertiesStep,
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
@@ -214,7 +207,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     control: controlPropertiesStep,
     clearErrors: clearErrorsPropertiesStep,
     reset: resetPropertiesStep,
-    watch: watchPropertiesStep,
     setError: setErrorPropertiesStep,
   } = catalogueItemPropertiesStepFormMethods;
 
@@ -249,21 +241,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     selectedCatalogueItem,
     selectedCatalogueItem?.properties,
   ]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    const subscription1 = watchDetailsStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription1.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchDetailsStep]);
-
-  React.useEffect(() => {
-    const subscription = watchPropertiesStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   const { mutateAsync: postCatalogueItem, isPending: isAddPending } =
     usePostCatalogueItem();
@@ -433,8 +410,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      let DetailsStepData: CatalogueItemDetailsStep | undefined;
-      let PropertiesStepData: PropertiesStep | undefined;
+      let DetailsStepData: CatalogueItemDetailsStepPost | undefined;
+      let PropertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Wrap the handleSubmit call for Step 1 in a promise
       await handleSubmitDetailsStep((validData) => {
@@ -449,7 +426,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (!PropertiesStepData) return;
 
       const data: CatalogueItemPost = {
-        ...convertToCatalogueItemDetailsStepPost(DetailsStepData),
+        ...DetailsStepData,
         properties: convertToPropertyPost(PropertiesStepData.properties),
         catalogue_category_id: parentId ?? '',
         is_obsolete: false,
@@ -496,10 +473,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const options = (): Array<Manufacturer & { isRecent: string }> => {
     const classifiedManufacturers = manufacturerList
       ? manufacturerList.map((option) => {
-          return {
-            ...option,
-            isRecent: 'A-Z',
-          };
+          return { ...option, isRecent: 'A-Z' };
         })
       : [];
 
@@ -513,10 +487,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return isRecent;
       })
       .map((option) => {
-        return {
-          ...option,
-          isRecent: 'Recently Added',
-        };
+        return { ...option, isRecent: 'Recently Added' };
       });
 
     /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
@@ -647,7 +618,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        options().find((manufacturer) => manufacturer.id === value) ?? null
+                        options().find(
+                          (manufacturer) => manufacturer.id === value
+                        ) ?? null
                       }
                       onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);
@@ -929,10 +902,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           sx={{ marginTop: 2 }}
         >
           {STEPS.map((label, index) => {
-            const labelProps: {
-              optional?: React.ReactNode;
-              error?: boolean;
-            } = {};
+            const labelProps: { optional?: React.ReactNode; error?: boolean } =
+              {};
 
             if (isStepFailed(index)) {
               labelProps.optional = (
@@ -991,11 +962,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         )}
       </DialogActions>
       <Box
-        sx={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
       >
         {errorsPropertiesStep.root?.formError && (
           <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>

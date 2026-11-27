@@ -16,6 +16,7 @@ import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIImage,
   AttachmentMetadata,
@@ -26,7 +27,10 @@ import {
 } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { getNameAndExtension } from '../utils';
+import {
+  createFormControlWithRootErrorClearing,
+  getNameAndExtension,
+} from '../utils';
 
 export interface BaseFileDialogProps {
   open: boolean;
@@ -56,6 +60,12 @@ export interface AttachmentDialogProps extends BaseFileDialogProps {
 
 export type FileDialogProps = ImageDialogProps | AttachmentDialogProps;
 
+const formControl = createFormControlWithRootErrorClearing<
+  z.input<typeof FileSchemaPatch>,
+  undefined,
+  ObjectFilePatchBase
+>();
+
 const EditFileDialog = (props: FileDialogProps) => {
   const { open, onClose, selectedFile, fileType, usePatchFile } = props;
 
@@ -74,11 +84,11 @@ const EditFileDialog = (props: FileDialogProps) => {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
     setError,
     clearErrors,
     reset,
-  } = useForm<ObjectFilePatchBase>({
+  } = useForm<z.input<typeof FileSchemaPatch>, undefined, ObjectFilePatchBase>({
+    formControl,
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
@@ -87,14 +97,6 @@ const EditFileDialog = (props: FileDialogProps) => {
   React.useEffect(() => {
     reset(initialFile);
   }, [initialFile, reset]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    if (errors.root?.formError) {
-      const subscription = watch(() => clearErrors('root.formError'));
-      return () => subscription.unsubscribe();
-    }
-  }, [clearErrors, errors, selectedFile, watch]);
 
   const handleClose = React.useCallback(() => {
     reset();

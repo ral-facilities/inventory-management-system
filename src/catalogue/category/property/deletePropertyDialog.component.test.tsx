@@ -6,19 +6,18 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import DeletePropertyDialog, {
-  DeletePropertyDialogProps,
-} from './deletePropertyDialog.component';
+import { http } from 'msw';
+import { CatalogueCategory } from '../../../api/api.types';
+import handleIMS_APIError from '../../../handleIMS_APIError';
+import { server } from '../../../mocks/server';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
 } from '../../../testUtils';
 import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCategoryDialog.component';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
-import { CatalogueCategory } from '../../../api/api.types';
-import handleIMS_APIError from '../../../handleIMS_APIError';
-import { server } from '../../../mocks/server';
-import { http } from 'msw';
+import DeletePropertyDialog, {
+  DeletePropertyDialogProps,
+} from './deletePropertyDialog.component';
 
 vi.mock('../../../handleIMS_APIError');
 
@@ -35,9 +34,9 @@ describe('delete property dialog', () => {
 
   const catalogueCategory = getCatalogueCategoryById('12') as CatalogueCategory;
 
-  const formattedProperties = transformToAddCatalogueCategoryWithPlacementIds(
-    catalogueCategory
-  ).properties as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const formattedProperties =
+    transformToAddCatalogueCategoryWithPlacementIds(catalogueCategory)
+      .properties ?? [];
 
   beforeEach(() => {
     props = {
